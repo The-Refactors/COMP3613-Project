@@ -72,7 +72,7 @@
         .login-card {
             position: absolute;
             top: 50%;
-            right: 365px; /* Adjust position from right */
+            right: 665px; /* Adjust position from right */
             transform: translateY(-50%);
             width: 400px;
             height: 450px;
@@ -134,17 +134,17 @@
         }
         .loginpage-img{
             position:absolute;
-            width: 450px;
-            height:450px;
-            top: 300px;
-            right: 0px;
+            width: 600px;
+            height:600px;
+            top: 200px;
+            right: 75px;
         }
         .loginpage-img2{
             position:absolute;
-            width: 450px;
-            height:450px;
-            top: 300px;
-            right: 725px;
+            width: 600px;
+            height:600px;
+            top: 200px;
+            right: 1125px;
             transform: scaleX(-1);
         }
     </style>
@@ -170,14 +170,12 @@
         <h2>Student Conduct Tracker</h2>
     </div>
     <!-- Login form -->
-    <form class="login-form" action="/login" href="/login" method="POST">
+    <form class="login-form">
         <p>   Username</p>
-        <input name="username" id="username" type="text" placeholder="Username">
+        <input type="text" placeholder="Username">
         <p> Password</p>
-        <input name="password" id="password" type="password" placeholder="Password">
-        <button type="submit" href="/login">
-            Submit
-        </button>
+        <input type="password" placeholder="Password">
+        <input type="submit" value="Login">
     </form>
 </div>
 
