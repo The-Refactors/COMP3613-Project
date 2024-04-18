@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Lilita+One&family=Titan+One&display=swap" rel="stylesheet">
-    <title>Student Tracker</title>
+    <title>Student Conduct Tracker - Proposed Achievements</title>
+  <link rel="icon" href="https://github.com/RichardR963/Info3604_Project/blob/main/images/AV2.png?raw=true" type="image/png">
+
     <style>
         body {
             margin: 0;
@@ -83,8 +85,8 @@
             width: 120px;
         }
         .student-card {
-            width: 100%;
-            max-width: 600px; /* Adjust this value based on your design */
+            width: 150%;
+            max-width: 1200px; /* Adjust this value based on your design */
             padding: 20px;
             display: flex;
             position: relative; /* Positioned Ancestor */
@@ -96,7 +98,6 @@
         .student-info {
             flex: 1;
             margin-right: 20px;
-            
         }
         .student-info h3 {
             margin: 0 0 5px;
@@ -111,49 +112,34 @@
             font-weight: bold;
             margin-right: 5px;
         }
-        .description-box {
-            width: 100%;
-            background-color: #f9f9f9;
-           margin-top: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
         .student-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
             display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            gap: 10px;
         }
         .student-buttons button {
-            padding: 16px 34px; /* Adjust button padding */
+            padding: 12px 20px; /* Adjust button padding */
             background-color: #051d3c;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin: 0 10px;
+        }
+        @media screen and (max-width: 768px) {
+            /* Adjust button positions for smaller screens */
+            .student-buttons {
+                bottom: 10px;
+                right: 10px;
+            }
         }
         .student-buttons button.accept {
             background-color: green; /* Green background for Accept button */
         }
         .student-buttons button.decline {
             background-color: red; /* Red background for Decline button */
-        }
-        .points-dropdown {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            align-items: center;
-        }
-        .points-dropdown select {
-            padding: 10px;
-            border-radius: 4px;
-        }
-        .points-dropdown label {
-    margin-right: 10px; /* Adjust the spacing between the label and the dropdown */
-    font-weight: bold; /* Make the label text bold */
-    color: #333; /* Change the color of the label text */
-}
-
+             }
     </style>
 </head>
 <body>
@@ -161,50 +147,37 @@
         <div class="logo">
             <h1>UWI</h1>
         </div>
-        <div class="logo2"><h2>Your Number One Tracker</h2></div>
+        <div class="logo2"><h2>Student Conduct Tracker</h2></div>
         <ul class="nav-bar">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="/staffhome">Home</a></li>
+            <li><a href="/logout">Logout</a></li>
         </ul>
     </header>
 
     <div class="recommendation-section">
-        <img src="FR.png" alt="Recommendation Icon" class="recommendation-image">
-        <div class="recommendation-text">Full Review</div>
-        <img src="FR.png" alt="Recommendation Icon" class="recommendation-image">
+        <img src="https://github.com/RichardR963/Info3604_Project/blob/main/images/proposed.png?raw=true" alt="Recommendation Icon" class="recommendation-image">
+        <div class="recommendation-text">Proposed Achievements</div>
+        <img src="https://github.com/RichardR963/Info3604_Project/blob/main/images/proposed.png?raw=true" alt="Recommendation Icon" class="recommendation-image">
     </div>
 
     <!-- New student card -->
+    {% for accomplishment  in accomplishments %}
     <div class="student-card">
         <div class="student-info">
-            <h3>John Doe</h3>
-            <p>ID: 12345</p>
-                <p>Topic: Shiii idk</p>
-            <div class="description-box">
-                <h3>Description</h3>
-                <p>Some shi</p>
-            </div>
+            <h3>{{accomplishment.studentName}}</h3>
+            <p>ID: {{accomplishment.uniID}} | Topic: {{accomplishment.topic}}</p>
+        </div>
+        <div class="student-buttons">
+            <form method="GET" action="/getStudentProfile/{{accomplishment.createdByStudentID}}">
+                <button href="/getStudentProfile/{{accomplishment.createdByStudentID}}">Student Profile</button>
+            </form>
+        
+        <form method="GET" action="/approveAchievement/{{accomplishment.id}}">
+            <button href="/approveAchievement/{{accomplishment.id}}" class="decline">Full Review</button>
+        </form>
         </div>
     </div>
-
-    <!-- Points dropdown -->
-    <div class="points-dropdown">
-    <label for="points">Award Points:</label>
-        <select name="points" id="points">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
-    </div>
-
-    <!-- Accept and Decline buttons -->
-    <div class="student-buttons">
-        <button class="accept">Accept</button>
-        <button class="decline">Decline</button>
-    </div>
-
+    {% endfor %}
+    <!-- Rest of your content -->
 </body>
 </html>

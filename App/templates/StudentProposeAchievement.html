@@ -6,7 +6,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Lilita+One&family=Titan+One&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Tracker</title>
+    <title>Student Conduct Tracker - Propose Achievement</title>
+  <link rel="icon" href="https://github.com/RichardR963/Info3604_Project/blob/main/images/AV2.png?raw=true" type="image/png">
+
     <style>
         body {
             margin: 0;
@@ -62,7 +64,7 @@
         }
         .recommendation-form {
             max-width: 500px;
-            margin: 200px auto 100px;
+            margin: 16vh auto 100px;
             padding: 20px;
             background-color: #fff;
             border: 2px solid #051d3c;
@@ -91,13 +93,36 @@
             cursor: pointer;
             width: 100%;
         }
-       
+
+      .recommendation-form select {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+          box-sizing: border-box;
+          background-color: #fff; /* Background color */
+          color: #333; /* Text color */
+          font-size: 18px; /* Font size */
+      }
+
+      /* Style select dropdown arrow */
+      .recommendation-form select::-ms-expand {
+          display: none; /* Hide default arrow in IE */
+      }
+
+      .recommendation-form select option {
+          background-color: #fff; /* Background color */
+          color: #333; /* Text color */
+          font-size: 16px; /* Font size */
+      }
+
         .recommendation-form img{
             width: 100px;
             height: 100px;
             display: flex;
             position: relative;
-            right: -185px;
+            right: -195px;
         }
 
         /* Add the following styles */
@@ -130,6 +155,8 @@
             width: 100%;
             margin-top: 10px; /* Add some margin at the top */
         }
+
+      
     </style>
 </head>
 <body>
@@ -137,37 +164,29 @@
         <div class="logo">
             <h1>UWI</h1>
         </div>
-        <div class="logo2"><h2>Your Number One Tracker</h2></div>
+        <div class="logo2"><h2>Student Conduct Tracker</h2></div>
         <ul class="nav-bar">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Logout</a></li>
+          <li><a href="/Student-Home">Home</a></li>
+          <li><a href="/student-page">Profile</a></li>
+          <li><a href="/logout">Logout</a></li>
         </ul>
     </header>
 
     <div class="recommendation-form">
-        <img src="IR.png" alt="Student Conduct Tracker">
-        <h2>Review Search</h2>
-        <form class = "sm"> <!-- Added action="#" method="post" -->
-            <input type="text" placeholder="Student Name" required>
-            <input type="text" placeholder="Year of Study" required>
-            <input type="text" placeholder="Degree" required>
-            <input type="text" placeholder="Faculty" required>
-           
-            <div class="deduct-points-section">
-                <label for="points-dropdown"> Points:</label>
-                <select id="points-dropdown" name="points-dropdown">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-        <option value="4">4</option>
-<option value="5">5</option>
-</select>
-</div>
-<button type="submit">Submit</button>
+        <img src="https://github.com/RichardR963/Info3604_Project/blob/main/images/fixes/staff%20proposed%20achivements.png?raw=true" alt="Student Conduct Tracker">
+        <h2>Propose Achievement</h2>
+        <form action="/api/propose-achievement" method="POST">
+          <select name="taggedStaffName" required>
+              {% for firstname, lastname in staff_names %}
+                  <option value="{{ firstname }} {{ lastname }}">{{ firstname }} {{ lastname }}</option>
+              {% endfor %}
+          </select>
+            <input type="text" placeholder="Topic" name="topic" required>
+            <textarea placeholder="details" name="details" rows="5" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </div>
 </form>
-
-
 </body>
 </html>
