@@ -8,13 +8,12 @@ class Admin(User):
 
   __mapper_args__ = {"polymorphic_identity": "admin"}
 
-  def __init__(self, username, firstname, lastname, email, password, faculty):
+  def __init__(self, username, firstname, lastname, email, password):
     super().__init__(username=username,
                      firstname=firstname,
                      lastname=lastname,
                      email=email,
-                     password=password,
-                     faculty=faculty)
+                     password=password)
 
 
 #return admin details on json format
@@ -25,6 +24,8 @@ class Admin(User):
         "username": self.username,
         "firstname": self.firstname,
         "lastname": self.lastname,
-        "email": self.email,
-        "faculty": self.faculty
+        "email": self.email
     }
+
+  def __repr__(self):
+    return f'<Admin {self.ID} :{self.email}>'

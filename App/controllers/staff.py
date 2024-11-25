@@ -7,13 +7,10 @@ from .review import (
 )
 from .student import(
     get_student_by_id,
-    get_student_by_username,
-    get_students_by_degree,
-    get_students_by_faculty
 )
 
-def create_staff(username,firstname, lastname, email, password, faculty):
-    newStaff = Staff(username,firstname, lastname, email, password, faculty)
+def create_staff(username, firstname, lastname, email, password):
+    newStaff = Staff(username,firstname, lastname, email, password)
     db.session.add(newStaff)
     
     try:
@@ -63,8 +60,8 @@ def staff_edit_review(id, details):
             return False
 
 
-def staff_create_review(staff, student, isPositive, points, details):
-    if create_review(staff, student, isPositive, points,details):
+def create_review(staff, student, isPositive, points, details):
+    if create_review(staff, student, isPositive, points, details):
         return True
     else:
         return False

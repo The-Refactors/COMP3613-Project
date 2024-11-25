@@ -1,8 +1,8 @@
 from App.models import User, Student
 from App.database import db
 
-def create_user(username, firstname, lastname, password, email, faculty):
-    newuser = User(username=username, firstname=firstname ,lastname=lastname, password=password, email=email, faculty=faculty)
+def create_user(username, firstname, lastname, password, email):
+    newuser = User(username=username, firstname=firstname ,lastname=lastname, password=password, email=email)
     db.session.add(newuser)
     try:
         db.session.commit()

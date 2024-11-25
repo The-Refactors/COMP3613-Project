@@ -7,14 +7,14 @@ class Review(db.Model):
   __tablename__ = 'review'
   ID = db.Column(db.Integer, primary_key=True)
   studentID = db.Column(db.Integer, db.ForeignKey('student.ID'))
-  createdByStaffID = db.Column(db.Integer, db.ForeignKey('staff.ID'))
+  staffID = db.Column(db.Integer, db.ForeignKey('staff.ID'))
   isPositive = db.Column(db.Boolean, nullable=False)
   dateCreated = db.Column(db.DateTime, default=datetime.utcnow)
   points = db.Column(db.Integer, nullable=False)
   details = db.Column(db.String(400), nullable=False)
-  studentSeen = db.Column(db.Boolean, nullable=False, default=False)
+  # studentSeen = db.Column(db.Boolean, nullable=False, default=False)
 
-  def __init__(self, staff, student, isPositive, points, details, studentSeen):
+  def __init__(self, staff, student, isPositive, points, details):
     self.createdByStaffID = staff.ID
     # self.student= student
     self.studentID = student.ID
@@ -22,7 +22,6 @@ class Review(db.Model):
     self.points = points
     self.details = details
     self.dateCreated = datetime.now()
-    self.studentSeen = studentSeen
 
   def get_id(self):
     return self.ID
@@ -45,5 +44,7 @@ class Review(db.Model):
         "isPositive": self.isPositive,
         "points": self.points,
         "details": self.details,
-        "studentSeen": self.studentSeen
     }
+
+    def __repr__(self):
+      return f'<Review - Staff: {self.staffID}, Student: {self.studentID}, Is Positive: {self.isPositive}, Details: {self.details}>'
