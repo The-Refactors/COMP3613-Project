@@ -2,12 +2,12 @@ from App.models import Student
 from App.database import db
 
 
-def create_student(studentID):
-  newStudent = Student(studentID)
-  db.session.add(newStudent)
+def create_student(student_id):
+  new_student = Student(student_id)
+  db.session.add(new_student)
   try:
     db.session.commit()
-    return newStudent
+    return new_student
     # return newStudent
   except Exception as e:
     print(
@@ -19,15 +19,15 @@ def create_student(studentID):
 
 
 def get_student_by_id(id):
-  student = Student.query.filter_by(ID=id).first()
+  student = Student.query.filter_by(id=id).first()
   if student:
     return student
   else:
     return None
 
 
-def get_student_by_studentID(studentID):
-  student = Student.query.filter_by(studentID=studentID).first()
+def get_student_by_student_id(student_id):
+  student = Student.query.filter_by(studentid=student_id).first()
   if student:
     return student
   else:
@@ -52,13 +52,13 @@ def get_all_students_json():
   return students_json
 
 
-def get_karma(studentID):
-  student = Student.query.filter_by(stduentID=studentID).first()
+def get_karma(student_id):
+  student = Student.query.filter_by(studentid=student_id).first()
   if student:
     return student.karma
   return None
   
-def get_Karma_by_id(id):
+def get_karma_by_id(id):
   student = Student.get(id)
   if student:
     return student.karma

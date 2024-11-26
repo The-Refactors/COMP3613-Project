@@ -1,3 +1,6 @@
+from sqlalchemy import CheckConstraint
+from sqlalchemy.orm import validates
+
 from App.database import db
 from .student import Student
 from datetime import datetime
@@ -25,6 +28,20 @@ class Review(db.Model):
     self.points = points
     self.details = details
     self.datecreated = datetime.now()
+
+  __table_args__ = (
+      CheckConstraint("points IN (1, 2, 3, 4, 5)", name='check_points'),
+  )
+
+  @validates('points')
+  def validate_points(self, key, points):
+    try:
+      points = int(points)
+    except TypeError:
+      raise TypeError("Points must be an integer")
+    if points not in [1, 2, 3]:
+      raise ValueError("Points must be 1, 2, 3, 4 or 5")
+    return points
 
 
   def get_id(self):

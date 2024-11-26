@@ -7,9 +7,9 @@ from App.database import db, get_migrate
 from App.main import create_app
 from App.models import User, Admin, Staff, Student, Review
 from App.controllers import (
-create_student, create_staff, create_admin, create_review, get_student_by_studentID, get_staff_by_id,
-get_student_reviews, get_all_users, get_all_users_json, get_all_admins, get_all_admins_json, 
-get_all_staff, get_all_staff_json)
+    create_student, create_staff, create_admin, create_review, get_student_by_student_id, get_staff_by_id,
+    get_student_reviews, get_all_users, get_all_users_json, get_all_admins, get_all_admins_json,
+    get_all_staff, get_all_staff_json)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -30,11 +30,11 @@ def initialize():
   create_staff("mike", "Michael", "Williams", "mikepass", "mike@mail.com")
   create_staff("cattie", "Catherine", "Singh", "cattiepass", "cattie@mail.com")
 
-  create_student(studentID='816011111')
-  create_student(studentID='816022222')
-  create_student(studentID='816033333')
-  create_student(studentID='816044444')
-  create_student(studentID='816055555')
+  create_student(student_id='816011111')
+  create_student(student_id='816022222')
+  create_student(student_id='816033333')
+  create_student(student_id='816044444')
+  create_student(student_id='816055555')
 
   print("Created Students")
 
@@ -89,7 +89,7 @@ def list_user_command(format):
 @click.argument("format", default="string")
 def list_user_command(format):
     if format == 'string':
-        print(get_all_admin())
+        print(get_all_admins())
     else:
         print(get_all_admins_json())
 
@@ -124,7 +124,7 @@ def add_student_command(student_id):
 @student_cli.command("search", help='Search for a student')
 @click.argument("student_id")
 def search_student_command(student_id):
-    student = get_student_by_studentID(student_id)
+    student = get_student_by_student_id(student_id)
     if student:
         print(student.get_json())
     else:
@@ -136,7 +136,7 @@ def search_student_command(student_id):
 @click.argument("points")
 @click.argument("details")
 def review_student_command(student_id, user_id, points, details):
-    student = get_student_by_studentID(student_id)
+    student = get_student_by_student_id(student_id)
     if student is None:
       print("Student does not exist")
 
@@ -154,7 +154,7 @@ def review_student_command(student_id, user_id, points, details):
 @student_cli.command("viewReviews", help='View student reviews')
 @click.argument("student_id")
 def view_reviews_command(student_id):
-    student = get_student_by_studentID(student_id)
+    student = get_student_by_student_id(student_id)
     reviews = get_student_reviews(student.id)
     if reviews:
       for review in reviews:

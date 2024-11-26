@@ -67,7 +67,7 @@ def empty_db():
 class StudentIntegrationTests(unittest.TestCase):
 
     def test_create_student(self):
-        assert create_student(studentID="816000000") == True
+        assert create_student(student_id="816000000") == True
         
     def test_get_student_by_id(self):
         student = get_student_by_id(1)

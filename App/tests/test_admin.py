@@ -5,7 +5,7 @@ from App.main import create_app
 from App.database import db, create_db
 from App.models import Admin
 from App.controllers import (
-    add_teacher,
+    add_staff,
     add_student,
     admin_update_name,
     admin_update_username,
@@ -49,7 +49,7 @@ def empty_db():
 class AdminIntegrationTests(unittest.TestCase):
 
     def test_add_teacher(self):
-        assert add_teacher(username="john", firstname="John", lastname="Doe", email="john@example.com", password="johnpassword") == True
+        assert add_staff(username="john", firstname="John", lastname="Doe", email="john@example.com", password="johnpassword") == True
         
 
     def test_add_student(self):

@@ -5,7 +5,7 @@ from App.database import db
 from .index import index_views
 from App.models import Staff, Student, User
 from App.controllers import (
-    create_user, login, get_student_by_studentID, get_all_students, get_staff_by_name)
+    create_user, login, get_student_by_student_id, get_all_students, get_staff_by_name)
 
 student_views = Blueprint('student_views',
                           __name__,
