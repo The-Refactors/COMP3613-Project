@@ -29,7 +29,7 @@ class Staff(User):
 
 #return staff details on json format
 
-  def to_json(self):
+  def get_json(self):
     return {
         "staffID":
         self.ID,
@@ -43,7 +43,7 @@ class Staff(User):
         self.email,
         # "faculty":
         # self.faculty,
-        "reviews": [review.to_json() for review in self.reviews]
+        "reviews": [review.get_json() for review in self.reviews]
         # "reports": [report.to_json() for report in self.reports],
         # "pendingAccomplishments": [
         #     pendingAccomplishment.to_json()

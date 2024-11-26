@@ -2,22 +2,24 @@ from App.models import Review
 from App.database import db
 
 
-def create_review(staff, student, isPositive, points, details):
+#def create_review(staff, student, isPositive, points, details):
+def create_review(staff, student, points, details):
   newReview = Review(staff=staff,
                      student=student,
-                     isPositive=isPositive,
+                     #isPositive=isPositive,
                      points=points,
                      details=details,
-                     studentSeen=False)
+                     #studentSeen=False
+                    )
   db.session.add(newReview)
   try:
     db.session.commit()
-    return True
+    return newReview
   except Exception as e:
     print("[review.create_review] Error occurred while creating new review: ",
           str(e))
     db.session.rollback()
-    return False
+    return None
 
 
 def delete_review(reviewID):
@@ -98,3 +100,14 @@ def get_review(id):
     return review
   else:
     return None
+
+def get_student_reviews(studentID):
+  return Review.query.filter_by(studentID=studentID).all()
+
+def get_student_reviews_json(studentID):
+  reviews = Review.query.filter_by(studentID=studentID).all()
+  if reviews:
+    reviews_json = [review.get_json() for review in reviews]
+    return reviews_json 
+  return None
+  

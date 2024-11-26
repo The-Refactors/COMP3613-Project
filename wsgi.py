@@ -6,7 +6,9 @@ from flask.cli import with_appcontext, AppGroup
 from App.database import db, get_migrate
 from App.main import create_app
 from App.models import User, Admin, Staff, Student, Review
-from App.controllers import (create_student, create_staff, create_admin, create_review, get_student_by_studentID)
+from App.controllers import (
+create_student, create_staff, create_admin, create_review, get_student_by_studentID, get_staff_by_id,
+get_student_reviews, get_student_reviews_json)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -71,30 +73,41 @@ def search_student_command(student_id):
         print(f'Student does not exist')
 
 @student_cli.command("review", help='Review a student')
-@click.argument("student")
-@click.argument("user")
-@click.argument("text")
-def review_student_command(student, user, text):
-    review = add_review(student, user, text)
-    if review:
-        student = get_student(student)
-        print(f'Review was created for {review.student.firstname} {review.student.lastname} by {review.user.firstname} {review.user.lastname}')
-    else:
-        print(f'Student does not exist')
+@click.argument("student_id")
+@click.argument("user_id")
+@click.argument("points")
+@click.argument("details")
+def review_student_command(student_id, user_id, points, details):
+    student = get_student_by_studentID(student_id)
+    if student is None:
+      print("Student does not exist")
+
+    staff = get_staff_by_id(user_id)
+    if staff is None:
+      print("Invalid user ID")
+    if student and staff:
+      review = create_review(staff, student, points, details)
+      if review:
+          print(f'Review was created for {student.studentID} by {staff.firstname} {staff.lastname} at {review.dateCreated}')
+      else:
+          print(f'Student does not exist')
 
 
 @student_cli.command("viewReviews", help='View student reviews')
-@click.argument("id")
-def view_reviews_command(id):
-    reviews = get_reviews(id)
+@click.argument("student_id")
+def view_reviews_command(student_id):
+    student = get_student_by_studentID(student_id)
+    reviews = get_student_reviews(student.ID)
     if reviews:
-        student = get_student(id)
-        print(f'Reviews for {student.firstname} {student.lastname}, {student.id}: ')
-        for review in reviews:
-            print(f'From {review.user.firstname} {review.user.lastname}, {review.user.id}: {review.text}')
-    else:
-        print(f'Student does not exist')
+      for review in reviews:
+        staff = get_staff_by_id(review.staffID)
+        if staff: 
+          print(f'{review.details}, points: {review.points}, created by {staff.firstname} {staff.lastname} at {review.dateCreated}')
+        else:
+          print(f'{review.details}, points: {review.points}, created by unknown user {review.dateCreated}')
 
+    else:
+      print(f'No reviews found')
 
 
 app.cli.add_command(student_cli)
@@ -139,7 +152,7 @@ app.cli.add_command(student_cli)
 # Test Commands
 # '''
 
-test = AppGroup('test', help='Testing commands')
+#test = AppGroup('test', help='Testing commands')
 
 # @test.command("final", help="Runs ALL tests")
 # @click.argument("type", default="all")
