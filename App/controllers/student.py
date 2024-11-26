@@ -17,6 +17,61 @@ def create_student(studentID):
     return False
 
 
+
+def get_student_by_id(id):
+  student = Student.query.filter_by(ID=id).first()
+  if student:
+    return student
+  else:
+    return None
+
+
+def get_student_by_studentID(studentID):
+  student = Student.query.filter_by(studentID=studentID).first()
+  if student:
+    return student
+  else:
+    return None
+
+
+def get_students_by_ids(student_ids):
+  students = Student.query.filter(Student.ID.in_(student_ids)).all()
+  return students
+
+
+def get_all_students():
+  students = Student.query.all()
+  return students
+
+
+def get_student_json(id):
+    student = Student.query.get(id)
+    if student: 
+        return student.get_json()
+    else:
+        return None
+
+def get_all_students_json():
+  students = Student.query.all()
+  if not students:
+    return []
+  students_json = [student.get_json() for student in students]
+  return students_json
+
+
+def get_karma(studentID):
+  student = Student.query.filter_by(stduentID=studentID).first()
+  if student:
+    return student.karma
+  return None
+  
+def get_Karma_by_id(id):
+  student = Student.get(id)
+  if student:
+    return student.karma
+  return None
+  
+
 # def create_student_from_transcript(transcript_data, student_data):
 #   try:
 
@@ -61,45 +116,12 @@ def create_student(studentID):
 #     return False
 
 
-def get_student_by_id(id):
-  student = Student.query.filter_by(ID=id).first()
-  if student:
-    return student
-  else:
-    return None
-
-
-def get_student_by_studentID(studentID):
-  student = Student.query.filter_by(studentID=studentID).first()
-  if student:
-    return student
-  else:
-    return None
-
-
 # def get_student_by_username(username):
 #   student = Student.query.filter_by(username=username).first()
 #   if student:
 #     return student
 #   else:
 #     return None
-
-
-# def get_students_by_ids(student_ids):
-#   students = Student.query.filter(Student.ID.in_(student_ids)).all()
-#   return students
-
-def get_all_students():
-  students = Student.query.all()
-  return students
-
-
-# def get_all_students_json():
-#   students = Student.query.all()
-#   if not students:
-#     return []
-#   students_json = [student.get_json() for student in students]
-#   return students_json
 
 
 # #returning all information about students

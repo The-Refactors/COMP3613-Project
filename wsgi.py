@@ -28,10 +28,10 @@ def initialize():
   create_staff("cattie", "Catherine", "Singh", "cattiepass", "cattie@mail.com")
 
   create_student(studentID='816011111')
-  #create_student(studentID='816022222')
-  #create_student(studentID='816033333')
-  #create_student(studentID='816044444')
-  #create_student(studentID='816055555')
+  create_student(studentID='816022222')
+  create_student(studentID='816033333')
+  create_student(studentID='816044444')
+  create_student(studentID='816055555')
 
   print("Created Students")
 
@@ -83,7 +83,7 @@ def initialize():
 # Test Commands
 # '''
 
-# test = AppGroup('test', help='Testing commands')
+test = AppGroup('test', help='Testing commands')
 
 # @test.command("final", help="Runs ALL tests")
 # @click.argument("type", default="all")
@@ -102,15 +102,17 @@ def initialize():
 #   #   sys.exit(pytest.main(["-k", "App"]))
 
 
-# @test.command("student", help="Run Student tests")
-# @click.argument("type", default="all")
-# def student_tests_command(type):
-#   if type == "unit":
-#     sys.exit(pytest.main(["-k", "StudentUnitTests"]))
-#   elif type == "int":
-#     sys.exit(pytest.main(["-k", "StudentIntegrationTests"]))
-#   # else:
-#   #   sys.exit(pytest.main(["-k", "App"]))
+@test.command("student", help="Run Student tests")
+@click.argument("type", default="all")
+def student_tests_command(type):
+  if type == "unit":
+    sys.exit(pytest.main(["-k", "StudentUnitTests"]))
+  elif type == "int":
+    sys.exit(pytest.main(["-k", "StudentIntegrationTests"]))
+  else:
+    sys.exit(pytest.main(["-k", "App"]))
+
+app.cli.add_command(test)
 
 
 # @test.command("staff", help="Run Staff tests")
@@ -288,4 +290,3 @@ def initialize():
 #     print("Student not found with ID:", UniId)
 
 
-# app.cli.add_command(test)
