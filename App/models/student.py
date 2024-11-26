@@ -27,7 +27,7 @@ class Student(db.Model):
 
   # karmaID = db.Column(db.Integer, db.ForeignKey('karma.karmaID'))
 
-  __mapper_args__ = {"polymorphic_identity": "student"}
+  # __mapper_args__ = {"polymorphic_identity": "student"}
 
   def __init__(self, studentid):
 
