@@ -4,7 +4,7 @@ from .user import User
 
 class Admin(User):
   __tablename__ = 'admin'
-  ID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
+  id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
 
   __mapper_args__ = {"polymorphic_identity": "admin"}
 
@@ -20,7 +20,7 @@ class Admin(User):
 
   def get_json(self):
     return {
-        "adminID": self.ID,
+        "adminID": self.id,
         "username": self.username,
         "firstname": self.firstname,
         "lastname": self.lastname,
@@ -28,4 +28,4 @@ class Admin(User):
     }
 
   def __repr__(self):
-    return f'<Admin {self.ID} :{self.email}>'
+    return f'<Admin {self.id} :{self.email}>'

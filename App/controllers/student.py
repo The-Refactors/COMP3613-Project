@@ -35,7 +35,7 @@ def get_student_by_studentID(studentID):
 
 
 def get_students_by_ids(student_ids):
-  students = Student.query.filter(Student.ID.in_(student_ids)).all()
+  students = Student.query.filter(Student.id.in_(student_ids)).all()
   return students
 
 
@@ -78,20 +78,20 @@ def get_Karma_by_id(id):
 #     fullname = transcript_data.get('fullname')
 
 #     #retrieve student from database and update the student object correctly
-#     print("Student Data in controller ID is:", student_data.ID)
+#     print("Student Data in controller id is:", student_data.id)
 
 #     #updating student
 #     #checking if student already exist based on id
-#     student = get_student_by_id(student_data.ID)
+#     student = get_student_by_id(student_data.id)
 #     if not student:
 #       print(
-#           f"Student with ID {student.ID} already exists in database from controller!"
+#           f"Student with id {student.id} already exists in database from controller!"
 #       )
 #       return False
 #     else:
 #       #db.session.add(new_student)
 #       #updating student
-#       update_from_transcript(student_data.ID, admittedTerm, UniId, gpa, degree,
+#       update_from_transcript(student_data.id, admittedTerm, UniId, gpa, degree,
 #                              faculty, fullname)
 #       #db.session.commit()
 #       #printing data to be stored
@@ -126,7 +126,7 @@ def get_Karma_by_id(id):
 #   students_json = []
 #   for student in students:
 #     student_data = {
-#         'id': student.ID,
+#         'id': student.id,
 #         'username': student.username,
 #         'firstname': student.firstname,
 #         'lastname': student.lastname,
@@ -156,9 +156,9 @@ def get_Karma_by_id(id):
 
 
 # #UniId=UniId, gpa=gpa, firstname=fullname, admittedTerm=admittedTerm, degree=degree, faculty=faculty, username=UniId, lastname="", email="", password=""
-# def update_from_transcript(ID, newAdmittedTerm, newUniId, newGpa, newDegree,
+# def update_from_transcript(id, newAdmittedTerm, newUniId, newGpa, newDegree,
 #                            newFaculty, newFullname):
-#   student = get_student_by_id(ID)
+#   student = get_student_by_id(id)
 #   if student:
 #     student.admittedTerm = newAdmittedTerm
 #     student.UniId = newUniId
@@ -171,14 +171,14 @@ def get_Karma_by_id(id):
 #       return True
 #     except Exception as e:
 #       print(
-#           "[student.update_from_transcript] Error occurred while updating student admittedTerm, No student with ID:",
-#           ID, "was found!", str(e))
+#           "[student.update_from_transcript] Error occurred while updating student admittedTerm, No student with id:",
+#           id, "was found!", str(e))
 #       db.session.rollback()
 #       return False
 
 
-# def update_admittedTerm(studentID, newAdmittedTerm):
-#   student = get_student_by_id(studentID)
+# def update_admittedTerm(studentid, newAdmittedTerm):
+#   student = get_student_by_id(studentid)
 #   if student:
 #     student.admittedTerm = newAdmittedTerm
 #     try:
@@ -193,13 +193,13 @@ def get_Karma_by_id(id):
 #   else:
 #     print(
 #         "[student.update_admittedTerm] Error occurred while updating student admittedTerm: Student "
-#         + str(studentID) + " not found")
+#         + str(studentid) + " not found")
 #     return False
 
 
 # # this field doesn't exist in the database for now
-# def update_yearofStudy(studentID, newYearofStudy):
-#   student = get_student_by_id(studentID)
+# def update_yearofStudy(studentid, newYearofStudy):
+#   student = get_student_by_id(studentid)
 #   if student:
 #     student.yearofStudy = newYearofStudy
 #     try:
@@ -214,12 +214,12 @@ def get_Karma_by_id(id):
 #   else:
 #     print(
 #         "[student.update_yearofStudy] Error occurred while updating student yearofStudy: Student "
-#         + str(studentID) + " not found")
+#         + str(studentid) + " not found")
 #     return False
 
 
-# def update_degree(studentID, newDegree):
-#   student = get_student_by_id(studentID)
+# def update_degree(studentid, newDegree):
+#   student = get_student_by_id(studentid)
 #   if student:
 #     student.degree = newDegree
 #     try:
@@ -234,5 +234,5 @@ def get_Karma_by_id(id):
 #   else:
 #     print(
 #         "[student.update_degree] Error occurred while updating student degree: Student "
-#         + str(studentID) + " not found")
+#         + str(studentid) + " not found")
 #     return False

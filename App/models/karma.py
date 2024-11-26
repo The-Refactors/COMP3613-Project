@@ -11,18 +11,18 @@ from .student import Student
 #   incidentPoints = db.Column(db.Float, nullable=False, default=0.0)
 #   reviewsPoints = db.Column(db.Float, nullable=False, default=0.0)
 #   rank = db.Column(db.Integer, nullable=False, default=-99)
-#   studentID = db.Column(db.Integer, db.ForeignKey('student.ID',
+#   studentid = db.Column(db.Integer, db.ForeignKey('student.id',
 #                                                   use_alter=True))
 
 #   def __init__(self, points, academicPoints, accomplishmentPoints,
-#                reviewsPoints, incidentPoints, rank, studentID):
+#                reviewsPoints, incidentPoints, rank, studentid):
 #     self.points = points
 #     self.academicPoints = academicPoints
 #     self.accomplishmentPoints = accomplishmentPoints
 #     self.reviewsPoints = reviewsPoints
 #     self.incidentPoints = incidentPoints
 #     self.rank = rank
-#     self.studentID = studentID
+#     self.studentid = studentid
 
 #   def calculate_total_points(self):
 #     # only review points
@@ -113,5 +113,5 @@ from .student import Student
 #         "reviewPoints": self.reviewsPoints,
 #         "incidentPoints": self.incidentPoints,
 #         "rank": self.rank,
-#         "studentID": self.studentID
+#         "studentid": self.studentid
 #     }

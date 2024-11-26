@@ -66,8 +66,8 @@ def calculate_points_downvote(review):
     return False
 
 
-# def get_total_review_points(studentID):
-#   reviews = Review.query.filter_by(studentID=studentID).all()
+# def get_total_review_points(studentid):
+#   reviews = Review.query.filter_by(studentid=studentid).all()
 #   if reviews:
 #     sum = 0
 #     for review in reviews:

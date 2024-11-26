@@ -17,7 +17,7 @@ Page/Action Routes
 # @student_views.route('/StudentHome', methods=['GET'])
 # @login_required
 # def student_home_page():
-#   student = Student.query.filter_by(ID=current_user.ID).first()
+#   student = Student.query.filter_by(id=current_user.id).first()
 
 #   # #notis for incidents
 #   # incidentsUnseenNum = 0
@@ -56,7 +56,7 @@ Page/Action Routes
 # @student_views.route('/Student-Home', methods=['GET'])
 # @login_required
 # def home_page():
-#   student = Student.query.filter_by(ID=current_user.ID).first()
+#   student = Student.query.filter_by(id=current_user.id).first()
 
 #   #notis for incidents
 #   incidentsUnseenNum = 0
@@ -104,21 +104,21 @@ Page/Action Routes
 # def student_page():
 #   #getting student info from controller
 #   #using flasklogin to get the current user
-#   student = Student.query.filter_by(ID=current_user.ID).first()
-#   user = User.query.filter_by(ID=current_user.ID).first()
-#   karma = get_karma(student.ID)
+#   student = Student.query.filter_by(id=current_user.id).first()
+#   user = User.query.filter_by(id=current_user.id).first()
+#   karma = get_karma(student.id)
 #   if karma:
 #     #print("karma id is: ", karma.karmaID)
-#     calculate_academic_points(student.ID)
-#     calculate_accomplishment_points(student.ID)
-#     calculate_review_points(student.ID)
-#     calculate_incident_points(student.ID)
+#     calculate_academic_points(student.id)
+#     calculate_accomplishment_points(student.id)
+#     calculate_review_points(student.id)
+#     calculate_incident_points(student.id)
 #     print("academic points:" + str(karma.academicPoints))
 #     print("accomplishment points:" + str(karma.accomplishmentPoints))
 #     print("review points:" + str(karma.reviewsPoints))
 #     print("incident points:" + str(karma.incidentPoints))
 #     #Points: academic (0.4),accomplishment (0,3 shared)
-#     update_total_points(student.ID)
+#     update_total_points(student.id)
 #     print('total karma points', karma.points)
 #     #updaing ranks
 #     calculate_ranks()
@@ -180,13 +180,13 @@ Page/Action Routes
 # def student_page_api():
 #   # Getting student info from controller
 #   # Using Flask-Login to get the current user
-#   student = Student.query.filter_by(ID=jwt_current_user.ID).first()
-#   user = User.query.filter_by(ID=jwt_current_user.ID).first()
-#   karma = get_karma(student.ID)
+#   student = Student.query.filter_by(id=jwt_current_user.id).first()
+#   user = User.query.filter_by(id=jwt_current_user.id).first()
+#   karma = get_karma(student.id)
 
 #   if karma:
-#     calculate_academic_points(student.ID)
-#     calculate_accomplishment_points(student.ID)
+#     calculate_academic_points(student.id)
+#     calculate_accomplishment_points(student.id)
 #     karma.calculate_total_points()
 
 #   transcripts = get_transcript(jwt_current_user.UniId)
@@ -303,7 +303,7 @@ Page/Action Routes
 #     details = request.form.get('jobdetails')
 #     status = "Recommendation Submitted - Pending Approval"
 #     # Handle job recommendation
-#     newrec = create_job_recommendation(student_id, staff.ID, approved, status,
+#     newrec = create_job_recommendation(student_id, staff.id, approved, status,
 #                                        cyos, details, company_name, position,
 #                                        company_email)
 #     message = f"You have submitted a {recommendation_type} recommendation request to {teacherName}!!"
@@ -316,7 +316,7 @@ Page/Action Routes
 #     details = request.form.get('schooldetails')
 #     status = "Recommendation Submitted - Pending Approval"
 #     # Handle job recommendation
-#     newrec = create_school_recommendation(student_id, staff.ID, approved,
+#     newrec = create_school_recommendation(student_id, staff.id, approved,
 #                                           status, cyos, details, school_name,
 #                                           program, school_email)
 #     message = f"You have submitted a {recommendation_type} recommendation request to {teacherName}!!"
@@ -346,7 +346,7 @@ Page/Action Routes
 #     details = request.form.get('jobdetails')
 #     status = "Job"
 #     # Handle job recommendation
-#     newrec = create_job_recommendation(student_id, staff.ID, approved, status,
+#     newrec = create_job_recommendation(student_id, staff.id, approved, status,
 #                                        cyos, details, company_name, position,
 #                                        company_email)
 #     message = f"You have submitted a {recommendation_type}  recommendation request to {teacherName}!!"
@@ -358,7 +358,7 @@ Page/Action Routes
 #     details = request.form.get('schooldetails')
 #     status = "School"
 #     # Handle school recommendation
-#     newrec = create_school_recommendation(student_id, staff.ID, approved,
+#     newrec = create_school_recommendation(student_id, staff.id, approved,
 #                                           status, cyos, details, school_name,
 #                                           program, school_email)
 #     message = f"You have submitted a recommendation request to {teacherName} {details}!!"
@@ -378,7 +378,7 @@ Page/Action Routes
 #     topic = request.form.get('topic')
 #     taggedStaffName = request.form.get('taggedStaffName')
 #     details = request.form.get('details')
-#     student_id = current_user.ID
+#     student_id = current_user.id
 #     print(student_id)
 #     print(topic)
 #     print(taggedStaffName)
@@ -412,7 +412,7 @@ Page/Action Routes
 #         'taggedStaffName'
 #     )  # todo get id from name displayed in list in front end
 #     details = request.form.get('details')
-#     student_id = jwt_current_user.ID
+#     student_id = jwt_current_user.id
 
 #     # Check if any required field is missing
 #     if not all([student_id, tagged_staff_name, details]):
@@ -446,13 +446,13 @@ Page/Action Routes
 
 #   #Recalculating points for each student and ranks
 #   for student in students:
-#     karma = get_karma(student.ID)
+#     karma = get_karma(student.id)
 #     if karma:
 
-#       calculate_academic_points(student.ID)
-#       calculate_accomplishment_points(student.ID)
-#       calculate_review_points(student.ID)
-#       calculate_incident_points(student.ID)
+#       calculate_academic_points(student.id)
+#       calculate_accomplishment_points(student.id)
+#       calculate_review_points(student.id)
+#       calculate_incident_points(student.id)
 #       #print("review points:" + str(karma.reviewsPoints))
 #       #Points: academic (0.4),accomplishment (0,3 shared)
 #       #missing points: incident , reivew
@@ -466,7 +466,7 @@ Page/Action Routes
 #   calculate_ranks()
 #   for stu in students:
 #     #print('gathering students and their karma info using student json')
-#     student_info = stu.to_json(get_karma(stu.ID))
+#     student_info = stu.to_json(get_karma(stu.id))
 #     students_json.append(
 #         student_info)  # Append each student's info to the students_json list
 #     #print(students_json)
@@ -489,13 +489,13 @@ Page/Action Routes
 
 #   #Recalculating points for each student and ranks
 #   for student in students:
-#     karma = get_karma(student.ID)
+#     karma = get_karma(student.id)
 #     if karma:
 
-#       calculate_academic_points(student.ID)
-#       calculate_accomplishment_points(student.ID)
-#       calculate_review_points(student.ID)
-#       calculate_incident_points(student.ID)
+#       calculate_academic_points(student.id)
+#       calculate_accomplishment_points(student.id)
+#       calculate_review_points(student.id)
+#       calculate_incident_points(student.id)
 #       print("review points:" + str(karma.reviewsPoints))
 #       #Points: academic (0.4),accomplishment (0,3 shared)
 #       #missing points: incident , reivew
@@ -511,7 +511,7 @@ Page/Action Routes
 #   calculate_ranks()
 #   for stu in students:
 #     print('gathering students and their karma info using student json')
-#     student_info = stu.to_json(get_karma(stu.ID))
+#     student_info = stu.to_json(get_karma(stu.id))
 #     students_json.append(
 #         student_info)  # Append each student's info to the students_json list
 #     print(students_json)
@@ -535,7 +535,7 @@ Page/Action Routes
 # @login_required
 # def view_all_reviews():
 #   student = get_student_by_UniId(current_user.UniId)
-#   user = User.query.filter_by(ID=current_user.ID).first()
+#   user = User.query.filter_by(id=current_user.id).first()
 #   if student:
 #     for review in student.reviews:
 #       review.studentSeen = True
@@ -549,7 +549,7 @@ Page/Action Routes
 # @student_views.route('/view-all-badges', methods=['GET'])
 # @login_required
 # def view_all_badges():
-#   user = User.query.filter_by(ID=current_user.ID).first()
+#   user = User.query.filter_by(id=current_user.id).first()
 #   student = get_student_by_UniId(current_user.UniId)
 
 #   if student:
@@ -571,11 +571,11 @@ Page/Action Routes
 #     reviews = []
 #     for review in student.reviews:
 #       review_data = {
-#           'ID': review.ID,
-#           'studentID': review.studentID,
+#           'id': review.id,
+#           'studentid': review.studentid,
 #           'createdByStaffID': review.createdByStaffID,
 #           'isPositive': review.isPositive,
-#           'dateCreated': review.dateCreated.isoformat(),
+#           'datecreated': review.datecreated.isoformat(),
 #           'points': review.points,
 #           'details': review.details
 #       }
@@ -591,7 +591,7 @@ Page/Action Routes
 # def view_all_incidents():
 #   # Return the students' details in JSON format
 #   student = get_student_by_UniId(current_user.UniId)
-#   user = User.query.filter_by(ID=current_user.ID).first()
+#   user = User.query.filter_by(id=current_user.id).first()
 #   if student:
 #     for incident in student.incidents:
 #       incident.studentSeen = True
@@ -609,7 +609,7 @@ Page/Action Routes
 # def viewRR():
 #   student = get_student_by_UniId(current_user.UniId)
 #   recommendations = get_recommendations_student(current_user.UniId)
-#   user = User.query.filter_by(ID=current_user.ID).first() 
+#   user = User.query.filter_by(id=current_user.id).first()
 #   if recommendations:
 #     for recommendation in recommendations:
 #       recommendation.studentSeen = True
@@ -633,11 +633,11 @@ Page/Action Routes
 #     for incident in student.incidents:
 #       incident_data = {
 #           'id': incident.id,
-#           'studentID': incident.studentID,
+#           'studentid': incident.studentid,
 #           'madeByStaffId': incident.madeByStaffId,
 #           'topic': incident.topic,
 #           'report': incident.report,
-#           'dateCreated': incident.dateCreated.isoformat(),
+#           'datecreated': incident.datecreated.isoformat(),
 #           'pointsDeducted': incident.pointsDeducted,
 #           'status': incident.studentSeen
 #       }
@@ -651,8 +651,8 @@ Page/Action Routes
 # @student_views.route('/view-all-achievements', methods=['GET'])
 # @login_required
 # def view_all_achievements():
-#   student = Student.query.filter_by(ID=current_user.ID).first()
-#   user = User.query.filter_by(ID=current_user.ID).first() 
+#   student = Student.query.filter_by(id=current_user.id).first()
+#   user = User.query.filter_by(id=current_user.id).first()
 #   if student:
 #     for achievement in student.accomplishments:
 #       achievement.studentSeen = True

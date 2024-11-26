@@ -4,8 +4,8 @@ from .recommendation import Recommendation
 
 class SchoolRecommendation(Recommendation):
   # __tablename__ = 'schoolRecommendation'
-  # ID = db.Column(db.Integer,
-  #                db.ForeignKey('recommendation.ID'),
+  # id = db.Column(db.Integer,
+  #                db.ForeignKey('recommendation.id'),
   #                primary_key=True)
   # school = db.Column(db.String(100), nullable=False)
   # program = db.Column(db.String(100), nullable=False)
@@ -13,10 +13,10 @@ class SchoolRecommendation(Recommendation):
 
   # __mapper_args__ = {"polymorphic_identity": "schoolRecommendation"}
 
-  # def __init__(self, currentYearOfStudy, details, student, staffID, approved,
+  # def __init__(self, currentYearOfStudy, details, student, staffid, approved,
   #              status, school, program, schoolEmail):
   #   super().__init__(student=student,
-  #                    staffID=staffID,
+  #                    staffid=staffid,
   #                    approved=approved,
   #                    status=status,
   #                    currentYearOfStudy=currentYearOfStudy,
@@ -27,4 +27,4 @@ class SchoolRecommendation(Recommendation):
   #   self.schoolEmail = schoolEmail
 
   # def __repr__(self):
-  #   return f'<SchoolRecommendation {self.ID} >'
+  #   return f'<SchoolRecommendation {self.id} >'

@@ -19,8 +19,8 @@ def create_incident_report(studentid, staffid, report, topic, points):
     )
     return False
 
-  newIncidentReport = IncidentReport(student.ID,
-                                     staff.ID,
+  newIncidentReport = IncidentReport(student.id,
+                                     staff.id,
                                      topic,
                                      report,
                                      points,

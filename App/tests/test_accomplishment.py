@@ -52,12 +52,12 @@ class AccomplishmentIntegrationTests(unittest.TestCase):
       student = get_student_by_username("billy")
       staff = get_staff_by_username("joe")
 
-      assert create_accomplishment(studentID=student.ID, verified=False, taggedStaffName=(staff.firstname+" "+staff.lastname), details="I won first place in Runtime", points=5, topic="First in Runtime", status="Not yet Checked" ) == True
+      assert create_accomplishment(studentID=student.id, verified=False, taggedStaffName=(staff.firstname + " " + staff.lastname), details="I won first place in Runtime", points=5, topic="First in Runtime", status="Not yet Checked") == True
 
     def test_delete_accomplishment(self):
         self.test_create_accomplishment()
         student = get_student_by_username("billy")
-        accomplishments = get_accomplishments_by_studentID(student.ID)
+        accomplishments = get_accomplishments_by_studentID(student.id)
         to_delete = accomplishments[0]
         db.session.delete(to_delete)
         db.session.commit()

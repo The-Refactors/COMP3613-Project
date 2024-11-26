@@ -2,7 +2,7 @@ from App.database import db
 
 class Transcript(db.Model):
     # __tablename__ = 'transcript'
-    # ID = db.Column(db.Integer, primary_key=True)
+    # id = db.Column(db.Integer, primary_key=True)
     # UniId = db.Column(db.String(10), db.ForeignKey('student.UniId'), nullable=False)
     # # gpa = db.Column(db.String(10), nullable=False)
     # # fullname = db.Column(db.String(255), nullable=False)
@@ -23,7 +23,7 @@ class Transcript(db.Model):
 
     # def to_json(self):
     #     return {
-    #         "ID": self.ID,
+    #         "id": self.id,
     #         "UniId": self.UniId,
     #         # "gpa": self.gpa,
     #         # "fullname": self.fullname,

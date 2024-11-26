@@ -4,7 +4,7 @@ from App.database import db
 from abc import ABC
 
 class User(db.Model, UserMixin):
-    ID = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), nullable=False)
     firstname = db.Column(db.String(120), nullable=False)
     lastname = db.Column(db.String(120), nullable=False)
@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
 
     def get_json(self):
         return{
-            'id': self.ID,
+            'id': self.id,
             'username': self.username,
             'firstname': self.firstname,
             'lastname': self.lastname,
@@ -36,7 +36,7 @@ class User(db.Model, UserMixin):
         }
     
     def get_id(self):
-        return self.ID
+        return self.id
 
     def set_password(self, password):
         """Create hashed password."""

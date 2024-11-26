@@ -23,7 +23,7 @@ def get_user_page():
 def identify_page():
   return jsonify({
       'message':
-      f"username: {current_user.username}, id : {current_user.ID}"
+      f"username: {current_user.username}, id : {current_user.id}"
   })
 
 
@@ -86,5 +86,5 @@ def user_login_api():
 def identify_user_action():
   return jsonify({
       'message':
-      f"username: {jwt_current_user.username}, id : {jwt_current_user.ID}"
+      f"username: {jwt_current_user.username}, id : {jwt_current_user.id}"
   })

@@ -27,7 +27,7 @@ class StaffUnitTests(unittest.TestCase):
     #     staff = Staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST")
     #     staff_json = staff.to_json()
     #     print(staff_json)
-    #     self.assertDictEqual(staff_json, {"staffID": None,
+    #     self.assertDictEqual(staff_json, {"staffid": None,
     #         "username": "joe",
     #         "firstname": "Joe",
     #         "lastname": "Mama",
@@ -83,4 +83,4 @@ class StaffIntegrationTests(unittest.TestCase):
     # def test_staff_edit_review(self):
     #     review = get_review(1)
     #     assert review is not None
-    #     assert staff_edit_review(review.ID, "Billy is very good") == True
+    #     assert staff_edit_review(review.id, "Billy is very good") == True

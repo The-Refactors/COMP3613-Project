@@ -96,7 +96,7 @@ def create_transcript(transcript_data):
 
 
 def calculate_academic_score(studentID):
-  # student = get_student_by_UniId(studentID)
+  # student = get_student_by_UniId(studentid)
   student = get_student_by_id(studentID)
 
   # UniId = '816033730'
@@ -107,7 +107,7 @@ def calculate_academic_score(studentID):
     total_grades_points= get_total__grade_points(UniId)
 
     if total_courses_attempted == 0:
-      print("Error: No courses attempted for student with ID:", UniId)
+      print("Error: No courses attempted for student with id:", UniId)
       return 0
 
     aratio = total_As / total_courses_attempted
@@ -131,7 +131,7 @@ def calculate_academic_score(studentID):
     # print("Academic score:", academic_score * 0.4, ' / 0.4 weight')
     return round(100 * academic_score, 2) # multiplying by 100 to normalize to 100 points
   else:
-    print("Student not found with ID:")
+    print("Student not found with id:")
     # print('Student with UniId:', UniId, 'not found')
     return 0
 
@@ -236,7 +236,7 @@ def delete_transcript(UniId):
 
   else:
     print(
-        "[transcript.delete_transcript] Transcript not found for student with ID: ",
+        "[transcript.delete_transcript] Transcript not found for student with id: ",
         UniId)
     return False
 

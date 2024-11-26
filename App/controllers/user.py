@@ -28,7 +28,7 @@ def get_user(id):
         return None
 
 #def get_user_student(student):
-#  user = User.query.get(student.ID)
+#  user = User.query.get(student.id)
 #  if user:
 #      return user
 #  else:

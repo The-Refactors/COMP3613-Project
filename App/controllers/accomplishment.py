@@ -24,7 +24,7 @@ def create_accomplishment(studentID, verified, taggedStaffName, topic, details,
 
   newAccomplishment = Accomplishment(student=student,
                                      verified=False,
-                                     taggedStaffId=staff.ID,
+                                     taggedStaffId=staff.id,
                                      topic=topic,
                                      details=details,
                                      points=points,

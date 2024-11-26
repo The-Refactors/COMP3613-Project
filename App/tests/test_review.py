@@ -66,29 +66,29 @@ class ReviewIntegrationTests(unittest.TestCase):
     # def test_get_review(self):
     #     self.test_create_review()
     #     review = get_review(1)
-    #     print(review.to_json(student=get_student_by_id(review.studentID), staff=get_staff_by_id(review.createdByStaffID)))
+    #     print(review.to_json(student=get_student_by_id(review.studentid), staff=get_staff_by_id(review.createdByStaffID)))
     #     assert review is not None
 
     # def test_calc_points_upvote(self):
     #     self.test_create_review()
     #     review = get_review(1)
-    #     print(review.to_json(student=get_student_by_id(review.studentID), staff=get_staff_by_id(review.createdByStaffID)))
+    #     print(review.to_json(student=get_student_by_id(review.studentid), staff=get_staff_by_id(review.createdByStaffID)))
     #     assert review is not None
     #     assert calculate_points_upvote(review) == True
 
     # def test_calc_points_downvote(self):
     #     self.test_create_review()
     #     review = get_review(1)
-    #     print(review.to_json(student=get_student_by_id(review.studentID), staff=get_staff_by_id(review.createdByStaffID)))
+    #     print(review.to_json(student=get_student_by_id(review.studentid), staff=get_staff_by_id(review.createdByStaffID)))
     #     assert review is not None
     #     assert calculate_points_downvote(review) == True
 
     # def test_get_total_points(self):
     #     self.test_create_review()
     #     review = get_review(1)
-    #     assert get_total_review_points(review.studentID) != 0
+    #     assert get_total_review_points(review.studentid) != 0
 
     # def test_delete_review(self):
     #     self.test_create_review()
     #     review = get_review(2)
-    #     assert delete_review(review.ID) == True
+    #     assert delete_review(review.id) == True

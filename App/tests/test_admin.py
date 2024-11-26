@@ -59,44 +59,44 @@ class AdminIntegrationTests(unittest.TestCase):
     # def test_admin_update_name(self):
     #     self.test_add_student()
     #     student = get_student_by_username("alice")
-    #     assert admin_update_name(student.ID, "NewFirstName", "NewLastName") == True
+    #     assert admin_update_name(student.id, "NewFirstName", "NewLastName") == True
        
 
     # def test_admin_update_username(self):
     #     self.test_add_student()
     #     staff = get_student_by_username("alice")
-    #     assert admin_update_username(student.ID, "newusername") == True
+    #     assert admin_update_username(student.id, "newusername") == True
         
 
     # def test_admin_update_email(self):
     #     self.test_add_student()
     #     student = get_student_by_username("alice")
-    #     assert admin_update_email(student.ID, "newemail@example.com") == True
+    #     assert admin_update_email(student.id, "newemail@example.com") == True
 
     # def test_admin_update_password(self):
     #     self.test_add_student()
     #     student = get_student_by_username("alice")
-    #     assert admin_update_password(student.ID, "newpassword") == True
+    #     assert admin_update_password(student.id, "newpassword") == True
 
     # def test_admin_update_faculty(self):
     #     self.test_add_student()
     #     student = get_student_by_username("alice")
-    #     assert admin_update_faculty(student.ID, "FSS") == True
+    #     assert admin_update_faculty(student.id, "FSS") == True
 
     # def test_admin_update_student_admittedTerm(self):
     #     self.test_add_student()
     #     student = get_student_by_username("alice")
-    #     assert admin_update_student_admittedTerm(student.ID, "2023/2024") == True
+    #     assert admin_update_student_admittedTerm(student.id, "2023/2024") == True
         
 
     # def test_admin_update_student_yearOfStudy(self):
     #     self.test_add_student()
     #     student = get_student_by_username("alice")
-    #     assert admin_update_student_yearOfStudy(student.ID, 2) == True
+    #     assert admin_update_student_yearOfStudy(student.id, 2) == True
         
 
     # def test_admin_update_student_degree(self):
     #     self.test_add_student()
     #     student = get_student_by_username("alice")
-    #     assert admin_update_student_degree(student.ID, "MSc Computer Science") == True
+    #     assert admin_update_student_degree(student.id, "MSc Computer Science") == True
         

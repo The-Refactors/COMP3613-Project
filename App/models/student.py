@@ -2,9 +2,9 @@ from App.database import db
 
 class Student(db.Model):
   #__tablename__ = 'student'
-  #ID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
-  ID = db.Column(db.Integer, primary_key=True)
-  studentID = db.Column(db.String(10), nullable=False)
+  #id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+  id = db.Column(db.Integer, primary_key=True)
+  studentid = db.Column(db.String(10), nullable=False)
   reviews = db.relationship('Review', backref='studentReviews', lazy='joined')
   karma = db.Column(db.Integer, nullable=True)
 
@@ -29,18 +29,18 @@ class Student(db.Model):
 
   __mapper_args__ = {"polymorphic_identity": "student"}
 
-  def __init__(self, studentID):
+  def __init__(self, studentid):
 
-    self.studentID=studentID
+    self.studentid=studentid
 
   def get_id(self):
-    return self.ID
+    return self.id
 
   def get_json(self):
     return{
-        'ID': self.ID,
-        'studentID': self.studentID,
+        'id': self.id,
+        'studentid': self.studentid,
     }
 
   def __repr__(self):
-    return f'<Student {self.studentID}>'
+    return f'<Student {self.studentid}>'

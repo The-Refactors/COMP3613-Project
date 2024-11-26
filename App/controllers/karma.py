@@ -14,7 +14,7 @@ def get_karma(studentID):
     return None
 
 def get_karma_student(student):
-  karma = Karma.query.filter_by(studentID=student.ID).first()
+  karma = Karma.query.filter_by(studentID=student.id).first()
   if karma:
     return karma
   else:
@@ -98,11 +98,11 @@ def calculate_academic_points(studentID):
 def update_total_points(studentID):
   karma = get_karma(studentID)
   if karma:
-    #print("calculating total points of student: ", studentID)
+    #print("calculating total points of student: ", studentid)
     karma.calculate_total_points()
     db.session.commit()
     return True
-  #print("student not found with id", studentID)
+  #print("student not found with id", studentid)
   return False
 
 

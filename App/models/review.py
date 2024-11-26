@@ -5,11 +5,11 @@ from datetime import datetime
 
 class Review(db.Model):
   __tablename__ = 'review'
-  ID = db.Column(db.Integer, primary_key=True)
-  studentID = db.Column(db.Integer, db.ForeignKey('student.ID'))
-  staffID = db.Column(db.Integer, db.ForeignKey('staff.ID'))
+  id = db.Column(db.Integer, primary_key=True)
+  studentid = db.Column(db.Integer, db.ForeignKey('student.id'))
+  staffid = db.Column(db.Integer, db.ForeignKey('staff.id'))
   #isPositive = db.Column(db.Boolean, nullable=False)
-  dateCreated = db.Column(db.DateTime, default=datetime.utcnow)
+  datecreated = db.Column(db.DateTime, default=datetime.utcnow)
   points = db.Column(db.Integer, nullable=False)
   details = db.Column(db.String(400), nullable=False)
   #student = db.relationship('Student', backref='reviews', lazy='joined')
@@ -17,18 +17,18 @@ class Review(db.Model):
 
   #def __init__(self, staff, student, isPositive, points, details):
   def __init__(self, staff, student, points, details):
-    #self.createdByStaffID = staff.ID
-    self.staffID = staff.ID
+    #self.createdByStaffID = staff.id
+    self.staffid = staff.id
     # self.student= student
-    self.studentID = student.ID
+    self.studentid = student.id
     #self.isPositive = isPositive
     self.points = points
     self.details = details
-    self.dateCreated = datetime.now()
+    self.datecreated = datetime.now()
 
 
   def get_id(self):
-    return self.ID
+    return self.id
 
   # def deleteReview(self, staff):
   #   if self.reviewer == staff:
@@ -39,16 +39,16 @@ class Review(db.Model):
 
   def get_json(self, student, staff):
     return {
-        "reviewID": self.ID,
+        "reviewID": self.id,
         "reviewer": staff.firstname + " " + staff.lastname,
-        "studentID": student.ID,
+        "studentid": student.id,
         #"studentName": student.firstname + " " + student.lastname,
         "created":
-        self.dateCreated.strftime("%d-%m-%Y %H:%M"),  #format the date/time
+        self.datecreated.strftime("%d-%m-%Y %H:%M"),  #format the date/time
         #"isPositive": self.isPositive,
         "points": self.points,
         "details": self.details,
     }
 
     def __repr__(self):
-      return f'<Review - Staff: {self.staffID}, Student: {self.studentID}, Is Positive: {self.isPositive}, Details: {self.details}>'
+      return f'<Review - Staff: {self.staffid}, Student: {self.studentid}, Details: {self.details}>'

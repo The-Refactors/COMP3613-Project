@@ -25,14 +25,14 @@ class StudentUnitTests(unittest.TestCase):
 
     def test_new_student(self):
         student = Student(studentID="816000000")
-        assert student.studentID == "816000000"
+        assert student.studentid == "816000000"
 
     # def test_get_json(self):
     #     student = Student(username="billy", firstname="Billy", lastname="John", email="billy@example.com", password="billypass", faculty="FST", admittedTerm="2022/2023", UniId="816000000", degree="BSc Computer Science", gpa="3.5")
     #     karma = get_karma(student.karmaID)
     #     student_json = student.to_json(karma)
     #     print(student_json)
-    #     self.assertDictEqual(student_json, {"studentID": None,
+    #     self.assertDictEqual(student_json, {"studentid": None,
     #                                         "username": "billy",
     #                                         "firstname": "Billy",
     #                                         "lastname": "John",
