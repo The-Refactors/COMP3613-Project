@@ -36,5 +36,11 @@ class Student(db.Model):
   def get_id(self):
     return self.ID
 
+  def get_json(self):
+    return{
+        'ID': self.ID,
+        'studentID': self.studentID,
+    }
+
   def __repr__(self):
     return f'<Student {self.studentID}>'

@@ -6,7 +6,7 @@ from flask.cli import with_appcontext, AppGroup
 from App.database import db, get_migrate
 from App.main import create_app
 from App.models import User, Admin, Staff, Student, Review
-from App.controllers import (create_student, create_staff, create_admin, create_review)
+from App.controllers import (create_student, create_staff, create_admin, create_review, get_student_by_studentID)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -42,6 +42,62 @@ def initialize():
     if student:
       print(student.ID)
 
+
+
+
+'''
+Student Commands
+'''
+
+student_cli = AppGroup('student', help= 'Student commands')
+
+@student_cli.command("add", help='Add a student')
+@click.argument("student_id")
+def add_student_command(student_id):
+    student = create_student(student_id)
+    if student:
+        print(f'{student.studentID} has been added at id {student.ID}!')
+    else:
+        print(f'Error creating student')
+
+
+@student_cli.command("search", help='Search for a student')
+@click.argument("student_id")
+def search_student_command(student_id):
+    student = get_student_by_studentID(student_id)
+    if student:
+        print(student.get_json())
+    else:
+        print(f'Student does not exist')
+
+@student_cli.command("review", help='Review a student')
+@click.argument("student")
+@click.argument("user")
+@click.argument("text")
+def review_student_command(student, user, text):
+    review = add_review(student, user, text)
+    if review:
+        student = get_student(student)
+        print(f'Review was created for {review.student.firstname} {review.student.lastname} by {review.user.firstname} {review.user.lastname}')
+    else:
+        print(f'Student does not exist')
+
+
+@student_cli.command("viewReviews", help='View student reviews')
+@click.argument("id")
+def view_reviews_command(id):
+    reviews = get_reviews(id)
+    if reviews:
+        student = get_student(id)
+        print(f'Reviews for {student.firstname} {student.lastname}, {student.id}: ')
+        for review in reviews:
+            print(f'From {review.user.firstname} {review.user.lastname}, {review.user.id}: {review.text}')
+    else:
+        print(f'Student does not exist')
+
+
+
+app.cli.add_command(student_cli)
 
 # @app.cli.command("nltk_test", help="Tests nltk")
 # @click.argument("sentence", default="all")
@@ -102,17 +158,16 @@ test = AppGroup('test', help='Testing commands')
 #   #   sys.exit(pytest.main(["-k", "App"]))
 
 
-@test.command("student", help="Run Student tests")
-@click.argument("type", default="all")
-def student_tests_command(type):
-  if type == "unit":
-    sys.exit(pytest.main(["-k", "StudentUnitTests"]))
-  elif type == "int":
-    sys.exit(pytest.main(["-k", "StudentIntegrationTests"]))
-  else:
-    sys.exit(pytest.main(["-k", "App"]))
+#@test.command("student", help="Run Student tests")
+#@click.argument("type", default="all")
+#def student_tests_command(type):
+#  if type == "unit":
+#    sys.exit(pytest.main(["-k", "StudentUnitTests"]))
+#  elif type == "int":
+#    sys.exit(pytest.main(["-k", "StudentIntegrationTests"]))
+#  else:
+#    sys.exit(pytest.main(["-k", "App"]))
 
-app.cli.add_command(test)
 
 
 # @test.command("staff", help="Run Staff tests")
@@ -290,3 +345,4 @@ app.cli.add_command(test)
 #     print("Student not found with ID:", UniId)
 
 
+#app.cli.add_command(test)

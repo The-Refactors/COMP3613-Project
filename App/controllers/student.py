@@ -7,7 +7,7 @@ def create_student(studentID):
   db.session.add(newStudent)
   try:
     db.session.commit()
-    return True
+    return newStudent
     # return newStudent
   except Exception as e:
     print(
@@ -43,13 +43,6 @@ def get_all_students():
   students = Student.query.all()
   return students
 
-
-def get_student_json(id):
-    student = Student.query.get(id)
-    if student: 
-        return student.get_json()
-    else:
-        return None
 
 def get_all_students_json():
   students = Student.query.all()
