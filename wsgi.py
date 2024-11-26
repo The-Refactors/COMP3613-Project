@@ -8,7 +8,8 @@ from App.main import create_app
 from App.models import User, Admin, Staff, Student, Review
 from App.controllers import (
 create_student, create_staff, create_admin, create_review, get_student_by_studentID, get_staff_by_id,
-get_student_reviews, get_student_reviews_json)
+get_student_reviews, get_all_users, get_all_users_json, get_all_admins, get_all_admins_json, 
+get_all_staff, get_all_staff_json)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -45,6 +46,63 @@ def initialize():
       print(student.ID)
 
 
+
+'''
+Admin Commands
+'''
+user_cli = AppGroup('user', help= 'Admin Commands')
+
+@user_cli.command("addAdmin", help="Add an admin")
+@click.argument("username", default="rob")
+@click.argument("password", default="robpass")
+@click.argument("firstname")
+@click.argument("lastname")
+@click.argument("email")
+def create_admin_command(username, firstname, lastname, password, email):
+    admin = create_admin(username, firstname, lastname, password, email)
+    if admin:  
+      print(f'{username} created!')
+
+
+@user_cli.command("addStaff", help="Add a member of staff")
+@click.argument("username", default="rob")
+@click.argument("password", default="robpass")
+@click.argument("firstname")
+@click.argument("lastname")
+@click.argument("email")
+def create_user_command(username, firstname, lastname, password, email):
+    user = create_staff(username, firstname, lastname, password, email)
+    if user:
+      print(f'{username} created!')
+
+
+@user_cli.command("list", help="Lists users in the database")
+@click.argument("format", default="string")
+def list_user_command(format):
+    if format == 'string':
+        print(get_all_users())
+    else:
+        print(get_all_users_json())
+
+
+@user_cli.command("listAdmin", help="Lists admins in the database")
+@click.argument("format", default="string")
+def list_user_command(format):
+    if format == 'string':
+        print(get_all_admin())
+    else:
+        print(get_all_admins_json())
+
+@user_cli.command("listStaff", help="Lists staff members in the database")
+@click.argument("format", default="string")
+def list_user_command(format):
+    if format == 'string':
+        print(get_all_staff())
+    else:
+        print(get_all_staff_json())
+
+
+app.cli.add_command(user_cli)
 
 
 '''

@@ -43,7 +43,7 @@ class Staff(User):
         self.email,
         # "faculty":
         # self.faculty,
-        "reviews": [review.get_json() for review in self.reviews]
+        #"reviews": [review.get_json() for review in self.reviews]
         # "reports": [report.to_json() for report in self.reports],
         # "pendingAccomplishments": [
         #     pendingAccomplishment.to_json()

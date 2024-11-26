@@ -19,6 +19,21 @@ def create_admin(username, firstname, lastname, email, password):
     db.session.rollback()
     return False
     
+def get_all_admins():
+    admins = Admin.query.all()
+    if admins:
+        return admins
+    else:
+        return []
+
+
+def get_all_admins_json():
+    admins = Admin.query.all()
+    if admins:
+        return [admin.get_json() for admin in admins]
+    else:
+        return None
+        
 def add_teacher(username,firstname, lastname, email, password):
     if create_staff(username,firstname, lastname, email, password):
         return True

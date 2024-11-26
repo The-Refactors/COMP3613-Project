@@ -27,12 +27,12 @@ def get_user(id):
     else:
         return None
 
-def get_user_student(student):
-  user = User.query.get(student.ID)
-  if user:
-      return user
-  else:
-      return None
+#def get_user_student(student):
+#  user = User.query.get(student.ID)
+#  if user:
+#      return user
+#  else:
+#      return None
 
 def get_all_users():
     users = User.query.all()

@@ -60,11 +60,22 @@ def staff_edit_review(id, details):
             return False
 
 
-def create_review(staff, student, isPositive, points, details):
-    if create_review(staff, student, isPositive, points, details):
-        return True
+def get_all_staff():
+    staff = Staff.query.all()
+    if staff:
+        return staff
     else:
-        return False
+        return []
 
+def get_all_staff_json():
+    staff = Staff.query.all()
+    if staff:
+        return [member.get_json() for member in staff]
+    else:
+        return None
 
-
+#def create_review(staff, student, isPositive, points, details):
+#    if create_review(staff, student, isPositive, points, details):
+#        return True
+#    else:
+#        return False

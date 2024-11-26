@@ -18,7 +18,7 @@ class Admin(User):
 
 #return admin details on json format
 
-  def to_json(self):
+  def get_json(self):
     return {
         "adminID": self.ID,
         "username": self.username,
