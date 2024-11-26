@@ -12,6 +12,7 @@ class Review(db.Model):
   dateCreated = db.Column(db.DateTime, default=datetime.utcnow)
   points = db.Column(db.Integer, nullable=False)
   details = db.Column(db.String(400), nullable=False)
+  #student = db.relationship('Student', backref='reviews', lazy='joined')
   # studentSeen = db.Column(db.Boolean, nullable=False, default=False)
 
   def __init__(self, staff, student, isPositive, points, details):

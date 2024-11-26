@@ -2,7 +2,7 @@ from App.database import db
 from .student import Student
 
 
-class Karma(db.Model):
+#class Karma(db.Model):
 #   __tablename__ = "karma"
 #   karmaID = db.Column(db.Integer, primary_key=True)
 #   points = db.Column(db.Float, nullable=False, default=0.0)

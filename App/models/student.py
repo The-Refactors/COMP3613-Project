@@ -1,8 +1,9 @@
 from App.database import db
 
-class Student():
-  # __tablename__ = 'student'
-  ID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
+class Student(db.Model):
+  #__tablename__ = 'student'
+  #ID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
+  ID = db.Column(db.Integer, primary_key=True)
   studentID = db.Column(db.String(10), nullable=False)
   reviews = db.relationship('Review', backref='studentReviews', lazy='joined')
   karma = db.Column(db.Integer, nullable=True)
@@ -26,7 +27,7 @@ class Student():
 
   # karmaID = db.Column(db.Integer, db.ForeignKey('karma.karmaID'))
 
-  # __mapper_args__ = {"polymorphic_identity": "student"}
+  __mapper_args__ = {"polymorphic_identity": "student"}
 
   def __init__(self, studentID):
 

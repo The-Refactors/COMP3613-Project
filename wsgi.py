@@ -19,7 +19,7 @@ migrate = get_migrate(app)
 def initialize():
   db.drop_all()
   db.create_all()
-
+  
   create_admin("bobby", "Bob", "Harris", "bobpass", "bob@mail.com")
   create_admin("lyss", "Alyssa", "Smith", "lysspass", "alyssa@mail.com")
 
@@ -28,10 +28,10 @@ def initialize():
   create_staff("cattie", "Catherine", "Singh", "cattiepass", "cattie@mail.com")
 
   create_student(studentID='816011111')
-  create_student(studentID='816022222')
-  create_student(studentID='816033333')
-  create_student(studentID='816044444')
-  create_student(studentID='816055555')
+  #create_student(studentID='816022222')
+  #create_student(studentID='816033333')
+  #create_student(studentID='816044444')
+  #create_student(studentID='816055555')
 
   print("Created Students")
 
