@@ -7,9 +7,9 @@ from App.database import db, get_migrate
 from App.main import create_app
 from App.models import User, Admin, Staff, Student, Review
 from App.controllers import (
-    create_student, create_staff, create_admin, create_review, get_student_by_student_id, get_staff_by_id,
-    get_student_reviews, get_all_users, get_all_users_json, get_all_admins, get_all_admins_json,
-    get_all_staff, get_all_staff_json)
+    create_student, create_staff, create_admin, create_review, get_student_by_id, get_student_by_student_id, get_staff_by_id,
+    get_student_reviews, get_all_students, get_all_users, get_all_users_json, get_all_admins, get_all_admins_json,
+    get_all_staff, get_all_staff_json, get_all_reviews)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -120,6 +120,13 @@ def add_student_command(student_id):
     else:
         print(f'Error creating student')
 
+@student_cli.command("list", help='Lists all students')
+def list_students_command():
+    students = get_all_students()
+
+    for student in students:
+
+      print(f'Student {student.id} - {student.studentid}')
 
 @student_cli.command("search", help='Search for a student')
 @click.argument("student_id")
@@ -153,7 +160,7 @@ def review_student_command(student_id, user_id, points, details):
 
 @student_cli.command("viewReviews", help='View student reviews')
 @click.argument("student_id")
-def view_reviews_command(student_id):
+def view_student_reviews_command(student_id):
     student = get_student_by_student_id(student_id)
     reviews = get_student_reviews(student.id)
     if reviews:
@@ -167,8 +174,26 @@ def view_reviews_command(student_id):
     else:
       print(f'No reviews found')
 
-
 app.cli.add_command(student_cli)
+
+'''
+Review Commands
+'''
+
+review_cli = AppGroup('review', help= 'Review commands')
+
+@review_cli.command("list", help='Lists all reviews')
+def list_reviews_command():
+    reviews = get_all_reviews()
+
+    for review in reviews:
+
+      staff = get_staff_by_id(review.staffid)
+      student = get_student_by_id(review.studentid)
+
+      print(f'Review {review.id} - {student.studentid}, {review.details}, points: {review.points}, created by {staff.firstname} {staff.lastname} at {review.datecreated}')
+
+app.cli.add_command(review_cli)
 
 # @app.cli.command("nltk_test", help="Tests nltk")
 # @click.argument("sentence", default="all")

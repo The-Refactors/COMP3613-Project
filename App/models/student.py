@@ -1,4 +1,4 @@
-from App.database import db
+from App.database import db, Float
 
 class Student(db.Model):
   #__tablename__ = 'student'
@@ -6,7 +6,7 @@ class Student(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   studentid = db.Column(db.String(10), nullable=False)
   reviews = db.relationship('Review', backref='studentReviews', lazy='joined')
-  karma = db.Column(db.Integer, nullable=True)
+  karma = db.Column(db.Float, nullable=True)
 
   # degree = db.Column(db.String(120), nullable=False)
   # fullname = db.Column(db.String(255), nullable=True)

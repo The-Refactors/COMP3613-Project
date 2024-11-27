@@ -30,7 +30,7 @@ class Review(db.Model):
     self.datecreated = datetime.now()
 
   __table_args__ = (
-      CheckConstraint("points IN (1, 2, 3, 4, 5)", name='check_points'),
+      CheckConstraint("points IN (-3, -2, -1, 1, 2, 3)", name='check_points'),
   )
 
   @validates('points')
@@ -39,8 +39,8 @@ class Review(db.Model):
       points = int(points)
     except TypeError:
       raise TypeError("Points must be an integer")
-    if points not in [1, 2, 3]:
-      raise ValueError("Points must be 1, 2, 3, 4 or 5")
+    if points not in [-3, -2, -1, 1, 2, 3]:
+      raise ValueError("Points must be -3, -2, -1, 1, 2 or 3")
     return points
 
 

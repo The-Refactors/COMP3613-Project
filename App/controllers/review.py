@@ -108,6 +108,10 @@ def get_review(id):
     return review
   else:
     return None
+  
+def get_all_reviews():
+  reviews = Review.query.all()
+  return reviews
 
 def get_student_reviews(student_id):
   return Review.query.filter_by(studentid=student_id).all()
