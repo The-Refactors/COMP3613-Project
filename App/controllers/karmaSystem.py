@@ -23,13 +23,21 @@ def calculate_karma(reviews):
     new_karma = 0
 
     for review in reviews:
-        new_karma += review.points()
+        new_karma += review.points
+
+    print(new_karma)
 
     return new_karma
 
 def update_karma(observer_id):
-    observer = KarmaObserver.query.filter_by(observer_id)
+    observer = KarmaObserver.query.filter_by(id=observer_id).first()
+
+    print(observer.karma)
+    print(observer.karma_rank)
+
     observer.set_karma(calculate_karma(observer.reviews))
+
+    print("Updated karma")
 
 def update_karma_rankings(system_id):
     print("Updates karma rankings")

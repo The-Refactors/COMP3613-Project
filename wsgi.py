@@ -157,7 +157,7 @@ def review_student_command(student_id, user_id, points, details):
     if student and staff:
 
       review = create_review(staff, student, points, details)
-      # update_karma(student_id)
+      update_karma(student.id)
 
       if review:
           print(f'Review was created for {student.student_id} by {staff.firstname} {staff.lastname} at {review.date_created}')
@@ -172,11 +172,11 @@ def view_student_reviews_command(student_id):
     reviews = get_student_reviews(student.id)
     if reviews:
       for review in reviews:
-        staff = get_staff_by_id(review.staffid)
+        staff = get_staff_by_id(review.staff_id)
         if staff: 
-          print(f'{review.details}, points: {review.points}, created by {staff.firstname} {staff.lastname} at {review.datecreated}')
+          print(f'{review.details}, points: {review.points}, created by {staff.firstname} {staff.lastname} at {review.date_created}')
         else:
-          print(f'{review.details}, points: {review.points}, created by unknown user {review.datecreated}')
+          print(f'{review.details}, points: {review.points}, created by unknown user {review.date_created}')
 
     else:
       print(f'No reviews found')
@@ -204,10 +204,10 @@ def list_reviews_command():
 
     for review in reviews:
 
-      staff = get_staff_by_id(review.staffid)
-      student = get_student_by_id(review.studentid)
+      staff = get_staff_by_id(review.staff_id)
+      student = get_student_by_id(review.student_id)
 
-      print(f'Review {review.id} - {student.studentid}, {review.details}, points: {review.points}, created by {staff.firstname} {staff.lastname} at {review.datecreated}')
+      print(f'Review {review.id} - {student.student_id}, {review.details}, points: {review.points}, created by {staff.firstname} {staff.lastname} at {review.date_created}')
 
 app.cli.add_command(review_cli)
 

@@ -12,6 +12,7 @@ class KarmaObserver(db.Model):
     }
 
     def set_karma(self, karma):
+        print(f'Setting karma to {karma}')
         self.karma = karma
     
     def get_karma(self):
