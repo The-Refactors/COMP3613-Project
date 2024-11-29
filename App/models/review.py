@@ -1,9 +1,9 @@
+from datetime import datetime
+
 from sqlalchemy import CheckConstraint
 from sqlalchemy.orm import validates
 
 from App.database import db
-from .student import Student
-from datetime import datetime
 
 
 class Review(db.Model):

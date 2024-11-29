@@ -1,5 +1,5 @@
-from App.models import Student
 from App.database import db
+from App.models import Student
 
 
 def create_student(student_id):

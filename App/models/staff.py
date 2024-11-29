@@ -1,6 +1,5 @@
 from App.database import db
 from .user import User
-from .student import Student
 
 
 class Staff(User):

@@ -1,5 +1,6 @@
-from App.models import Review
 from App.database import db
+from App.models import Review
+
 
 #def create_review(staff, student, isPositive, points, details):
 def create_review(staff, student, points, details):

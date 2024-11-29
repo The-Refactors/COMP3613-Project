@@ -1,5 +1,6 @@
-from App.models import KarmaRankingSystem, KarmaObserver
 from App.database import db
+from App.models import KarmaRankingSystem, KarmaObserver
+
 
 def create_karma_system():
     new_karma_system = KarmaRankingSystem()

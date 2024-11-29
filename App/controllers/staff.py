@@ -1,13 +1,9 @@
+from App.database import db
 from App.models import Staff
-from App.database import db 
-
 from .review import (
-    create_review,
     get_review
 )
-from .student import(
-    get_student_by_id,
-)
+
 
 def create_staff(username, firstname, lastname, email, password):
     new_staff = Staff(username,firstname, lastname, email, password)

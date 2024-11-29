@@ -1,5 +1,5 @@
 from App.database import db
-from .karmaRankingSystem import KarmaRankingSystem
+
 
 class KarmaObserver(db.Model):
     id = db.Column(db.Integer, primary_key=True)

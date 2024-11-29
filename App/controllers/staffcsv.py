@@ -1,11 +1,11 @@
 import csv
 import secrets
 import string
+
 from flask import current_app
 from flask_mailman import EmailMultiAlternatives
-from App.models import *
+
 from App.controllers.staff import create_staff
-from App.database import db
 
 
 def generate_random_password(length=12):
