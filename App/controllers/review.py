@@ -114,10 +114,10 @@ def get_all_reviews():
   return reviews
 
 def get_student_reviews(student_id):
-  return Review.query.filter_by(studentid=student_id).all()
+  return Review.query.filter_by(student_id=student_id).all()
 
 def get_student_reviews_json(student_id):
-  reviews = Review.query.filter_by(studentid=student_id).all()
+  reviews = Review.query.filter_by(student_id=student_id).all()
   if reviews:
     reviews_json = [review.get_json() for review in reviews]
     return reviews_json 

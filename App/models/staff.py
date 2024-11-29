@@ -6,7 +6,7 @@ from .student import Student
 class Staff(User):
   __tablename__ = 'staff'
   id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-  reviews = db.relationship('Review', backref='staffReviews', lazy='joined')
+  reviews = db.relationship('Review', backref='staff_reviews', lazy='joined')
   # reports = db.relationship('IncidentReport',
   #                           backref='staffReports',
   #                           lazy='joined')
@@ -31,7 +31,7 @@ class Staff(User):
 
   def get_json(self):
     return {
-        "staffid":
+        "staff_id":
         self.id,
         "username":
         self.username,

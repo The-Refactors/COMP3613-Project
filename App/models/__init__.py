@@ -1,6 +1,8 @@
 from .user import *
 from .admin import *
 from .student import *
+from .karmaObserver import *
+from .karmaRankingSystem import *
 from .staff import *
 from .review import *
 # from .recommendation import *

@@ -27,7 +27,7 @@ def get_student_by_id(id):
 
 
 def get_student_by_student_id(student_id):
-  student = Student.query.filter_by(studentid=student_id).first()
+  student = Student.query.filter_by(student_id=student_id).first()
   if student:
     return student
   else:
@@ -53,7 +53,7 @@ def get_all_students_json():
 
 
 def get_karma(student_id):
-  student = Student.query.filter_by(studentid=student_id).first()
+  student = Student.query.filter_by(student_id=student_id).first()
   if student:
     return student.karma
   return None

@@ -5,11 +5,11 @@ from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, get_migrate
 from App.main import create_app
-from App.models import User, Admin, Staff, Student, Review
+from App.models import User, Admin, Staff, KarmaObserver, Student, Review
 from App.controllers import (
     create_student, create_staff, create_admin, create_review, get_student_by_id, get_student_by_student_id, get_staff_by_id,
     get_student_reviews, get_all_students, get_all_users, get_all_users_json, get_all_admins, get_all_admins_json,
-    get_all_staff, get_all_staff_json, get_all_reviews)
+    get_all_staff, get_all_staff_json, get_all_reviews, create_karma_system, update_karma)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -44,6 +44,8 @@ def initialize():
     
     if student:
       print(student.id)
+
+  create_karma_system()
 
 
 
@@ -126,7 +128,7 @@ def list_students_command():
 
     for student in students:
 
-      print(f'Student {student.id} - {student.studentid}')
+      print(f'Student {student.id} - {student.student_id}')
 
 @student_cli.command("search", help='Search for a student')
 @click.argument("student_id")
@@ -153,9 +155,12 @@ def review_student_command(student_id, user_id, points, details):
     if staff is None:
       print("Invalid user id")
     if student and staff:
+
       review = create_review(staff, student, points, details)
+      # update_karma(student_id)
+
       if review:
-          print(f'Review was created for {student.studentid} by {staff.firstname} {staff.lastname} at {review.datecreated}')
+          print(f'Review was created for {student.student_id} by {staff.firstname} {staff.lastname} at {review.date_created}')
       else:
           print(f'Student does not exist')
 
@@ -175,6 +180,15 @@ def view_student_reviews_command(student_id):
 
     else:
       print(f'No reviews found')
+
+@student_cli.command("details", help='View student details')
+@click.argument("student_id")
+def view_student_details_command(student_id):
+    student = get_student_by_student_id(student_id)
+    
+    print(f'Student ID:\t{student.student_id}')
+    print(f'Karma Score:\t{student.karma}')
+    print(f'Karma Rank:\t{student.karma_rank}')
 
 app.cli.add_command(student_cli)
 

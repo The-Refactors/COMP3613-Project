@@ -3,6 +3,7 @@ from .auth import *
 from .admin import *
 from .staff import *
 from .student import *
+from .karmaSystem import *
 from .review import *
 # from .karma import *
 # from .accomplishment import *
