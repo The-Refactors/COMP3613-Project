@@ -145,7 +145,9 @@ def search_student_command(student_id):
 def review_student_command(student_id, user_id, points, details):
     student = get_student_by_student_id(student_id)
     if student is None:
-      print("Student does not exist")
+      print("Student has never been reviewed before")
+      create_student(student_id)
+      student = get_student_by_student_id(student_id)
 
     staff = get_staff_by_id(user_id)
     if staff is None:

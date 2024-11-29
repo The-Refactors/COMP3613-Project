@@ -1,9 +1,9 @@
 from App.models import Review
 from App.database import db
 
-
 #def create_review(staff, student, isPositive, points, details):
 def create_review(staff, student, points, details):
+
   new_review = Review(staff=staff,
                      student=student,
                      #isPositive=isPositive,

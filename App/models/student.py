@@ -1,12 +1,13 @@
-from App.database import db, Float
+from App.database import db
 
 class Student(db.Model):
   #__tablename__ = 'student'
   #id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
   id = db.Column(db.Integer, primary_key=True)
-  studentid = db.Column(db.String(10), nullable=False)
+  studentid = db.Column(db.String(10), nullable=False, unique=True)
   reviews = db.relationship('Review', backref='studentReviews', lazy='joined')
   karma = db.Column(db.Float, nullable=True)
+  karma_rank = db.Column(db.Integer, nullable=True)
 
   # degree = db.Column(db.String(120), nullable=False)
   # fullname = db.Column(db.String(255), nullable=True)
