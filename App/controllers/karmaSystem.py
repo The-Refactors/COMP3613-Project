@@ -1,7 +1,6 @@
 from App.database import db
 from App.models import KarmaRankingSystem, KarmaObserver, Student
 
-
 def create_karma_system():
     new_karma_system = KarmaRankingSystem()
     db.session.add(new_karma_system)
@@ -44,10 +43,23 @@ def update_karma(observer_id):
 
     observer.set_karma(calculate_karma(observer.reviews))
 
+    print(f'Updated karma for observer {observer.id}')
+    print(f'Karma is now {observer.karma}')
+
     print("Updated karma")
 
-def update_karma_rankings(system_id):
-    print("Updates karma rankings")
+def update_karma_ranking(id):
+    # gets karma ranking system (subject) which notifies students (observers) of their new karma rank
+    system = KarmaRankingSystem.query.filter_by(id=id).first()
+
+    # for observer in observers:
+    #     ranking[0]
+
+    # db.session.commit()
+
+    system.update_ranking()
+
+    print("Updated karma rankings")
     
 
     
