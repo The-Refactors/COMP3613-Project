@@ -11,6 +11,10 @@ class KarmaObserver(db.Model):
         "polymorphic_identity": "karma_observer"
     }
 
+    # Subscribes to observable KarmaRankingSystem subject
+    def observe_system(self, system_id):
+        self.system_id = system_id
+
     def set_karma(self, karma):
         print(f'Setting karma to {karma}')
         self.karma = karma

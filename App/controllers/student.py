@@ -2,9 +2,10 @@ from App.models import Student
 from App.database import db
 
 
-def create_student(student_id):
+def create_student(student_id, system_id):
   new_student = Student(student_id)
   db.session.add(new_student)
+  new_student.observe_system(system_id)
   try:
     db.session.commit()
     return new_student
@@ -50,7 +51,6 @@ def get_all_students_json():
     return []
   students_json = [student.get_json() for student in students]
   return students_json
-
 
 def get_karma(student_id):
   student = Student.query.filter_by(student_id=student_id).first()

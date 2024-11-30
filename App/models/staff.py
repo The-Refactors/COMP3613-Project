@@ -2,7 +2,6 @@ from App.database import db
 from .user import User
 from .student import Student
 
-
 class Staff(User):
   __tablename__ = 'staff'
   id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)

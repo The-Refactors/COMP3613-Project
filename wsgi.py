@@ -9,12 +9,14 @@ from App.models import User, Admin, Staff, KarmaObserver, Student, Review
 from App.controllers import (
     create_student, create_staff, create_admin, create_review, get_student_by_id, get_student_by_student_id, get_staff_by_id,
     get_student_reviews, get_all_students, get_all_users, get_all_users_json, get_all_admins, get_all_admins_json,
-    get_all_staff, get_all_staff_json, get_all_reviews, create_karma_system, update_karma)
+    get_all_staff, get_all_staff_json, get_all_reviews, create_karma_system, update_karma, update_karma_ranking)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
 app = create_app()
 migrate = get_migrate(app)
+
+system_id = 1 # id of karma ranking system that all students observe
 
 
 # This command creates and initializes the database
@@ -30,11 +32,13 @@ def initialize():
   create_staff("mike", "Michael", "Williams", "mikepass", "mike@mail.com")
   create_staff("cattie", "Catherine", "Singh", "cattiepass", "cattie@mail.com")
 
-  create_student(student_id='816011111')
-  create_student(student_id='816022222')
-  create_student(student_id='816033333')
-  create_student(student_id='816044444')
-  create_student(student_id='816055555')
+  create_karma_system()
+
+  create_student(student_id='816011111', system_id=system_id)
+  create_student(student_id='816022222', system_id=system_id)
+  create_student(student_id='816033333', system_id=system_id)
+  create_student(student_id='816044444', system_id=system_id)
+  create_student(student_id='816055555', system_id=system_id)
 
   print("Created Students")
 
@@ -44,8 +48,6 @@ def initialize():
     
     if student:
       print(student.id)
-
-  create_karma_system()
 
 
 
@@ -148,7 +150,7 @@ def review_student_command(student_id, user_id, points, details):
     student = get_student_by_student_id(student_id)
     if student is None:
       print("Student has never been reviewed before")
-      create_student(student_id)
+      create_student(student_id, system_id)
       student = get_student_by_student_id(student_id)
 
     staff = get_staff_by_id(user_id)
@@ -158,6 +160,7 @@ def review_student_command(student_id, user_id, points, details):
 
       review = create_review(staff, student, points, details)
       update_karma(student.id)
+      update_karma_ranking(system_id)
 
       if review:
           print(f'Review was created for {student.student_id} by {staff.firstname} {staff.lastname} at {review.date_created}')
@@ -186,7 +189,9 @@ def view_student_reviews_command(student_id):
 def view_student_details_command(student_id):
     student = get_student_by_student_id(student_id)
     
+    print(f'Database ID:\t{student.id}')
     print(f'Student ID:\t{student.student_id}')
+    print(f'Karma System:\t{student.system_id}')
     print(f'Karma Score:\t{student.karma}')
     print(f'Karma Rank:\t{student.karma_rank}')
 
