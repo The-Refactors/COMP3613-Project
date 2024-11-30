@@ -41,6 +41,8 @@ def get_students_by_ids(student_ids):
 
 def get_all_students():
   students = Student.query.all()
+  if not students:
+    return None
   return students
 
 
@@ -48,8 +50,7 @@ def get_all_students_json():
   students = Student.query.all()
   if not students:
     return []
-  students_json = [student.get_json() for student in students]
-  return students_json
+  return [student.get_json() for student in students]
 
 
 def get_karma(student_id):

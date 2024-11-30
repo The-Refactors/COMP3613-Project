@@ -1,5 +1,5 @@
 from App.database import db
-from App.models import KarmaRankingSystem, KarmaObserver
+from App.models import KarmaRankingSystem, KarmaObserver, Student
 
 
 def create_karma_system():
@@ -17,24 +17,30 @@ def create_karma_system():
 
 
 def add_observer_to_system(observer_id, system_id):
-    observer = KarmaObserver.query.filter_by(observer_id)
+    observer = KarmaObserver.query.filter_by(id=observer_id).first()
     observer.system_id = system_id
 
 def calculate_karma(reviews):
-    new_karma = 0
+    new_karma = 0.5 # Neutral karma
+    if not reviews:
+        return new_karma
+    review_points = [review.points for review in reviews]
 
-    for review in reviews:
-        new_karma += review.points
+    # Wilscon Score
+    z_sqr = 1.96 * 1.96
+    num_rev = len(review_points)
+    p_hat = ((sum(review_points) / (num_rev * 3)) + 1) / 2
+    new_karma = (p_hat + z_sqr/(2 * num_rev)) / (1 + (z_sqr/num_rev))
 
-    print(new_karma)
+    print(f'New Karma: {new_karma}')
 
     return new_karma
 
 def update_karma(observer_id):
-    observer = KarmaObserver.query.filter_by(id=observer_id).first()
+    observer = Student.query.filter_by(id=observer_id).first()
 
-    print(observer.karma)
-    print(observer.karma_rank)
+    print(f'Old Karma: {observer.karma}')
+    print(f'Karma Rank: {observer.karma_rank}')
 
     observer.set_karma(calculate_karma(observer.reviews))
 

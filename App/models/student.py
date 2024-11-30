@@ -9,27 +9,6 @@ class Student(KarmaObserver):
 
   __mapper_args__ = {"polymorphic_identity": "student"}
 
-  # degree = db.Column(db.String(120), nullable=False)
-  # fullname = db.Column(db.String(255), nullable=True)
-  # degree = db.Column(db.String(120), nullable=False)
-  # admittedTerm = db.Column(db.String(120), nullable=False)
-  # #yearOfStudy = db.Column(db.Integer, nullable=False)
-  # gpa = db.Column(db.String(120), nullable=True)
-
-  # accomplishments = db.relationship('Accomplishment',
-  #                                   backref='studentAccomplishments',
-  #                                   lazy='joined')
-  # incidents = db.relationship('IncidentReport',
-  #                             backref='studentincidents',
-  #                             lazy='joined')
-  # grades = db.relationship('Grades', backref='studentGrades', lazy='joined')
-  # transcripts = db.relationship('Transcript', backref='student', lazy='joined')
-  # badges = db.relationship('Badges', backref='studentbadge', lazy='joined')
-
-  # karmaID = db.Column(db.Integer, db.ForeignKey('karma.karmaID'))
-
-  # __mapper_args__ = {"polymorphic_identity": "student"}
-
   def __init__(self, student_id):
 
     self.student_id=student_id
@@ -40,8 +19,8 @@ class Student(KarmaObserver):
   def get_json(self):
     return{
         'id': self.id,
-        'studentid': self.student_id,
+        'studentid': self.student_id
     }
 
   def __repr__(self):
-    return f'<Student {self.student_id}>'
+    return f'<Id: {self.id}, Student: {self.student_id}, Reviews: {self.reviews.count()}, Karma: {self.karma}, KarmaRank: {self.karma_rank}>'

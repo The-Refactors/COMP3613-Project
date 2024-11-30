@@ -1,4 +1,4 @@
-from flask_jwt_extended import create_access_token, JWTManager
+from flask_jwt_extended import create_access_token, JWTManager, jwt_required
 from flask_login import LoginManager
 
 from App.models import User

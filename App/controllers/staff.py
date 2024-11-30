@@ -11,9 +11,7 @@ def create_staff(username, firstname, lastname, email, password):
     
     try:
         db.session.commit()
-        return True
-        # can return if we need
-        # return new_staff
+        return new_staff
     except Exception as e:
         print("[staff.create_staff] Error occurred while creating new staff: ", str(e))
         db.session.rollback()
@@ -47,6 +45,7 @@ def staff_edit_review(id, details):
         return False
     else:
         review.details = details
+        db.session.add(review)
         try:
             db.session.commit()
             return True
@@ -61,14 +60,14 @@ def get_all_staff():
     if staff:
         return staff
     else:
-        return []
+        return None
 
 def get_all_staff_json():
     staff = Staff.query.all()
     if staff:
         return [member.get_json() for member in staff]
     else:
-        return None
+        return []
 
 #def create_review(staff, student, isPositive, points, details):
 #    if create_review(staff, student, isPositive, points, details):

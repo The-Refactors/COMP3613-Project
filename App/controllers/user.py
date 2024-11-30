@@ -40,15 +40,13 @@ def get_all_users():
     if users:
         return users
     else:
-        return []
+        return None
 
 def get_all_users_json():
     users = User.query.all()
-    # users = Student.query.all()
     if not users:
         return []
-    users = [user.get_json() for user in users]
-    return users
+    return [user.get_json() for user in users]
 
 def update_user_username(id, username):
     user = get_user(id)

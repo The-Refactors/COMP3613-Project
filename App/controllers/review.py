@@ -2,17 +2,13 @@ from App.database import db
 from App.models import Review
 
 
-#def create_review(staff, student, isPositive, points, details):
 def create_review(staff, student, points, details):
-
   new_review = Review(staff=staff,
                      student=student,
-                     #isPositive=isPositive,
                      points=points,
-                     details=details,
-                     #studentSeen=False
-                    )
+                     details=details)
   db.session.add(new_review)
+
   try:
     db.session.commit()
     return new_review
@@ -112,7 +108,15 @@ def get_review(id):
   
 def get_all_reviews():
   reviews = Review.query.all()
+  if not reviews:
+      return None
   return reviews
+
+def get_all_reviews_json():
+    reviews = Review.query.all()
+    if not reviews:
+        return []
+    return [review.to_json() for review in reviews]
 
 def get_student_reviews(student_id):
   return Review.query.filter_by(student_id=student_id).all()
@@ -120,7 +124,6 @@ def get_student_reviews(student_id):
 def get_student_reviews_json(student_id):
   reviews = Review.query.filter_by(student_id=student_id).all()
   if reviews:
-    reviews_json = [review.get_json() for review in reviews]
-    return reviews_json 
+    return [review.get_json() for review in reviews]
   return None
   

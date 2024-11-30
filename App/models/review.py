@@ -9,22 +9,15 @@ from App.database import db
 class Review(db.Model):
   __tablename__ = 'review'
   id = db.Column(db.Integer, primary_key=True)
-  student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
-  staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
-  #isPositive = db.Column(db.Boolean, nullable=False)
-  date_created = db.Column(db.DateTime, default=datetime.utcnow)
+  student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+  staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'), nullable=False)
+  date_created = db.Column(db.DateTime, default=datetime.now(), nullable=False)
   points = db.Column(db.Integer, nullable=False)
   details = db.Column(db.String(400), nullable=False)
-  #student = db.relationship('Student', backref='reviews', lazy='joined')
-  # studentSeen = db.Column(db.Boolean, nullable=False, default=False)
 
-  #def __init__(self, staff, student, isPositive, points, details):
   def __init__(self, staff, student, points, details):
-    #self.createdByStaffID = staff.id
     self.staff_id = staff.id
-    # self.student= student
     self.student_id = student.id
-    #self.isPositive = isPositive
     self.points = points
     self.details = details
     self.date_created = datetime.now()
@@ -59,13 +52,10 @@ class Review(db.Model):
         "review_id": self.id,
         "reviewer": staff.firstname + " " + staff.lastname,
         "student_id": student.id,
-        #"studentName": student.firstname + " " + student.lastname,
-        "created":
-        self.date_created.strftime("%d-%m-%Y %H:%M"),  #format the date/time
-        #"isPositive": self.isPositive,
+        "created": self.date_created.strftime("%d-%m-%Y %H:%M"),  #format the date/time
         "points": self.points,
-        "details": self.details,
+        "details": self.details
     }
 
-    def __repr__(self):
-      return f'<Review - Staff: {self.staff_id}, Student: {self.student_id}, Details: {self.details}>'
+  def __repr__(self):
+    return f'<ReviewId: {self.id}, StaffId: {self.staff_id}, StudentId: {self.student_id}, Date: {self.date_created}, Points: {self.points}, Details: {self.details}>'

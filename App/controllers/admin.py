@@ -7,9 +7,7 @@ def create_admin(username, firstname, lastname, email, password):
   db.session.add(new_admin)
   try:
     db.session.commit()
-    return True
-    # can return if we need
-    # return newStaff
+    return new_admin
   except Exception as e:
     print("[admin.create_admin] Error occurred while creating new admin: ", str(e))
     db.session.rollback()
@@ -20,7 +18,7 @@ def get_all_admins():
     if admins:
         return admins
     else:
-        return []
+        return None
 
 
 def get_all_admins_json():
@@ -28,4 +26,4 @@ def get_all_admins_json():
     if admins:
         return [admin.get_json() for admin in admins]
     else:
-        return None
+        return []

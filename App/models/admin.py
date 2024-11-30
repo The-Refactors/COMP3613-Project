@@ -14,18 +14,3 @@ class Admin(User):
                      lastname=lastname,
                      email=email,
                      password=password)
-
-
-#return admin details on json format
-
-  def get_json(self):
-    return {
-        "adminID": self.id,
-        "username": self.username,
-        "firstname": self.firstname,
-        "lastname": self.lastname,
-        "email": self.email
-    }
-
-  def __repr__(self):
-    return f'<Admin {self.id} :{self.email}>'
