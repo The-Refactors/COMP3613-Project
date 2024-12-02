@@ -46,12 +46,12 @@ class IncidentReportIntegrationTests(unittest.TestCase):
         student = get_student_by_username("billy")
         staff = get_staff_by_username("joe")
 
-        assert create_incident_report(student.UniId, staff.ID, "Bad Report", "Badness", points=-3) == True
+        assert create_incident_report(student.UniId, staff.id, "Bad Report", "Badness", points=-3) == True
 
     def test_delete_report(self):
         self.test_create_report()
         staff = get_staff_by_username("joe")
-        reports = get_incident_reports(staff.ID)
+        reports = get_incident_reports(staff.id)
         report = reports[0]
         db.session.delete(report)
         db.session.commit()

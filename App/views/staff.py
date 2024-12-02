@@ -55,7 +55,7 @@ Page/Action Routes
 
 # @staff_views.route('/get_student_name', methods=['POST'])
 # def get_student_name():
-#   student_id = request.json['studentID']
+#   student_id = request.json['studentid']
 
 #   student = get_student_by_UniId(student_id)
 
@@ -82,7 +82,7 @@ Page/Action Routes
 #   staff = get_staff_by_id(staff_id)
 
 #   data = request.form
-#   studentID = data['studentID']
+#   studentid = data['studentid']
 #   studentName = data['name']
 #   points = int(data['points'])
 #   print("Start points:", points)
@@ -90,7 +90,7 @@ Page/Action Routes
 #   personalReview = data['manual-review']
 #   details = data['selected-details']
 #   firstname, lastname = studentName.split(' ')
-#   student = get_student_by_UniId(studentID)
+#   student = get_student_by_UniId(studentid)
 
 #   if personalReview:
 #     details += f"{num}. {personalReview}"
@@ -119,7 +119,7 @@ Page/Action Routes
 #   data = request.form
 #   staff_id = current_user.get_id()
 
-#   student_id = data['studentID']
+#   student_id = data['studentid']
 #   student_name = data['name']
 #   firstname, lastname = student_name.split(' ')
 #   student = get_student_for_ir(firstname, lastname, student_id)
@@ -145,7 +145,7 @@ Page/Action Routes
 # def studentSearch():
 
 #   name = request.args.get('name')
-#   studentID = request.args.get('studentID')
+#   studentid = request.args.get('studentid')
 #   faculty = request.args.get('faculty')
 #   degree = request.args.get('degree')
 
@@ -163,8 +163,8 @@ Page/Action Routes
 #           or_(Student.firstname.ilike(f'%{name}%'),
 #               Student.lastname.ilike(f'%{name}%')))
 
-#   if studentID:
-#     query = query.filter_by(UniId=studentID)
+#   if studentid:
+#     query = query.filter_by(UniId=studentid)
 
 #   if faculty:
 #     query = query.filter_by(faculty=faculty)
@@ -294,7 +294,7 @@ Page/Action Routes
 # def view_all_student_reviews(uniID):
 
 #   student = get_student_by_UniId(uniID)
-#   user = User.query.filter_by(ID=current_user.ID).first()
+#   user = User.query.filter_by(id=current_user.id).first()
 #   return render_template('AllStudentReviews.html', student=student,user=user)
 
 
@@ -304,7 +304,7 @@ Page/Action Routes
 # def view_all_student_incidents(uniID):
 
 #   student = get_student_by_UniId(uniID)
-#   user = User.query.filter_by(ID=current_user.ID).first()
+#   user = User.query.filter_by(id=current_user.id).first()
 #   return render_template('AllStudentIncidents.html', student=student,user=user)
 
 
@@ -313,7 +313,7 @@ Page/Action Routes
 # @login_required
 # def view_all_student_achievements(uniID):
 #   student = Student.query.filter_by(UniId=uniID).first()
-#   user = User.query.filter_by(ID=current_user.ID).first()
+#   user = User.query.filter_by(id=current_user.id).first()
 #   return render_template('AllStudentAchivements.html', student=student,user=user)
 
 
@@ -323,16 +323,16 @@ Page/Action Routes
 #   student = Student.query.filter_by(UniId=uniID).first()
 
 #   if student is None:
-#     student = Student.query.filter_by(ID=uniID).first()
+#     student = Student.query.filter_by(id=uniID).first()
 
-#   user = User.query.filter_by(ID=student.ID).first()
-#   karma = get_karma(student.ID)
+#   user = User.query.filter_by(id=student.id).first()
+#   karma = get_karma(student.id)
 
 #   if karma:
 
-#     calculate_academic_points(student.ID)
-#     calculate_accomplishment_points(student.ID)
-#     calculate_review_points(student.ID)
+#     calculate_academic_points(student.id)
+#     calculate_accomplishment_points(student.id)
+#     calculate_review_points(student.id)
 #     #Points: academic (0.4),accomplishment (0,3 shared)
 #     #missing points: incident , reivew
 #     #calculate the accomplishment - incident for 0.3 shared
@@ -355,8 +355,8 @@ Page/Action Routes
 # @staff_views.route('/allRecommendationRequests', methods=['GET'])
 # @login_required
 # def allRecommendationRequests():
-#   staffID = current_user.get_id()
-#   recommendations = get_recommendations_staff(staffID)
+#   staffid = current_user.get_id()
+#   recommendations = get_recommendations_staff(staffid)
 #   recommendations_type = type(recommendations)
 #   print("recommendations type:", recommendations_type)
 
@@ -385,11 +385,11 @@ Page/Action Routes
 # def acceptRR(rrID):
 #   current_date = datetime.now().strftime("%Y-%m-%d")
 #   recommendation = get_recommendation(rrID)
-#   staffID = current_user.get_id()
-#   staff = get_staff_by_id(staffID)
+#   staffid = current_user.get_id()
+#   staff = get_staff_by_id(staffid)
 #   student = get_student_by_UniId(recommendation.createdByStudentID)
 #   # accomplishments = get_all_verified(student.UniId) 
-#   accomplishments = get_all_verified(student.ID)
+#   accomplishments = get_all_verified(student.id)
 #   message = "You have accepted this recommendation !!"
 #   return render_template('RecommendationLetter.html',
 #                          accomplishments=accomplishments,
@@ -405,8 +405,8 @@ Page/Action Routes
 # def makePDF(rrID):
 #     current_date = datetime.now().strftime("%Y-%m-%d")
 #     recommendation = get_recommendation(rrID)
-#     staffID = current_user.get_id()
-#     staff = get_staff_by_id(staffID)
+#     staffid = current_user.get_id()
+#     staff = get_staff_by_id(staffid)
 #     student = get_student_by_UniId(recommendation.createdByStudentID)
 
 #     base64_signature = request.form['signature']
@@ -441,9 +441,9 @@ Page/Action Routes
 
 #   return render_template('Stafflandingpage.html', message=message)
 
-# @staff_views.route('/view-all-badges-staff/<string:studentID>', methods=['GET'])
+# @staff_views.route('/view-all-badges-staff/<string:studentid>', methods=['GET'])
 # @login_required
-# def view_all_badges(studentID):
-#   student = get_student_by_id(studentID)
-#   user = User.query.filter_by(ID=current_user.ID).first()
+# def view_all_badges(studentid):
+#   student = get_student_by_id(studentid)
+#   user = User.query.filter_by(id=current_user.id).first()
 #   return render_template('AllBadges.html',student=student,user=user)

@@ -1,9 +1,9 @@
+import csv
 import secrets
 import string
-import csv
-from App.models import *
+
 from App.controllers.user import create_user
-from App.database import db
+
 
 def generate_random_password(length=12):
     alphabet = string.ascii_letters + string.digits + string.punctuation

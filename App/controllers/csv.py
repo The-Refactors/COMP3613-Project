@@ -1,12 +1,13 @@
 import csv
 import secrets
 import string
+
 from flask import current_app
 from flask_mailman import EmailMultiAlternatives
-from App.models import *
-from App.controllers.student import create_student, get_student_by_UniId
-from App.controllers.karma import  create_karma, get_karma
-from App.database import db  
+
+from App.controllers.karma import create_karma, get_karma
+from App.controllers.student import create_student
+from App.database import db
 
 
 def generate_random_password(length=12):
@@ -22,7 +23,7 @@ def populate_db_from_csv(csv_file_path):
         firstname = row.get('First name')
         lastname = row.get('Last name')
         username = f"{firstname}.{lastname}" if firstname and lastname else ""
-        UniId = row.get('ID number')
+        UniId = row.get('id number')
         email = row.get('Email address')
 
         if None in [firstname, lastname, username, UniId, email]:
@@ -60,10 +61,10 @@ def populate_db_from_csv(csv_file_path):
         #get student by new uniid
           student = get_student_by_UniId(UniId)
           if student:
-            print(student.ID)
-            create_karma(student.ID)
-            student.karmaID = get_karma(student.ID).karmaID
-            print(get_karma(student.ID).karmaID)
+            print(student.id)
+            create_karma(student.id)
+            student.karmaID = get_karma(student.id).karmaID
+            print(get_karma(student.id).karmaID)
             db.session.commit()
             
           # Send email notification

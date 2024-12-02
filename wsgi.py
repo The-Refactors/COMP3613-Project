@@ -5,16 +5,18 @@ from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, get_migrate
 from App.main import create_app
-from App.models import User, Admin, Staff, Student, Review
+from App.models import User, Admin, Staff, KarmaObserver, Student, Review
 from App.controllers import (
-create_student, create_staff, create_admin, create_review, get_student_by_studentID, get_staff_by_id,
-get_student_reviews, get_all_users, get_all_users_json, get_all_admins, get_all_admins_json, 
-get_all_staff, get_all_staff_json)
+    create_student, create_staff, create_admin, create_review, get_student_by_id, get_student_by_student_id, get_staff_by_id,
+    get_student_reviews, get_all_students, get_all_users, get_all_users_json, get_all_admins, get_all_admins_json,
+    get_all_staff, get_all_staff_json, get_all_reviews, create_karma_system, update_karma, update_karma_ranking)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
 app = create_app()
 migrate = get_migrate(app)
+
+system_id = 1 # id of karma ranking system that all students observe
 
 
 # This command creates and initializes the database
@@ -30,11 +32,13 @@ def initialize():
   create_staff("mike", "Michael", "Williams", "mikepass", "mike@mail.com")
   create_staff("cattie", "Catherine", "Singh", "cattiepass", "cattie@mail.com")
 
-  create_student(studentID='816011111')
-  create_student(studentID='816022222')
-  create_student(studentID='816033333')
-  create_student(studentID='816044444')
-  create_student(studentID='816055555')
+  create_karma_system()
+
+  create_student(student_id='816011111', system_id=system_id)
+  create_student(student_id='816022222', system_id=system_id)
+  create_student(student_id='816033333', system_id=system_id)
+  create_student(student_id='816044444', system_id=system_id)
+  create_student(student_id='816055555', system_id=system_id)
 
   print("Created Students")
 
@@ -43,7 +47,7 @@ def initialize():
   for student in students:
     
     if student:
-      print(student.ID)
+      print(student.id)
 
 
 
@@ -89,7 +93,7 @@ def list_user_command(format):
 @click.argument("format", default="string")
 def list_user_command(format):
     if format == 'string':
-        print(get_all_admin())
+        print(get_all_admins())
     else:
         print(get_all_admins_json())
 
@@ -116,15 +120,22 @@ student_cli = AppGroup('student', help= 'Student commands')
 def add_student_command(student_id):
     student = create_student(student_id)
     if student:
-        print(f'{student.studentID} has been added at id {student.ID}!')
+        print(f'{student.studentid} has been added at id {student.id}!')
     else:
         print(f'Error creating student')
 
+@student_cli.command("list", help='Lists all students')
+def list_students_command():
+    students = get_all_students()
+
+    for student in students:
+
+      print(f'Student {student.id} - {student.student_id}')
 
 @student_cli.command("search", help='Search for a student')
 @click.argument("student_id")
 def search_student_command(student_id):
-    student = get_student_by_studentID(student_id)
+    student = get_student_by_student_id(student_id)
     if student:
         print(student.get_json())
     else:
@@ -136,39 +147,74 @@ def search_student_command(student_id):
 @click.argument("points")
 @click.argument("details")
 def review_student_command(student_id, user_id, points, details):
-    student = get_student_by_studentID(student_id)
+    student = get_student_by_student_id(student_id)
     if student is None:
-      print("Student does not exist")
+      print("Student has never been reviewed before")
+      create_student(student_id, system_id)
+      student = get_student_by_student_id(student_id)
 
     staff = get_staff_by_id(user_id)
     if staff is None:
-      print("Invalid user ID")
+      print("Invalid user id")
     if student and staff:
+
       review = create_review(staff, student, points, details)
+      update_karma(student.id)
+      update_karma_ranking(system_id)
+
       if review:
-          print(f'Review was created for {student.studentID} by {staff.firstname} {staff.lastname} at {review.dateCreated}')
+          print(f'Review was created for {student.student_id} by {staff.firstname} {staff.lastname} at {review.date_created}')
       else:
           print(f'Student does not exist')
 
 
 @student_cli.command("viewReviews", help='View student reviews')
 @click.argument("student_id")
-def view_reviews_command(student_id):
-    student = get_student_by_studentID(student_id)
-    reviews = get_student_reviews(student.ID)
+def view_student_reviews_command(student_id):
+    student = get_student_by_student_id(student_id)
+    reviews = get_student_reviews(student.id)
     if reviews:
       for review in reviews:
-        staff = get_staff_by_id(review.staffID)
+        staff = get_staff_by_id(review.staff_id)
         if staff: 
-          print(f'{review.details}, points: {review.points}, created by {staff.firstname} {staff.lastname} at {review.dateCreated}')
+          print(f'{review.details}, points: {review.points}, created by {staff.firstname} {staff.lastname} at {review.date_created}')
         else:
-          print(f'{review.details}, points: {review.points}, created by unknown user {review.dateCreated}')
+          print(f'{review.details}, points: {review.points}, created by unknown user {review.date_created}')
 
     else:
       print(f'No reviews found')
 
+@student_cli.command("details", help='View student details')
+@click.argument("student_id")
+def view_student_details_command(student_id):
+    student = get_student_by_student_id(student_id)
+    
+    print(f'Database ID:\t{student.id}')
+    print(f'Student ID:\t{student.student_id}')
+    print(f'Karma System:\t{student.system_id}')
+    print(f'Karma Score:\t{student.karma}')
+    print(f'Karma Rank:\t{student.karma_rank}')
 
 app.cli.add_command(student_cli)
+
+'''
+Review Commands
+'''
+
+review_cli = AppGroup('review', help= 'Review commands')
+
+@review_cli.command("list", help='Lists all reviews')
+def list_reviews_command():
+    reviews = get_all_reviews()
+
+    for review in reviews:
+
+      staff = get_staff_by_id(review.staff_id)
+      student = get_student_by_id(review.student_id)
+
+      print(f'Review {review.id} - {student.student_id}, {review.details}, points: {review.points}, created by {staff.firstname} {staff.lastname} at {review.date_created}')
+
+app.cli.add_command(review_cli)
 
 # @app.cli.command("nltk_test", help="Tests nltk")
 # @click.argument("sentence", default="all")
@@ -341,15 +387,15 @@ app.cli.add_command(student_cli)
 # @test.command("print", help="print get_transcript")
 # @click.argument("type", default="all")
 # def print_transcript(type):
-#   studentID = input("Enter student ID: ")  # Prompt user to enter student ID
+#   studentid = input("Enter student id: ")  # Prompt user to enter student id
 #   transcripts = get_transcript(
-#       studentID)  # Get transcript data for the student
+#       studentid)  # Get transcript data for the student
 #   if transcripts:
 #     for transcript in transcripts:
 #       if type == "all":
 #         print(transcript.to_json())  # Print all transcript data as JSON
 #       # elif type == "id":
-#       #     print(transcript.studentID)  # Print student ID
+#       #     print(transcript.studentid)  # Print student id
 #       # elif type == "gpa":
 #       #     print(transcript.gpa)  # Print GPA
 #       # elif type == "fullname":
@@ -360,13 +406,13 @@ app.cli.add_command(student_cli)
 #             "Invalid type. Please choose 'all', 'id', 'gpa', 'fullname', or add more options."
 #         )
 #   else:
-#     print("Transcript not found for student with ID:", studentID)
+#     print("Transcript not found for student with id:", studentid)
 
 
 # @test.command("printstu", help="print get_student")
 # @click.argument("type", default="all")
 # def print_student(type):
-#   UniId = input("Enter student ID: ")
+#   UniId = input("Enter student id: ")
 #   student = get_student_by_UniId(UniId)
 #   if student:
 #     if type == "all":
@@ -382,14 +428,14 @@ app.cli.add_command(student_cli)
 #           "Invalid type. Please choose 'all', 'id', 'gpa', 'fullname', or add more options."
 #       )
 #   else:
-#     print("Student not found with ID:", UniId)
+#     print("Student not found with id:", UniId)
 
 
 # @test.command("printgradepointsandgpa_weight",
 #               help="print student grade points from transcript")
 # @click.argument("type", default="all")
 # def print_grade_points(type):
-#   UniId = input("Enter student ID: ")
+#   UniId = input("Enter student id: ")
 #   points = get_total_As(UniId)
 #   cources_attempted = get_total_courses_attempted(UniId)
 #   if points:
@@ -397,13 +443,13 @@ app.cli.add_command(student_cli)
 #     print('courses attepmtped:, ', cources_attempted)
 
 #   else:
-#     print("Student not found with ID:", UniId)
+#     print("Student not found with id:", UniId)
 
 
 # @test.command("printacademicscore", help="print student academic weight")
 # @click.argument("type", default="all")
 # def print_academic_weight(type):
-#   UniId = input("Enter student ID: ")
+#   UniId = input("Enter student id: ")
 #   points = get_total_As(UniId)
 #   cources_attempted = get_total_courses_attempted(UniId)
 #   academic_score = calculate_academic_score(UniId)
@@ -413,7 +459,7 @@ app.cli.add_command(student_cli)
 #     print('Academic Score:, ', academic_score)
 
 #   else:
-#     print("Student not found with ID:", UniId)
+#     print("Student not found with id:", UniId)
 
 
 #app.cli.add_command(test)

@@ -1,7 +1,8 @@
-from flask_login import login_user, login_manager, logout_user, LoginManager
-from flask_jwt_extended import create_access_token, jwt_required, JWTManager
+from flask_jwt_extended import create_access_token, JWTManager, jwt_required
+from flask_login import LoginManager
 
 from App.models import User
+
 
 def jwt_authenticate(username, password):
   user = User.query.filter_by(username=username).first()
@@ -11,9 +12,17 @@ def jwt_authenticate(username, password):
 
 def login(username, password):
     user = User.query.filter_by(username=username).first()
-    if user and user.check_password(password):
-        return user
+    if user:
+        print(f"Found user: {user}")  # Debug log
+        if user.check_password(password):
+            print(f"Password match for user: {username}")  # Debug log
+            return user
+        else:
+            print(f"Invalid password for user: {username}")  # Debug log
+    else:
+        print(f"User not found: {username}")  # Debug log
     return None
+
 
 def setup_flask_login(app):
     login_manager = LoginManager()
@@ -32,7 +41,7 @@ def setup_jwt(app):
     def user_identity_lookup(identity):
         user = User.query.filter_by(username=identity).one_or_none()
         if user:
-            return user.ID
+            return user.id
         return None
 
     @jwt.user_lookup_loader

@@ -1,46 +1,26 @@
 from App.database import db
+from .karmaObserver import KarmaObserver
 
-class Student(db.Model):
-  #__tablename__ = 'student'
-  #ID = db.Column(db.Integer, db.ForeignKey('user.ID'), primary_key=True)
-  ID = db.Column(db.Integer, primary_key=True)
-  studentID = db.Column(db.String(10), nullable=False)
-  reviews = db.relationship('Review', backref='studentReviews', lazy='joined')
-  karma = db.Column(db.Integer, nullable=True)
-
-  # degree = db.Column(db.String(120), nullable=False)
-  # fullname = db.Column(db.String(255), nullable=True)
-  # degree = db.Column(db.String(120), nullable=False)
-  # admittedTerm = db.Column(db.String(120), nullable=False)
-  # #yearOfStudy = db.Column(db.Integer, nullable=False)
-  # gpa = db.Column(db.String(120), nullable=True)
-
-  # accomplishments = db.relationship('Accomplishment',
-  #                                   backref='studentAccomplishments',
-  #                                   lazy='joined')
-  # incidents = db.relationship('IncidentReport',
-  #                             backref='studentincidents',
-  #                             lazy='joined')
-  # grades = db.relationship('Grades', backref='studentGrades', lazy='joined')
-  # transcripts = db.relationship('Transcript', backref='student', lazy='joined')
-  # badges = db.relationship('Badges', backref='studentbadge', lazy='joined')
-
-  # karmaID = db.Column(db.Integer, db.ForeignKey('karma.karmaID'))
+class Student(KarmaObserver):
+  __tablename__ = 'student'
+  id = db.Column(db.Integer, db.ForeignKey('karma_observer.id'), primary_key=True)
+  student_id = db.Column(db.String(10), nullable=False, unique=True)
+  reviews = db.relationship('Review', backref='student_reviews', lazy='joined')
 
   __mapper_args__ = {"polymorphic_identity": "student"}
 
-  def __init__(self, studentID):
+  def __init__(self, student_id):
 
-    self.studentID=studentID
+    self.student_id=student_id
 
   def get_id(self):
-    return self.ID
+    return self.id
 
   def get_json(self):
     return{
-        'ID': self.ID,
-        'studentID': self.studentID,
+        'id': self.id,
+        'studentid': self.student_id
     }
 
   def __repr__(self):
-    return f'<Student {self.studentID}>'
+    return f'<Id: {self.id}, Student: {self.student_id}, Reviews: {self.reviews.count()}, Karma: {self.karma}, KarmaRank: {self.karma_rank}>'

@@ -31,7 +31,7 @@ class KarmaUnitTests(unittest.TestCase):
             "reviewPoints": 0.0,
             "incidentPoints": 0.0,
             "rank": -99,
-            "studentID": 1
+            "studentid": 1
         })
 '''
     Integration Tests
@@ -54,7 +54,7 @@ class KarmaIntegrationTests(unittest.TestCase):
     def test_get_karma(self):
         self.test_create_karma()
         karma = get_karma(1)
-        assert karma.studentID == 1
+        assert karma.studentid == 1
 
     def test_calculate_karma(self):
         karma = calculate_review_points(1)

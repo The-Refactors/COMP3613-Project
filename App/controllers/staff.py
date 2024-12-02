@@ -1,23 +1,17 @@
-from App.models import Staff, Review, Student
-from App.database import db 
-
+from App.database import db
+from App.models import Staff
 from .review import (
-    create_review,
     get_review
 )
-from .student import(
-    get_student_by_id,
-)
+
 
 def create_staff(username, firstname, lastname, email, password):
-    newStaff = Staff(username,firstname, lastname, email, password)
-    db.session.add(newStaff)
+    new_staff = Staff(username,firstname, lastname, email, password)
+    db.session.add(new_staff)
     
     try:
         db.session.commit()
-        return True
-        # can return if we need
-        # return newStaff
+        return new_staff
     except Exception as e:
         print("[staff.create_staff] Error occurred while creating new staff: ", str(e))
         db.session.rollback()
@@ -25,7 +19,7 @@ def create_staff(username, firstname, lastname, email, password):
     
 
 def get_staff_by_id(id):
-    staff = Staff.query.filter_by(ID=id).first()
+    staff = Staff.query.filter_by(id=id).first()
     if staff:
         return staff
     else:
@@ -51,6 +45,7 @@ def staff_edit_review(id, details):
         return False
     else:
         review.details = details
+        db.session.add(review)
         try:
             db.session.commit()
             return True
@@ -65,14 +60,14 @@ def get_all_staff():
     if staff:
         return staff
     else:
-        return []
+        return None
 
 def get_all_staff_json():
     staff = Staff.query.all()
     if staff:
         return [member.get_json() for member in staff]
     else:
-        return None
+        return []
 
 #def create_review(staff, student, isPositive, points, details):
 #    if create_review(staff, student, isPositive, points, details):

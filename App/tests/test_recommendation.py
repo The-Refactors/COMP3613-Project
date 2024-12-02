@@ -53,9 +53,9 @@ class RecommendationUnitTests(unittest.TestCase):
                details="yeh", studentSeen=False)
         rec_json = recommendation.get_json()
         self.assertDictEqual(rec_json,{
-            'studentID': "816031160",
+            'studentid': "816031160",
             "name": "Billy John",
-            'staffID': 1,
+            'staffid': 1,
             'approved': False,
             "date requested": recommendation.dateRequested.strftime("%d-%m-%Y %H:%M"),
             "status": "pending",

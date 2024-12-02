@@ -155,9 +155,9 @@ def init():
   # students = Student.query.all()
 
   # for student in students:
-  #   create_karma(student.ID)
+  #   create_karma(student.id)
   #   student.karmaID = Karma.query.filter_by(
-  #       studentID=student.ID).first().karmaID
+  #       studentid=student.id).first().karmaID
 
   return jsonify(message='db initialized!')
 

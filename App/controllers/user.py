@@ -1,5 +1,6 @@
-from App.models import User, Student
 from App.database import db
+from App.models import User
+
 
 def create_user(username, firstname, lastname, password, email):
     newuser = User(username=username, firstname=firstname ,lastname=lastname, password=password, email=email)
@@ -28,7 +29,7 @@ def get_user(id):
         return None
 
 #def get_user_student(student):
-#  user = User.query.get(student.ID)
+#  user = User.query.get(student.id)
 #  if user:
 #      return user
 #  else:
@@ -39,15 +40,13 @@ def get_all_users():
     if users:
         return users
     else:
-        return []
+        return None
 
 def get_all_users_json():
     users = User.query.all()
-    # users = Student.query.all()
     if not users:
         return []
-    users = [user.get_json() for user in users]
-    return users
+    return [user.get_json() for user in users]
 
 def update_user_username(id, username):
     user = get_user(id)
@@ -63,10 +62,10 @@ def update_user_username(id, username):
             return False
     return False
 
-def update_username(userID, newUsername):
-    user = get_user(userID)
+def update_username(user_id, new_username):
+    user = get_user(user_id)
     if user:
-        user.username = newUsername
+        user.username = new_username
         try:
             db.session.commit()
             return True
@@ -75,14 +74,14 @@ def update_username(userID, newUsername):
             db.session.rollback()
             return False
     else:
-        print("[user.update_username] Error occurred while updating user username: User "+userID+" not found")
+        print("[user.update_username] Error occurred while updating user username: User " + user_id + " not found")
         return False
 
-def update_name(userID, newFirstname, newLastName):
-    user = get_user(userID)
+def update_name(user_id, new_firstname, new_last_name):
+    user = get_user(user_id)
     if user:
-        user.firstname = newFirstname
-        user.lastname = newLastName
+        user.firstname = new_firstname
+        user.lastname = new_last_name
         try:
             db.session.commit()
             return True
@@ -91,13 +90,13 @@ def update_name(userID, newFirstname, newLastName):
             db.session.rollback()
             return False
     else:
-        print("[user.update_name] Error occurred while updating user name: User "+userID+" not found")
+        print("[user.update_name] Error occurred while updating user name: User " + user_id + " not found")
         return False
 
-def update_email(userID, newEmail):
-    user = get_user(userID)
+def update_email(user_id, new_email):
+    user = get_user(user_id)
     if user:
-        user.email = newEmail
+        user.email = new_email
         try:
             db.session.commit()
             return True
@@ -106,13 +105,13 @@ def update_email(userID, newEmail):
             db.session.rollback()
             return False
     else:
-        print("[user.update_email] Error occurred while updating user email: User "+userID+" not found")
+        print("[user.update_email] Error occurred while updating user email: User " + user_id + " not found")
         return False
 
-def update_password(userID, newPassword):
-    user = get_user(userID)
+def update_password(user_id, new_password):
+    user = get_user(user_id)
     if user:
-        user.set_password(newPassword)
+        user.set_password(new_password)
         try:
             db.session.commit()
             return True
@@ -121,13 +120,13 @@ def update_password(userID, newPassword):
             db.session.rollback()
             return False
     else:
-        print("[user.update_password] Error occurred while updating user password: User "+userID+" not found")
+        print("[user.update_password] Error occurred while updating user password: User " + user_id + " not found")
         return False
 
-def update_faculty(userID, newFaculty):
-    user = get_user(userID)
+def update_faculty(user_id, new_faculty):
+    user = get_user(user_id)
     if user:
-        user.faculty = newFaculty
+        user.faculty = new_faculty
         try:
             db.session.commit()
             return True
@@ -136,5 +135,5 @@ def update_faculty(userID, newFaculty):
             db.session.rollback()
             return False
     else:
-        print("[user.update_faculty] Error occurred while updating student faculty: User "+userID+" not found")
+        print("[user.update_faculty] Error occurred while updating student faculty: User " + user_id + " not found")
         return False

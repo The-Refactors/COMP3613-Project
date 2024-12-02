@@ -1,34 +1,44 @@
-from App.database import db
-from .student import Student
 from datetime import datetime
+
+from sqlalchemy import CheckConstraint
+from sqlalchemy.orm import validates
+
+from App.database import db
 
 
 class Review(db.Model):
   __tablename__ = 'review'
-  ID = db.Column(db.Integer, primary_key=True)
-  studentID = db.Column(db.Integer, db.ForeignKey('student.ID'))
-  staffID = db.Column(db.Integer, db.ForeignKey('staff.ID'))
-  #isPositive = db.Column(db.Boolean, nullable=False)
-  dateCreated = db.Column(db.DateTime, default=datetime.utcnow)
+  id = db.Column(db.Integer, primary_key=True)
+  student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+  staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'), nullable=False)
+  date_created = db.Column(db.DateTime, default=datetime.now(), nullable=False)
   points = db.Column(db.Integer, nullable=False)
   details = db.Column(db.String(400), nullable=False)
-  #student = db.relationship('Student', backref='reviews', lazy='joined')
-  # studentSeen = db.Column(db.Boolean, nullable=False, default=False)
 
-  #def __init__(self, staff, student, isPositive, points, details):
   def __init__(self, staff, student, points, details):
-    #self.createdByStaffID = staff.ID
-    self.staffID = staff.ID
-    # self.student= student
-    self.studentID = student.ID
-    #self.isPositive = isPositive
+    self.staff_id = staff.id
+    self.student_id = student.id
     self.points = points
     self.details = details
-    self.dateCreated = datetime.now()
+    self.date_created = datetime.now()
+
+  __table_args__ = (
+      CheckConstraint("points IN (-3, -2, -1, 1, 2, 3)", name='check_points'),
+  )
+
+  @validates('points')
+  def validate_points(self, key, points):
+    try:
+      points = int(points)
+    except TypeError:
+      raise TypeError("Points must be an integer")
+    if points not in [-3, -2, -1, 1, 2, 3]:
+      raise ValueError("Points must be -3, -2, -1, 1, 2 or 3")
+    return points
 
 
   def get_id(self):
-    return self.ID
+    return self.id
 
   # def deleteReview(self, staff):
   #   if self.reviewer == staff:
@@ -39,16 +49,13 @@ class Review(db.Model):
 
   def get_json(self, student, staff):
     return {
-        "reviewID": self.ID,
+        "review_id": self.id,
         "reviewer": staff.firstname + " " + staff.lastname,
-        "studentID": student.ID,
-        #"studentName": student.firstname + " " + student.lastname,
-        "created":
-        self.dateCreated.strftime("%d-%m-%Y %H:%M"),  #format the date/time
-        #"isPositive": self.isPositive,
+        "student_id": student.id,
+        "created": self.date_created.strftime("%d-%m-%Y %H:%M"),  #format the date/time
         "points": self.points,
-        "details": self.details,
+        "details": self.details
     }
 
-    def __repr__(self):
-      return f'<Review - Staff: {self.staffID}, Student: {self.studentID}, Is Positive: {self.isPositive}, Details: {self.details}>'
+  def __repr__(self):
+    return f'<ReviewId: {self.id}, StaffId: {self.staff_id}, StudentId: {self.student_id}, Date: {self.date_created}, Points: {self.points}, Details: {self.details}>'
