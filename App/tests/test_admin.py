@@ -4,15 +4,12 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from App.main import create_app
 from App.database import db, create_db
 from App.models import Admin
-#from App.controllers import (
-    #add_staff,
-    #add_student,
-    #admin_update_name,
-    #admin_update_username,
-    #admin_update_email,
-    #admin_update_password,
-    #get_student_by_username
-#)
+from App.controllers import (
+    create_admin,
+    get_all_admins,
+    get_all_admins_json,
+    login
+)
 '''
    Unit Tests
 '''
@@ -24,14 +21,15 @@ class AdminUnitTests(unittest.TestCase):
     
     def test_to_json(self):
         newAdmin = Admin(username="phil",firstname="Phil", lastname="Smith", email="phil@example.com", password="philpass")
-        newAdmin_json = newAdmin.to_json()
+        newAdmin_json = newAdmin.get_json()
         self.assertDictEqual(newAdmin_json,{
-            "adminID": None,
+            "id": None,
             "username": "phil",
             "firstname": "Phil",
             "lastname": "Smith",
             "email": "phil@example.com"
         })
+
 
 '''
     Integration Tests
@@ -48,55 +46,27 @@ def empty_db():
 
 class AdminIntegrationTests(unittest.TestCase):
 
-    def test_add_teacher(self):
-        assert add_staff(username="john", firstname="John", lastname="Doe", email="john@example.com", password="johnpassword") == True
-        
 
-    def test_add_student(self):
-        assert add_student(studentID) == True
-       
+    
+    def test_authenticate(self):
+        user = create_admin("bob", "Bob", "Smith", "bob@example.com", "bobpass")
+        assert login("bob", "bobpass") != None
 
-    # def test_admin_update_name(self):
-    #     self.test_add_student()
-    #     student = get_student_by_username("alice")
-    #     assert admin_update_name(student.id, "NewFirstName", "NewLastName") == True
-       
+    def test_create_admin(self):
+        user = create_admin("rick", "Rick", "Grimes", "rick@example.com" , "rickpass")
+        assert user.username == "rick"
 
-    # def test_admin_update_username(self):
-    #     self.test_add_student()
-    #     staff = get_student_by_username("alice")
-    #     assert admin_update_username(student.id, "newusername") == True
-        
-
-    # def test_admin_update_email(self):
-    #     self.test_add_student()
-    #     student = get_student_by_username("alice")
-    #     assert admin_update_email(student.id, "newemail@example.com") == True
-
-    # def test_admin_update_password(self):
-    #     self.test_add_student()
-    #     student = get_student_by_username("alice")
-    #     assert admin_update_password(student.id, "newpassword") == True
-
-    # def test_admin_update_faculty(self):
-    #     self.test_add_student()
-    #     student = get_student_by_username("alice")
-    #     assert admin_update_faculty(student.id, "FSS") == True
-
-    # def test_admin_update_student_admittedTerm(self):
-    #     self.test_add_student()
-    #     student = get_student_by_username("alice")
-    #     assert admin_update_student_admittedTerm(student.id, "2023/2024") == True
-        
-
-    # def test_admin_update_student_yearOfStudy(self):
-    #     self.test_add_student()
-    #     student = get_student_by_username("alice")
-    #     assert admin_update_student_yearOfStudy(student.id, 2) == True
-        
-
-    # def test_admin_update_student_degree(self):
-    #     self.test_add_student()
-    #     student = get_student_by_username("alice")
-    #     assert admin_update_student_degree(student.id, "MSc Computer Science") == True
-        
+    def test_get_all_admins_json(self):
+        admins_json = get_all_admins_json()
+        self.assertListEqual([{"id":1, 
+            "username":"bob", 
+            "firstname":"Bob", 
+            "lastname":"Smith", 
+            "email":"bob@example.com"},
+            {
+            "id":2, 
+            "username":"rick", 
+            "firstname":"Rick", 
+            "lastname":"Grimes", 
+            "email":"rick@example.com", 
+            }], admins_json)

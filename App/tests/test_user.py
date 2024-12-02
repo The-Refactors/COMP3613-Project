@@ -61,13 +61,14 @@ def empty_db():
 
 class UserIntegrationTests(unittest.TestCase):
 
-    def test_authenticate(self):
-        user = create_user("bob", "Bob", "Smith", "bobpass", "bob@example.com")
-        assert login("bob", "bobpass") != None
 
     def test_create_user(self):
         user = create_user("rick", "Rick", "Grimes", "rickpass", "rick@example.com")
         assert user.username == "rick"
+        
+    def test_authenticate(self):
+        user = create_user("bob", "Bob", "Smith", "bobpass", "bob@example.com")
+        assert login("bob", "bobpass") != None
 
 
     def test_get_all_users_json(self):
@@ -84,30 +85,3 @@ class UserIntegrationTests(unittest.TestCase):
             "lastname":"Grimes", 
             "email":"rick@example.com", 
             }], users_json)
-
-    # # Tests data changes in the database
-    # def test_update_user(self):
-    #     update_username(1, "ronnie")
-    #     user = get_user(1)
-    #     assert user.username == "ronnie"
-
-    # def test_update_name(self):
-    #     update_name(1, "Bobby", "Jones")
-    #     user = get_user(1)
-    #     assert user.firstname == "Bobby"
-    #     assert user.lastname == "Jones"
-
-    # def test_update_email(self):
-    #     update_email(1, "newemail@example.com")
-    #     user = get_user(1)
-    #     assert user.email == "newemail@example.com"
-
-    # def test_update_password(self):
-    #     update_password(1, "newpass")
-    #     user = get_user(1)
-    #     assert user.check_password("newpass")
-
-    # def test_update_faculty(self):
-    #     update_faculty(1, "New Faculty")
-    #     user = get_user(1)
-    #     assert user.faculty == "New Faculty"
