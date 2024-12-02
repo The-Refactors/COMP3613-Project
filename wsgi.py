@@ -272,7 +272,7 @@ def user_tests_command(type):
   elif type == "int":
     sys.exit(pytest.main(["-k", "UserIntegrationTests"]))
   else:
-    sys.exit(pytest.main(["-k", "App"]))
+    sys.exit(pytest.main(["-k", "test_user.py"]))
 
 
 #@test.command("student", help="Run Student tests")

@@ -18,7 +18,7 @@ from App.controllers import (
 )
 
 
-#LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 '''
    Unit Tests
@@ -29,7 +29,6 @@ class UserUnitTests(unittest.TestCase):
          user = User(username="bob", firstname="Bob", lastname="Smith", password="bobpass", email="bob@example.com")
          assert user.username == "bob"
 
-    # # pure function no side effects or integrations called
     def test_get_json(self):
          user = User(username="bob", firstname="Bob", lastname="Smith", password="bobpass", email="bob@example.com")
          user_json = user.get_json()
@@ -60,33 +59,31 @@ def empty_db():
     db.drop_all()
 
 
-def test_authenticate():
-    user = create_user("bob", "Bob", "Smith", "bobpass", "bob@example.com", "FST")
-    assert login("bob", "bobpass") != None
+class UserIntegrationTests(unittest.TestCase):
 
-#class UsersIntegrationTests(unittest.TestCase):
+    def test_authenticate(self):
+        user = create_user("bob", "Bob", "Smith", "bobpass", "bob@example.com")
+        assert login("bob", "bobpass") != None
 
-    # def test_get_all_users_json(self):
-    #     users_json = get_all_users_json()
-    #     self.assertListEqual([{"id":1, 
-    #         "username":"bob", 
-    #         "firstname":"Bob", 
-    #         "lastname":"Smith", 
-    #         "email":"bob@example.com", 
-    #         "faculty":"FST"},
-    #         {
-    #         "id":2, 
-    #         "username":"rick", 
-    #         "firstname":"Rick", 
-    #         "lastname":"Grimes", 
-    #         "email":"rick@example.com", 
-    #         "faculty":"FST"
-    #         }], users_json)
+    def test_create_user(self):
+        user = create_user("rick", "Rick", "Grimes", "rickpass", "rick@example.com")
+        assert user.username == "rick"
 
-    # def test_create_user(self):
-    #     user = create_user("rick", "Rick", "Grimes", "rickpass", "rick@example.com", "FST")
-    #     assert user.username == "rick"
 
+    def test_get_all_users_json(self):
+        users_json = get_all_users_json()
+        self.assertListEqual([{"id":1, 
+            "username":"bob", 
+            "firstname":"Bob", 
+            "lastname":"Smith", 
+            "email":"bob@example.com"},
+            {
+            "id":2, 
+            "username":"rick", 
+            "firstname":"Rick", 
+            "lastname":"Grimes", 
+            "email":"rick@example.com", 
+            }], users_json)
 
     # # Tests data changes in the database
     # def test_update_user(self):
