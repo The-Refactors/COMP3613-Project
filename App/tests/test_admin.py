@@ -4,15 +4,15 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from App.main import create_app
 from App.database import db, create_db
 from App.models import Admin
-from App.controllers import (
-    add_staff,
-    add_student,
-    admin_update_name,
-    admin_update_username,
-    admin_update_email,
-    admin_update_password,
-    get_student_by_username
-)
+#from App.controllers import (
+    #add_staff,
+    #add_student,
+    #admin_update_name,
+    #admin_update_username,
+    #admin_update_email,
+    #admin_update_password,
+    #get_student_by_username
+#)
 '''
    Unit Tests
 '''

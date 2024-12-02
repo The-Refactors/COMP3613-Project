@@ -3,13 +3,13 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from App.main import create_app
 from App.database import db, create_db
-from App.models import Karma
-from App.controllers import (
-    get_karma,
-    create_karma,
-    calculate_review_points,
-    update_review_points
-)
+#from App.models import Karma
+#from App.controllers import (
+#    get_karma,
+#    create_karma,
+#    calculate_review_points,
+#    update_review_points
+#)
 
 '''
    Unit Tests

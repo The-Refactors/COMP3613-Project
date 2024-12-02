@@ -18,33 +18,33 @@ from App.controllers import (
 )
 
 
-LOGGER = logging.getLogger(__name__)
+#LOGGER = logging.getLogger(__name__)
 
 '''
    Unit Tests
 '''
 class UserUnitTests(unittest.TestCase):
 
-    # def test_new_user(self):
-    #     user = User(username="bob", firstname="Bob", lastname="Smith", password="bobpass", email="bob@example.com")
-    #     assert user.username == "bob"
+    def test_new_user(self):
+         user = User(username="bob", firstname="Bob", lastname="Smith", password="bobpass", email="bob@example.com")
+         assert user.username == "bob"
 
     # # pure function no side effects or integrations called
-    # def test_get_json(self):
-    #     user = User(username="bob", firstname="Bob", lastname="Smith", password="bobpass", email="bob@example.com")
-    #     user_json = user.get_json()
-    #     self.assertDictEqual(user_json, {"id":None, "username":"bob", "firstname":"Bob", "lastname":"Smith", "email":"bob@example.com"})
+    def test_get_json(self):
+         user = User(username="bob", firstname="Bob", lastname="Smith", password="bobpass", email="bob@example.com")
+         user_json = user.get_json()
+         self.assertDictEqual(user_json, {"id":None, "username":"bob", "firstname":"Bob", "lastname":"Smith", "email":"bob@example.com"})
 
-    # def test_hashed_password(self):
-    #     password = "mypass"
-    #     hashed = generate_password_hash(password, method='sha256')
-    #     user = User(username="bob", firstname="Bob", lastname="Smith", password=password, email="bob@example.com")
-    #     assert user.password != password
+    def test_hashed_password(self):
+         password = "mypass"
+         hashed = generate_password_hash(password, method='sha256')
+         user = User(username="bob", firstname="Bob", lastname="Smith", password=password, email="bob@example.com")
+         assert user.password != password
 
-    # def test_check_password(self):
-    #     password = "mypass"
-    #     user = User(username="bob", firstname="Bob", lastname="Smith", password=password, email="bob@example.com")
-    #     assert user.check_password(password)
+    def test_check_password(self):
+         password = "mypass"
+         user = User(username="bob", firstname="Bob", lastname="Smith", password=password, email="bob@example.com")
+         assert user.check_password(password)
 
 '''
     Integration Tests
@@ -64,7 +64,7 @@ def test_authenticate():
     user = create_user("bob", "Bob", "Smith", "bobpass", "bob@example.com", "FST")
     assert login("bob", "bobpass") != None
 
-class UsersIntegrationTests(unittest.TestCase):
+#class UsersIntegrationTests(unittest.TestCase):
 
     # def test_get_all_users_json(self):
     #     users_json = get_all_users_json()

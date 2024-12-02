@@ -8,16 +8,13 @@ from App.controllers import (
     create_staff,
     get_staff_by_id,
     get_staff_by_username,
-    staff_create_review,
-    staff_edit_review,
     create_student,
-    get_student_by_username,
     get_review
 )
 '''
    Unit Tests
 '''
-class StaffUnitTests(unittest.TestCase):
+#class StaffUnitTests(unittest.TestCase):
 
     # def test_new_staff(self):
     #     staff = Staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST")
@@ -51,7 +48,7 @@ def empty_db():
     yield app.test_client()
     db.drop_all()
 
-class StaffIntegrationTests(unittest.TestCase):
+#class StaffIntegrationTests(unittest.TestCase):
 
     # def test_create_staff(self):
     #     assert create_staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST") == True

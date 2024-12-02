@@ -12,7 +12,7 @@ from App.controllers import (
 '''
    Unit Tests
 '''
-class ReviewUnitTests(unittest.TestCase):
+#class ReviewUnitTests(unittest.TestCase):
 
     # def test_new_review(self):
     #     assert create_staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST") == True
@@ -44,7 +44,7 @@ def empty_db():
     yield app.test_client()
     db.drop_all()
 
-class ReviewIntegrationTests(unittest.TestCase):
+#class ReviewIntegrationTests(unittest.TestCase):
 
     # def test_create_review(self):
     #     assert create_staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST") == True
