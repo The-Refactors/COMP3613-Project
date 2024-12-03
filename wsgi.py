@@ -118,9 +118,9 @@ student_cli = AppGroup('student', help= 'Student commands')
 @student_cli.command("add", help='Add a student')
 @click.argument("student_id")
 def add_student_command(student_id):
-    student = create_student(student_id)
+    student = create_student(student_id, system_id)
     if student:
-        print(f'{student.studentid} has been added at id {student.id}!')
+        print(f'{student.student_id} has been added at id {student.id}!')
     else:
         print(f'Error creating student')
 
@@ -297,26 +297,26 @@ def user_tests_command(type):
 
 
 
-# @test.command("staff", help="Run Staff tests")
-# @click.argument("type", default="all")
-# def staff_tests_command(type):
-#   if type == "unit":
-#     sys.exit(pytest.main(["-k", "StaffUnitTests"]))
-#   elif type == "int":
-#     sys.exit(pytest.main(["-k", "StaffIntegrationTests"]))
-#   # else:
-#   #   sys.exit(pytest.main(["-k", "App"]))
+@test.command("staff", help="Run Staff tests")
+@click.argument("type", default="all")
+def staff_tests_command(type):
+  if type == "unit":
+    sys.exit(pytest.main(["-k", "StaffUnitTests"]))
+  elif type == "int":
+    sys.exit(pytest.main(["-k", "StaffIntegrationTests"]))
+  else:
+    sys.exit(pytest.main(["-k", "test_staff.py"]))
 
 
-# @test.command("review", help="Run Review tests")
-# @click.argument("type", default="all")
-# def review_tests_command(type):
-#   if type == "unit":
-#     sys.exit(pytest.main(["-k", "ReviewUnitTests"]))
-#   elif type == "int":
-#     sys.exit(pytest.main(["-k", "ReviewIntegrationTests"]))
-#   # else:
-#   #   sys.exit(pytest.main(["-k", "App"]))
+@test.command("review", help="Run Review tests")
+@click.argument("type", default="all")
+def review_tests_command(type):
+  if type == "unit":
+    sys.exit(pytest.main(["-k", "ReviewUnitTests"]))
+  elif type == "int":
+    sys.exit(pytest.main(["-k", "ReviewIntegrationTests"]))
+  else:
+    sys.exit(pytest.main(["-k", "test_review.py"]))
 
 
 # @test.command("recommendation", help="Run Recommendation tests")

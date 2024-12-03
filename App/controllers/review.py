@@ -1,7 +1,6 @@
 from App.database import db
 from App.models import Review
 
-
 def create_review(staff, student, points, details):
   new_review = Review(staff=staff,
                      student=student,
@@ -116,14 +115,14 @@ def get_all_reviews_json():
     reviews = Review.query.all()
     if not reviews:
         return []
-    return [review.to_json() for review in reviews]
+    return [review.get_json(review.student, review.staff) for review in reviews]
 
 def get_student_reviews(student_id):
   return Review.query.filter_by(student_id=student_id).all()
 
-def get_student_reviews_json(student_id):
-  reviews = Review.query.filter_by(student_id=student_id).all()
-  if reviews:
-    return [review.get_json() for review in reviews]
-  return None
+#def get_student_reviews_json(student_id):
+#  reviews = Review.query.filter_by(student_id=student_id).all()
+#  if reviews:
+#    return [review.get_json(review.student, review.staff_id) for review in reviews]
+#  return None
   

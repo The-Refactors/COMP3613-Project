@@ -47,14 +47,14 @@ def empty_db():
 class AdminIntegrationTests(unittest.TestCase):
 
 
-    
-    def test_authenticate(self):
-        user = create_admin("bob", "Bob", "Smith", "bob@example.com", "bobpass")
-        assert login("bob", "bobpass") != None
 
     def test_create_admin(self):
         user = create_admin("rick", "Rick", "Grimes", "rick@example.com" , "rickpass")
         assert user.username == "rick"
+
+    def test_authenticate(self):
+        user = create_admin("bob", "Bob", "Smith", "bob@example.com", "bobpass")
+        assert login("bob", "bobpass") != None
 
     def test_get_all_admins_json(self):
         admins_json = get_all_admins_json()

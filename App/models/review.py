@@ -15,12 +15,13 @@ class Review(db.Model):
   points = db.Column(db.Integer, nullable=False)
   details = db.Column(db.String(400), nullable=False)
 
-  def __init__(self, staff, student, points, details):
+  def __init__(self, staff, student, points, details, date_created=datetime.now()):
     self.staff_id = staff.id
     self.student_id = student.id
     self.points = points
     self.details = details
-    self.date_created = datetime.now()
+    #self.date_created = datetime.now()
+    self.date_created = date_created
 
   __table_args__ = (
       CheckConstraint("points IN (-3, -2, -1, 1, 2, 3)", name='check_points'),
