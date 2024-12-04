@@ -1,6 +1,6 @@
 from App.database import db
 from App.models import Review
-from.karmaSystem import update_karma
+from.karmaSystem import update_karma, update_karma_ranking
 
 def create_review(staff, student, points, details):
   new_review = Review(staff=staff,
@@ -11,6 +11,8 @@ def create_review(staff, student, points, details):
 
   try:
     db.session.commit()
+    update_karma(student.id)
+    update_karma_ranking(1)
     return new_review
   except Exception as e:
     print("[review.create_review] Error occurred while creating new review: ",

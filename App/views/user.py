@@ -30,7 +30,7 @@ def home_page():
     reviews = Review.query.order_by(Review.id.desc()).all()
     my_reviews = Review.query.order_by(Review.id.desc()).filter_by(staff_id=current_user.id)
 
-    return render_template(f'{current_user.user_type}_home.html', current_user=current_user, users=users, students=students, staff=staff, reviews=reviews, my_reviews=my_reviews)
+    return render_template(f'{current_user.user_type}_home.html', current_user=current_user, users=users, rankings=rankings, students=students, staff=staff, reviews=reviews, my_reviews=my_reviews)
 
 @user_views.route('/write', methods=['GET'])
 def write_review_page():
