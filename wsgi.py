@@ -78,8 +78,8 @@ def create_user_command(type, username, firstname, lastname, password, email):
         print(f'New {type} created with username: {username}, name: {firstname} {lastname}, email: {email}')
 
 @user_cli.command("list", help="Lists users in the database")
-@click.argument("type", type=click.Choice(["all", "staff", "admin"]), default="all")
 @click.argument("format", default="string")
+@click.argument("type", type=click.Choice(["all", "staff", "admin"]), default="all")
 def list_user_command(type, format):
     if type == "all":
         if format == 'string':
@@ -98,8 +98,8 @@ def list_user_command(type, format):
             print(get_all_admins_json())
 
 @user_cli.command("update", help="Updates given attribute of the user")
-@click.argument("field", type=click.Choice(["username", "password", "firstname", "lastname", "email"]))
 @click.argument("userid", type=int)
+@click.argument("field", type=click.Choice(["username", "password", "firstname", "lastname", "email"]))
 @click.argument("data")
 def update_user_command(field, userid, data):
     check = False
@@ -227,18 +227,22 @@ Review Commands
 
 review_cli = AppGroup('review', help= 'Review commands')
 
-@review_cli.command("add", help='Creates a review for a student with specified student id')
+@review_cli.command("add", help='Creates a review for a student by a staff')
 @click.argument("student_id", type=int)
-@click.argument("user_id", type=int)
+@click.argument("staff_id", type=int)
 @click.argument("points", type=int)
 @click.argument("details")
-def create_review_command(student_id, user_id, points, details):
+def create_review_command(student_id, staff_id, points, details):
+    if not points in [-3, -2, -1, 1, 2, 3]:
+        print("Invalid points entered. Exiting...")
+        return
+
     student = get_student_by_student_id(student_id)
     if student is None:
       print("Student has never been reviewed before")
       student = create_student(student_id, system_id)
 
-    staff = get_staff_by_id(user_id)
+    staff = get_staff_by_id(staff_id)
     if staff is None:
       print("Invalid user id")
 
@@ -262,8 +266,8 @@ def list_reviews_command(format):
         print(get_all_reviews_json())
 
 @review_cli.command("update", help='Updates given attribute of the review')
-@click.argument("field", type=click.Choice(["staff", "student", "points", "details"]))
 @click.argument("reviewid", type=int)
+@click.argument("field", type=click.Choice(["staff", "student", "points", "details"]))
 @click.argument("data")
 def update_review_command(field, reviewid, data):
     check = False
@@ -320,13 +324,11 @@ Test Commands
 test = AppGroup('test', help='Testing commands')
 
 @test.command("final", help="Runs ALL tests")
-@click.argument("type", default="all")
-def final_tests_command(type):
-  if type == "all":
-    sys.exit(pytest.main(["App/tests"]))
+def final_tests_command():
+  sys.exit(pytest.main(["App/tests"]))
 
 @test.command("user", help="Run User tests")
-@click.argument("type", default="all")
+@click.argument("type", type=click.Choice(["all", "unit", "int"]), default="all")
 def user_tests_command(type):
   if type == "unit":
     sys.exit(pytest.main(["-k", "UserUnitTests"]))
@@ -336,7 +338,7 @@ def user_tests_command(type):
     sys.exit(pytest.main(["-k", "test_user.py"]))
 
 @test.command("admin", help="Run Admin tests")
-@click.argument("type", default="all")
+@click.argument("type", type=click.Choice(["all", "unit", "int"]), default="all")
 def user_tests_command(type):
   if type == "unit":
     sys.exit(pytest.main(["-k", "AdminUnitTests"]))
@@ -347,7 +349,7 @@ def user_tests_command(type):
 
 
 @test.command("student", help="Run Student tests")
-@click.argument("type", default="all")
+@click.argument("type", type=click.Choice(["all", "unit", "int"]), default="all")
 def student_tests_command(type):
  if type == "unit":
    sys.exit(pytest.main(["-k", "StudentUnitTests"]))
@@ -359,7 +361,7 @@ def student_tests_command(type):
 
 
 @test.command("staff", help="Run Staff tests")
-@click.argument("type", default="all")
+@click.argument("type", type=click.Choice(["all", "unit", "int"]), default="all")
 def staff_tests_command(type):
   if type == "unit":
     sys.exit(pytest.main(["-k", "StaffUnitTests"]))
@@ -370,7 +372,7 @@ def staff_tests_command(type):
 
 
 @test.command("review", help="Run Review tests")
-@click.argument("type", default="all")
+@click.argument("type", type=click.Choice(["all", "unit", "int"]), default="all")
 def review_tests_command(type):
   if type == "unit":
     sys.exit(pytest.main(["-k", "ReviewUnitTests"]))
