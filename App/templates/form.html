@@ -1,0 +1,54 @@
+{% extends "layout2.html" %}
+{% block title %}{% endblock %}
+{% block page %}{% endblock %}
+
+{{ super() }}
+
+{% block body %}
+
+    <div class = "page-header">
+        <div>
+        {% block page_header %}{% endblock %}
+        </div>
+    </div>
+
+    <div class = "page-content">
+
+        <div class = "page-segment" style="width:90%;">
+            
+            <div class="pane">
+
+                <div class ="pane-content">
+
+                <div class = "pane-header" style="align-items: center;">
+
+                    <div class = "pane-header-text"> 
+
+                        <div>{% block pane_header %}{% endblock %}</div>
+
+                    </div>
+
+                    </div>
+
+                    <form id= "form" name ="form" class ="form" method="POST" action="{% block form_action %}{% endblock %}">
+                        {% block form_content %}{% endblock %}
+                    </form>
+
+                    <div class = "pane-controls">
+                        <button class="button-compound key hover" type="submit" form="form">
+                            
+                            <div class="button-compound-text">
+                                POST
+                            </div>
+                        
+                        </button>       
+                    </div>
+                    
+                </div>
+            
+            </div>
+            
+        </div>
+
+    </div>
+{% endblock %}

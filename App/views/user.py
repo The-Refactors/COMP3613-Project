@@ -12,7 +12,11 @@ from App.controllers import (
     jwt_authenticate, 
     get_all_users,
     get_all_users_json,
-    jwt_required
+    jwt_required,
+    get_staff_by_id,
+    get_student_by_student_id,
+    create_student,
+    create_review
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
@@ -20,12 +24,46 @@ user_views = Blueprint('user_views', __name__, template_folder='../templates')
 @user_views.route('/home', methods=['GET'])
 def home_page():
     users = User.query.all()
-    students = Student.query.order_by(Student.karma.desc()).all()
+    students = Student.query.all()
+    rankings = Student.query.order_by(Student.karma.desc()).all()
     staff = Staff.query.all()
     reviews = Review.query.order_by(Review.id.desc()).all()
     my_reviews = Review.query.order_by(Review.id.desc()).filter_by(staff_id=current_user.id)
 
     return render_template(f'{current_user.user_type}_home.html', current_user=current_user, users=users, students=students, staff=staff, reviews=reviews, my_reviews=my_reviews)
+
+@user_views.route('/write', methods=['GET'])
+def write_review_page():
+    reviews = Review.query.all()
+    students = Student.query.all()
+    staff = Staff.query.all()
+    users = User.query.all()
+    return render_template('write_review.html', current_user=current_user, reviews=reviews, students=students, staff=staff, users=users)
+
+@user_views.route('/write/post', methods=['POST'])
+def write_review_action():
+    data = request.form
+    print(current_user.id)
+    print(data['student_id'])
+    print(data['points'])
+    print(data['details'])
+
+    staff = get_staff_by_id(current_user.id)
+    student = get_student_by_student_id(data['student_id'])
+
+    if student == None:
+        student = create_student(data['student_id'], 1)
+
+    review = create_review(current_user, student, data['points'], data['details'])
+    message = "Review could not be created. Invalid data"
+
+    if review:
+        print("Review successfully created")
+        return redirect("/home")
+
+    return render_template('login.html', message=message)
+
+
 
 @user_views.route('/users', methods=['GET'])
 def get_user_page():

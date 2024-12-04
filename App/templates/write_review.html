@@ -1,0 +1,99 @@
+{% extends "form.html" %}
+
+{{ super() }}
+
+{% block page_header %}WRITE REVIEW{% endblock %}
+
+{% block pane_header %}Write review on a student{% endblock %}
+
+{% block form_action %}/write/post{% endblock %}
+
+{% block form_content %}
+<!-- Review Info Fields -->
+<table class="form-table" style="width:98%;">
+
+    <tr>
+      <td>
+        <div class ="card-text-header">
+          REVIEW
+        </div>
+      </td>
+    </tr>
+    
+    <!--- Stundent ID Field --->
+    <tr class ="form-field">
+      <td>
+        <span class = "form-field-asterisk">*</span>
+        <label for="student_id-field" class ="form-field-item">
+          Student ID:
+        </label>
+      </td>
+      <td>
+        <input
+          type = "number"
+          id = "student_id-field"
+          name = "student_id"
+          value = ""
+          class = "form-field-item"
+          placeholder = "816000000" 
+          required
+        />
+      </td>
+    </tr>
+
+    <!--- Points Field --->
+    <tr class ="form-field">
+
+        <td>
+          <span class = "form-field-asterisk">*</span>
+          <label for="points-field" class ="form-field-item">
+            Rating:
+          </label>
+        </td>
+        <td>
+  
+          <select id="points-field" name="points" class="form-field-item" required>
+            <option value="" disabled selected>[select points]</option>
+            <option value="3" class="select">+3 : Extremely Positive</option>
+            <option value="2" class="select">+2 : Very Positive</option>
+            <option value="1" class="select">+1 : Positive</option>
+            <option value="-1" class="select">-1 : Negative</option>
+            <option value="-2" class="select">-2 : Very Negative</option>
+            <option value="-3" class="select">-3 : Extremely Negative</option>
+  
+          </select>
+  
+        </td>
+    </tr>
+
+    <tr>
+      <td>
+        <span class = "form-field-asterisk">*</span>
+        <div class ="card-text form-field-item">
+           Details
+        </div>
+      </td>
+    </tr>
+
+    <!--- Details Field --->
+    <tr class ="form-field">
+      <td>
+
+        <textarea
+          id = "details-field"
+          name = "details"
+          class = "form-field-item"
+          value = ""
+          placeholder = "Write review details here"
+          rows = "5"
+          cols = "100"
+          required
+        ></textarea>
+
+      </td>
+    </tr>
+
+  </table>
+
+
+{% endblock %}
