@@ -1,4 +1,6 @@
 from App.database import db
+from .karmaObserver import KarmaObserver
+
 
 class KarmaRankingSystem(db.Model):
 
@@ -11,25 +13,24 @@ class KarmaRankingSystem(db.Model):
     }
 
     def notify_of_rank(self, observer_id, rank):
-        from .karmaObserver import KarmaObserver
 
         observer = KarmaObserver.query.filter_by(id=observer_id).first()
         observer.set_karma_rank(rank)
 
     # notifys all karma observers of their new rank
     def update_ranking(self):
-        from .karmaObserver import KarmaObserver
 
         # query of all karma observers in descending order by their karma value
         sorted_query = KarmaObserver.query.order_by(KarmaObserver.karma.desc()).all()
 
-        rank = 1
+        rank = 0
+        last_karma = 0
 
         # loop for assigning new karma ranks to all observers
         for observer in sorted_query:
+            if not (observer.karma == last_karma):
+                rank += 1
             self.notify_of_rank(observer.id, rank)
-            print(f'#{rank} - {observer.id}: {observer.karma}')
-            rank += 1
+            last_karma = observer.karma
 
         db.session.commit()
-        

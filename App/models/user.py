@@ -22,8 +22,8 @@ class User(db.Model, UserMixin):
         self.username= username
         self.firstname = firstname
         self.lastname = lastname
-        self.email = email
         self.set_password(password)
+        self.email = email
 
     def get_json(self):
         return{
@@ -31,7 +31,8 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'firstname': self.firstname,
             'lastname': self.lastname,
-            'email': self.email
+            'email': self.email,
+            'user_type': self.user_type
         }
     
     def get_id(self):
@@ -46,4 +47,4 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def __repr__(self):
-        return f'<Id: {self.id}, Username: {self.username}, Firstname: {self.firstname}, Lastname: {self.lastname}, Email: {self.email}>'
+        return f'<Id: {self.id}, Username: {self.username}, Name: {self.firstname} {self.lastname}, Email: {self.email}, Type: {self.user_type}>'

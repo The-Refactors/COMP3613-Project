@@ -28,13 +28,6 @@ def get_user(id):
     else:
         return None
 
-#def get_user_student(student):
-#  user = User.query.get(student.id)
-#  if user:
-#      return user
-#  else:
-#      return None
-
 def get_all_users():
     users = User.query.all()
     if users:
@@ -47,20 +40,6 @@ def get_all_users_json():
     if not users:
         return []
     return [user.get_json() for user in users]
-
-def update_user_username(id, username):
-    user = get_user(id)
-    if user:
-        user.username = username
-        db.session.add(user)
-        try:
-            db.session.commit()
-            return True
-        except Exception as e:
-            print("[user.update_user_username] Error occurred while creating new user: ", str(e))
-            db.session.rollback()
-            return False
-    return False
 
 def update_username(user_id, new_username):
     user = get_user(user_id)
@@ -123,17 +102,17 @@ def update_password(user_id, new_password):
         print("[user.update_password] Error occurred while updating user password: User " + user_id + " not found")
         return False
 
-def update_faculty(user_id, new_faculty):
+def delete_user(user_id):
     user = get_user(user_id)
     if user:
-        user.faculty = new_faculty
+        db.session.delete(user)
         try:
             db.session.commit()
             return True
         except Exception as e:
-            print("[user.update_faculty] Error occurred while updating user faculty:", str(e))
+            print("[user.delete_user] Error occurred while deleting user:", str(e))
             db.session.rollback()
             return False
     else:
-        print("[user.update_faculty] Error occurred while updating student faculty: User " + user_id + " not found")
+        print("[user.delete_user] Error occurred while deleting user: User " + user_id + " not found")
         return False

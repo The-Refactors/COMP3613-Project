@@ -9,7 +9,6 @@ def create_student(student_id, system_id):
   try:
     db.session.commit()
     return new_student
-    # return newStudent
   except Exception as e:
     print(
         "[student.create_student] Error occurred while creating new student: ",
@@ -34,11 +33,21 @@ def get_student_by_student_id(student_id):
   else:
     return None
 
+def get_student_by_student_id_json(student_id):
+  student = Student.query.filter_by(student_id=student_id).first().get_json()
+  if student:
+    return student
+  else:
+    return None
+
 
 def get_students_by_ids(student_ids):
   students = Student.query.filter(Student.id.in_(student_ids)).all()
   return students
 
+def get_karma_ordered_students_by_system_id(system_id):
+  students = Student.query.filter_by(system_id=system_id).order_by(Student.karma.desc()).all()
+  return students
 
 def get_all_students():
   students = Student.query.all()
@@ -64,7 +73,20 @@ def get_karma_by_id(id):
   if student:
     return student.karma
   return None
-  
+
+def delete_student(student_id):
+  student = Student.query.filter_by(student_id=student_id).first()
+  if student:
+    db.session.delete(student)
+    try:
+      db.session.commit()
+      return True
+    except Exception as e:
+      print("[student.delete_student] Error occurred while deleting student: ", str(e))
+      db.session.rollback()
+      return False
+  else:
+    return False
 
 # def create_student_from_transcript(transcript_data, student_data):
 #   try:

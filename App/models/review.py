@@ -9,8 +9,8 @@ from App.database import db
 class Review(db.Model):
   __tablename__ = 'review'
   id = db.Column(db.Integer, primary_key=True)
-  student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
   staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'), nullable=False)
+  student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
   date_created = db.Column(db.DateTime, default=datetime.now(), nullable=False)
   points = db.Column(db.Integer, nullable=False)
   details = db.Column(db.String(400), nullable=False)
@@ -47,12 +47,12 @@ class Review(db.Model):
   #     return True
   #   return None
 
-  def get_json(self, student, staff):
+  def get_json(self):
     return {
-        "review_id": self.id,
-        "reviewer": staff.firstname + " " + staff.lastname,
-        "student_id": student.id,
-        "created": self.date_created.strftime("%d-%m-%Y %H:%M"),  #format the date/time
+        "id": self.id,
+        "staff_id": self.staff_id,
+        "student_id": self.student_id,
+        "date_created": self.date_created.strftime("%d-%m-%Y %H:%M"),  #format the date/time
         "points": self.points,
         "details": self.details
     }
