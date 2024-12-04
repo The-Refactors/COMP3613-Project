@@ -4,7 +4,7 @@ from .user import User
 class Staff(User):
   __tablename__ = 'staff'
   id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-  reviews = db.relationship('Review', backref='staff_reviews', lazy='joined')
+  reviews = db.relationship('Review', backref='staff', lazy='joined', cascade='all, delete-orphan')
 
   __mapper_args__ = {"polymorphic_identity": "staff"}
 

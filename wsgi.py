@@ -11,7 +11,8 @@ from App.controllers import (
     get_all_staff, get_all_staff_json, get_all_reviews, create_karma_system, update_karma, update_karma_ranking,
     get_all_students_json, print_karma_ranking, update_username, update_password, get_user, update_name, update_email,
     delete_user, get_all_reviews_json, get_review, update_review_staff, update_review_student, update_review_points,
-    update_review_details, delete_review, get_student_reviews_json, get_student_by_student_id_json, delete_student, get_karma_ranking_json)
+    update_review_details, delete_review, get_student_reviews_json, get_student_by_student_id_json, delete_student,
+    get_karma_ranking_json, delete_staff)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -132,11 +133,16 @@ def delete_user_command(userid):
     if not user:
         print("User not found. Exiting...")
         return
-
-    if not delete_user(user.id):
-        print(f'User {user.id} failed to remove')
+    elif not user.user_type == 'staff':
+        if not delete_user(user.id):
+            print(f'User {user.id} failed to remove')
+        else:
+            print(f'User {user.id} removed successfully')
     else:
-        print(f'User {user.id} removed successfully')
+        if not delete_staff(user.id):
+            print(f'User {user.id} failed to remove')
+        else:
+            print(f'User {user.id} removed successfully')
 
 app.cli.add_command(user_cli)
 

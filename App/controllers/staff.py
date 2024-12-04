@@ -1,7 +1,7 @@
 from App.database import db
 from App.models import Staff
 from .review import (
-    get_review
+    get_review, get_staff_reviews, delete_review
 )
 
 
@@ -68,3 +68,21 @@ def get_all_staff_json():
         return [member.get_json() for member in staff]
     else:
         return []
+
+def delete_staff(id):
+    staff = get_staff_by_id(id)
+    reviews = get_staff_reviews(id)
+    for review in reviews:
+        delete_review(review.id)
+    if staff:
+        db.session.delete(staff)
+        try:
+            db.session.commit()
+            return True
+        except Exception as e:
+            print("[staff.delete_staff] Error occurred while deleting staff:", str(e))
+            db.session.rollback()
+            return False
+    else:
+        print("[staff.delete_staff] Error occurred while deleting staff: Staff " + id + " not found")
+        return False
