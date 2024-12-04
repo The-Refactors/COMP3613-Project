@@ -6,7 +6,7 @@ def create_student(student_id, system_id):
     existing_student = get_student_by_student_id(student_id)
     if existing_student:
         print("[student.create_student] Student already exists.")
-        return False
+        return existing_student
 
     new_student = Student(student_id=student_id)
     db.session.add(new_student)
