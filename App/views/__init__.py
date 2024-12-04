@@ -6,6 +6,7 @@ from .auth import auth_views
 # from .csv import csv_views
 from .student import student_views
 from .staff import staff_views
+from .login_views import login_views    
 # from .transcript import transcript_views
 
 
