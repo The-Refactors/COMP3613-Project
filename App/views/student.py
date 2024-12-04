@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from flask_login import login_required, login_user, current_user, logout_user
 from App.database import db
 from .index import index_views
-from App.models import Staff, Student, User
+from App.models import Staff, Student, User, Review
 from App.controllers import (
     create_user, login, get_student_by_student_id,create_student,get_student_by_id, get_all_students, get_staff_by_name,get_all_students_json)
 
@@ -13,20 +13,31 @@ student_views = Blueprint('student_views',
 '''
 Page/Action Routes
 '''
-@student_views.route('/student/all', methods=['GET'])
+
+@student_views.route('/student/all/', methods=['GET'])
 @login_required
 def browse_students():
-    students = get_all_students_json()
-    if students:
-        return jsonify(students), 200
-    return jsonify({'error': 'No students found'}), 404
+    students = Student.query.all()
+    selected = None
+    return render_template('browse_students.html', current_user=current_user, students=students, selected=selected)
+
+@student_views.route('/student/all/<int:selected_id>', methods=['GET'])
+@login_required
+def browse_students_selected(selected_id=1):
+    students = Student.query.all()
+    selected = Student.query.filter_by(id=selected_id).first()
+    return render_template('browse_students.html', current_user=current_user, students=students, selected=selected)
 
 
+@student_views.route('/student/<int:student_id>', methods=['GET'])
 def view_student(student_id):
-    student = get_student_by_id(student_id)
-    if student:
-        return jsonify(student.get_json()), 200
-    return jsonify({'error': 'Student not found'}), 404
+    selected = Student.query.filter_by(id=student_id).first()
+    users = User.query.all()
+    students = Student.query.all()
+    staff = Staff.query.all()
+    reviews = Review.query.filter_by(student_id=student_id)
+    if(selected):  
+        return render_template('view_student.html', current_user=current_user, selected=selected, users=users, reviews=reviews, students=students, staff=staff)
 
 
 # @student_views.route('/StudentHome', methods=['GET'])

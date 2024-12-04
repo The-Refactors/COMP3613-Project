@@ -1,0 +1,25 @@
+{% if selected %}
+  <table class ="card-text-column">
+
+    {% if current_user.user_type=='admin' %}
+    <tr>
+        <td>Database ID:</td>
+        <td>{{selected.id}}</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td>First Name:</td>
+      <td>{{selected.firstname}}</td>
+    </tr>
+    <tr>
+      <td>Last Name:</td>
+      <td>{{selected.lastname}}</td>
+    </tr>
+    <tr>
+      <td>Email:</td>
+      <td>{{selected.email}}</td>
+    </tr>
+  </table>
+{% else %}
+<div class = "not-selected-message">NO STAFF SELECTED</div>
+{% endif %}

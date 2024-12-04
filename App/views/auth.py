@@ -36,12 +36,11 @@ def login_action():
     user_type = type(user)
     print("User type:", user_type)
     login_user(user)
-    if (user.user_type == "staff"):
-      return redirect("/StaffHome")  # Redirect to student dashboard
-    elif (user.user_type == "student"):
-      return redirect("/StudentHome")  # Redirect to staff dashboard
-    elif (user.user_type == "admin"):
-      return redirect("/admin")
+    return redirect("/home")
+    # if (user.user_type == "staff"):
+    #   return redirect("/staff")  # Redirect to staff home
+    # elif (user.user_type == "admin"):
+    #   return redirect("/admin")  # Redirect to admin home
   return render_template('login.html', message=message)
 
 

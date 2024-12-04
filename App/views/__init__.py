@@ -6,10 +6,11 @@ from .auth import auth_views
 # from .csv import csv_views
 from .student import student_views
 from .staff import staff_views
+from .review import review_views
 from .login_views import login_views    
 # from .transcript import transcript_views
 
 
-views = [user_views, index_views, auth_views, student_views, staff_views]
+views = [user_views, index_views, auth_views, student_views, staff_views, review_views]
 
 # blueprints must be added to this list

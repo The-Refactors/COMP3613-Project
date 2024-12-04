@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from sqlalchemy import or_
 from datetime import datetime
 
-from App.models import Student, Staff, User
+from App.models import Student, Staff, User, Review
 # from App.controllers import (
 #     jwt_authenticate, create_incident_report, get_student_by_UniId,
 #     get_accomplishment, get_student_by_id, get_recommendations_staff,
@@ -23,6 +23,30 @@ staff_views = Blueprint('staff_views',
 '''
 Page/Action Routes
 '''
+
+@staff_views.route('/staff/all/', methods=['GET'])
+@login_required
+def browse_staff():
+    staff = Staff.query.all()
+    selected = None
+    return render_template('browse_staff.html', current_user=current_user, staff=staff, selected=selected)
+
+@staff_views.route('/staff/all/<int:selected_id>', methods=['GET'])
+@login_required
+def browse_staff_selected(selected_id=1):
+    staff = Staff.query.all()
+    selected = Staff.query.filter_by(id=selected_id).first()
+    return render_template('browse_staff.html', current_user=current_user, staff=staff, selected=selected)
+
+@staff_views.route('/staff/<int:staff_id>', methods=['GET'])
+def view_staff(staff_id):
+    selected = Staff.query.filter_by(id=staff_id).first()
+    users = User.query.all()
+    students = Student.query.all()
+    staff = Staff.query.all()
+    reviews = Review.query.filter_by(id=staff_id)
+    if(selected):  
+        return render_template('view_staff.html', current_user=current_user, selected=selected, reviews=reviews, users=users, students=students, staff=staff)
 
 # @staff_views.route('/StaffHome', methods=['GET'])
 # def get_StaffHome_page():
