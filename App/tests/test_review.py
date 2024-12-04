@@ -11,8 +11,7 @@ from App.controllers import (
     get_review,
     get_all_reviews,
     get_student_reviews,
-    delete_review,
-    get_total_review_points,
+    delete_review
 )
 '''
    Unit Tests
@@ -30,12 +29,12 @@ class ReviewUnitTests(unittest.TestCase):
         student = Student("816023233")
         staff = Staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass")
         review = Review(student=student, staff=staff, details="Great!", points=2, date_created=created)
-        review_json = review.get_json(student, staff)
+        review_json = review.get_json()
         self.assertDictEqual({
-            "review_id": None,
-            "reviewer": "Joe Mama",
+            "id": None,
+            "staff_id": None,
             "student_id": None,
-            "created": created.strftime("%d-%m-%Y %H:%M"),
+            "date_created": created.strftime("%d-%m-%Y %H:%M"),
             "points": 2,
             "details": "Great!"
         }, review_json)

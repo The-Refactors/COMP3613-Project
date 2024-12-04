@@ -1,5 +1,5 @@
 from App.database import db
-from App.models import KarmaRankingSystem
+from App.models import KarmaRankingSystem, KarmaObserver
 from .student import get_karma_ordered_students_by_system_id, get_student_by_id
 
 
@@ -17,9 +17,9 @@ def create_karma_system():
         return False
 
 
-# def add_observer_to_system(observer_id, system_id):
-#     observer = KarmaObserver.query.filter_by(id=observer_id).first()
-#     observer.system_id = system_id
+def add_observer_to_system(observer_id, system_id):
+    observer = KarmaObserver.query.filter_by(id=observer_id).first()
+    observer.system_id = system_id
 
 def calculate_karma(reviews):
     new_karma = 0

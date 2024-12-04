@@ -12,7 +12,6 @@ from App.controllers import (
     get_user_by_username,
     update_username,
     update_email,
-    update_faculty,
     update_name,
     update_password
 )
@@ -32,7 +31,7 @@ class UserUnitTests(unittest.TestCase):
     def test_get_json(self):
          user = User(username="bob", firstname="Bob", lastname="Smith", password="bobpass", email="bob@example.com")
          user_json = user.get_json()
-         self.assertDictEqual(user_json, {"id":None, "username":"bob", "firstname":"Bob", "lastname":"Smith", "email":"bob@example.com"})
+         self.assertDictEqual(user_json, {"id":None, "username":"bob", "firstname":"Bob", "lastname":"Smith", "email":"bob@example.com", "user_type":"user"})
 
     def test_hashed_password(self):
          password = "mypass"
@@ -77,11 +76,13 @@ class UserIntegrationTests(unittest.TestCase):
             "username":"bob", 
             "firstname":"Bob", 
             "lastname":"Smith", 
-            "email":"bob@example.com"},
+            "email":"bob@example.com",
+            "user_type":"user"},
             {
             "id":2, 
             "username":"rick", 
             "firstname":"Rick", 
             "lastname":"Grimes", 
-            "email":"rick@example.com", 
+            "email":"rick@example.com",
+            "user_type":"user"
             }], users_json)

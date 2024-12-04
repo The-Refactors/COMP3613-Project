@@ -32,6 +32,7 @@ class StaffUnitTests(unittest.TestCase):
              "firstname": "Joe",
              "lastname": "Mama",
              "email": "joe@example.com",
+             "user_type": "staff"
              })
 
 
@@ -57,7 +58,7 @@ class StaffIntegrationTests(unittest.TestCase):
         assert staff.username == "rick"
 
     def test_authenticate(self):
-        user = create_staff("bob", "Bob", "Smith", "bob@example.com", "bobpass")
+        user = create_staff(username="bob", firstname="Bob", lastname="Smith", email="bob@example.com", password="bobpass")
         assert login("bob", "bobpass") != None
     
 
@@ -79,13 +80,15 @@ class StaffIntegrationTests(unittest.TestCase):
             "username":"bob", 
             "firstname":"Bob", 
             "lastname":"Smith", 
-            "email":"bob@example.com"},
+            "email":"bob@example.com",
+            "user_type": "staff"},
             {
             "id":2, 
             "username":"rick", 
             "firstname":"Rick", 
             "lastname":"Grimes", 
-            "email":"rick@example.com", 
+            "email":"rick@example.com",
+            "user_type": "staff"
             }], staff_json)
 
 

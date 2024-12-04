@@ -22,10 +22,15 @@ class StudentUnitTests(unittest.TestCase):
 
     def test_get_json(self):
         student = Student(student_id="816000000")
+        student.set_karma(0.0)
         student_json = student.get_json()
         self.assertDictEqual(student_json, {
-            "id": None,
+            "id": 1,
+            "system_id": None,
+            "karma": 0.0,
+            "karmarank": None,
             "studentid": "816000000",
+            "reviews": 0
         })
 
 

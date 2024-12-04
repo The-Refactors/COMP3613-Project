@@ -27,7 +27,8 @@ class AdminUnitTests(unittest.TestCase):
             "username": "phil",
             "firstname": "Phil",
             "lastname": "Smith",
-            "email": "phil@example.com"
+            "email": "phil@example.com",
+            "user_type": "admin"
         })
 
 
@@ -49,24 +50,27 @@ class AdminIntegrationTests(unittest.TestCase):
 
 
     def test_create_admin(self):
-        user = create_admin("rick", "Rick", "Grimes", "rick@example.com" , "rickpass")
+        user = create_admin(username="rick", firstname="Rick", lastname="Grimes", password="rickpass", email="rick@example.com")
         assert user.username == "rick"
 
     def test_authenticate(self):
-        user = create_admin("bob", "Bob", "Smith", "bob@example.com", "bobpass")
+        user = create_admin(username="bob", firstname="Bob", lastname="Smith", password="bobpass", email="bob@example.com")
         assert login("bob", "bobpass") != None
 
     def test_get_all_admins_json(self):
         admins_json = get_all_admins_json()
-        self.assertListEqual([{"id":1, 
-            "username":"bob", 
-            "firstname":"Bob", 
-            "lastname":"Smith", 
-            "email":"bob@example.com"},
+        self.assertListEqual([
             {
-            "id":2, 
-            "username":"rick", 
-            "firstname":"Rick", 
-            "lastname":"Grimes", 
-            "email":"rick@example.com", 
-            }], admins_json)
+                "id":1,
+                "username":"bob",
+                "firstname":"Bob",
+                "lastname":"Smith",
+                "email":"bob@example.com",
+                "user_type":"admin"},
+            {
+                "id":2,
+                "username":"rick",
+                "firstname":"Rick",
+                "lastname":"Grimes",
+                "email":"rick@example.com",
+                "user_type":"admin"}], admins_json)
