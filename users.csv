@@ -1,0 +1,12 @@
+username,firstname,lastname,password,email,user_type
+bobby,Bob,Harris,bobpass,bob@mail.com,admin
+lyss,Alyssa,Smith,lysspass,alyssa@mail.com,admin
+henry,Henry,John,henrypass,henry@mail.com,staff
+mike,Michael,Williams,mikepass,mike@mail.com,staff
+cattie,Catherine,Singh,cattiepass,cattie@mail.com,staff
+amy,Amy,Winehouse,amypass,amy@mail.com,staff
+gary,Gary,Busey,garypass,gary@mail.com,staff
+rick,Rick,Roll,rickpass,rick@mail.com,staff
+lucy,Lucy,Hearfilia,lucypass,lucy@mail.com,staff
+mark,Mark,Twain,markpass,mark@mail.com,staff
+john,John,Doe,johnpass,john@mail.com,staff

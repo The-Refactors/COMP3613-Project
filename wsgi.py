@@ -12,7 +12,7 @@ from App.controllers import (
     get_all_students_json, print_karma_ranking, update_username, update_password, get_user, update_name, update_email,
     delete_user, get_all_reviews_json, get_review, update_review_staff, update_review_student, update_review_points,
     update_review_details, delete_review, get_student_reviews_json, get_student_by_student_id_json, delete_student,
-    get_karma_ranking_json, delete_staff)
+    get_karma_ranking_json, delete_staff, parse_all)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -28,20 +28,20 @@ def initialize():
   db.drop_all()
   db.create_all()
   
-  create_admin(username="bobby", firstname="Bob", lastname="Harris", email="bob@mail.com", password="bobpass")
-  create_admin(username="lyss", firstname="Alyssa", lastname="Smith", email="alyssa@mail.com", password="lysspass")
+  # create_admin(username="bobby", firstname="Bob", lastname="Harris", email="bob@mail.com", password="bobpass")
+  # create_admin(username="lyss", firstname="Alyssa", lastname="Smith", email="alyssa@mail.com", password="lysspass")
 
-  create_staff(username="henry", firstname="Henry", lastname="John", email="henry@mail.com", password="henrypass")
-  create_staff(username="mike", firstname="Michael", lastname="Williams", email="mike@mail.com", password="mikepass")
-  create_staff(username="cattie", firstname="Catherine", lastname="Singh", email="cattie@mail.com", password="cattiepass")
+  # create_staff(username="henry", firstname="Henry", lastname="John", email="henry@mail.com", password="henrypass")
+  # create_staff(username="mike", firstname="Michael", lastname="Williams", email="mike@mail.com", password="mikepass")
+  # create_staff(username="cattie", firstname="Catherine", lastname="Singh", email="cattie@mail.com", password="cattiepass")
 
   create_karma_system()
-
-  create_student(student_id='816011111', system_id=system_id)
-  create_student(student_id='816022222', system_id=system_id)
-  create_student(student_id='816033333', system_id=system_id)
-  create_student(student_id='816044444', system_id=system_id)
-  create_student(student_id='816055555', system_id=system_id)
+  parse_all()
+  # create_student(student_id='816011111', system_id=system_id)
+  # create_student(student_id='816022222', system_id=system_id)
+  # create_student(student_id='816033333', system_id=system_id)
+  # create_student(student_id='816044444', system_id=system_id)
+  # create_student(student_id='816055555', system_id=system_id)
 
   print("Database Initialized")
 
