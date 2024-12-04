@@ -42,7 +42,7 @@ def initialize():
   create_student(student_id='816044444', system_id=system_id)
   create_student(student_id='816055555', system_id=system_id)
 
-  print("Created Students")
+  print("Database Initialized")
 
 
 @app.cli.command("karma", help="Lists the karma rankings")
