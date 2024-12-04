@@ -317,23 +317,33 @@ app.cli.add_command(review_cli)
 # Test Commands
 # '''
 
-#test = AppGroup('test', help='Testing commands')
+test = AppGroup('test', help='Testing commands')
 
-# @test.command("final", help="Runs ALL tests")
-# @click.argument("type", default="all")
-# def final_tests_command(type):
-#   if type == "all":
-#     sys.exit(pytest.main(["App/tests"]))
+@test.command("final", help="Runs ALL tests")
+@click.argument("type", default="all")
+def final_tests_command(type):
+  if type == "all":
+    sys.exit(pytest.main(["App/tests"]))
 
-# @test.command("user", help="Run User tests")
-# @click.argument("type", default="all")
-# def user_tests_command(type):
-#   if type == "unit":
-#     sys.exit(pytest.main(["-k", "UserUnitTests"]))
-#   elif type == "int":
-#     sys.exit(pytest.main(["-k", "UserIntegrationTests"]))
-#   # else:
-#   #   sys.exit(pytest.main(["-k", "App"]))
+@test.command("user", help="Run User tests")
+@click.argument("type", default="all")
+def user_tests_command(type):
+  if type == "unit":
+    sys.exit(pytest.main(["-k", "UserUnitTests"]))
+  elif type == "int":
+    sys.exit(pytest.main(["-k", "UserIntegrationTests"]))
+  else:
+    sys.exit(pytest.main(["-k", "test_user.py"]))
+
+@test.command("admin", help="Run User tests")
+@click.argument("type", default="all")
+def user_tests_command(type):
+  if type == "unit":
+    sys.exit(pytest.main(["-k", "AdminUnitTests"]))
+  elif type == "int":
+    sys.exit(pytest.main(["-k", "AdminIntegrationTests"]))
+  else:
+    sys.exit(pytest.main(["-k", "test_admin.py"]))
 
 
 #@test.command("student", help="Run Student tests")
@@ -348,26 +358,26 @@ app.cli.add_command(review_cli)
 
 
 
-# @test.command("staff", help="Run Staff tests")
-# @click.argument("type", default="all")
-# def staff_tests_command(type):
-#   if type == "unit":
-#     sys.exit(pytest.main(["-k", "StaffUnitTests"]))
-#   elif type == "int":
-#     sys.exit(pytest.main(["-k", "StaffIntegrationTests"]))
-#   # else:
-#   #   sys.exit(pytest.main(["-k", "App"]))
+@test.command("staff", help="Run Staff tests")
+@click.argument("type", default="all")
+def staff_tests_command(type):
+  if type == "unit":
+    sys.exit(pytest.main(["-k", "StaffUnitTests"]))
+  elif type == "int":
+    sys.exit(pytest.main(["-k", "StaffIntegrationTests"]))
+  else:
+    sys.exit(pytest.main(["-k", "test_staff.py"]))
 
 
-# @test.command("review", help="Run Review tests")
-# @click.argument("type", default="all")
-# def review_tests_command(type):
-#   if type == "unit":
-#     sys.exit(pytest.main(["-k", "ReviewUnitTests"]))
-#   elif type == "int":
-#     sys.exit(pytest.main(["-k", "ReviewIntegrationTests"]))
-#   # else:
-#   #   sys.exit(pytest.main(["-k", "App"]))
+@test.command("review", help="Run Review tests")
+@click.argument("type", default="all")
+def review_tests_command(type):
+  if type == "unit":
+    sys.exit(pytest.main(["-k", "ReviewUnitTests"]))
+  elif type == "int":
+    sys.exit(pytest.main(["-k", "ReviewIntegrationTests"]))
+  else:
+    sys.exit(pytest.main(["-k", "test_review.py"]))
 
 
 # @test.command("recommendation", help="Run Recommendation tests")
@@ -523,4 +533,4 @@ app.cli.add_command(review_cli)
 #     print("Student not found with id:", UniId)
 
 
-#app.cli.add_command(test)
+app.cli.add_command(test)

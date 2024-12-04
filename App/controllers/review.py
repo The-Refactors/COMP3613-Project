@@ -2,7 +2,6 @@ from App.database import db
 from App.models import Review
 from.karmaSystem import update_karma
 
-
 def create_review(staff, student, points, details):
   new_review = Review(staff=staff,
                      student=student,

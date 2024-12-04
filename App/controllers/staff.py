@@ -68,9 +68,3 @@ def get_all_staff_json():
         return [member.get_json() for member in staff]
     else:
         return []
-
-#def create_review(staff, student, isPositive, points, details):
-#    if create_review(staff, student, isPositive, points, details):
-#        return True
-#    else:
-#        return False

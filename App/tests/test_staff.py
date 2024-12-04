@@ -6,12 +6,11 @@ from App.database import db, create_db
 from App.models import Staff
 from App.controllers import (
     create_staff,
+    login,
     get_staff_by_id,
+    get_staff_by_name,
     get_staff_by_username,
-    staff_create_review,
-    staff_edit_review,
-    create_student,
-    get_student_by_username,
+    get_all_staff_json,
     get_review
 )
 '''
@@ -19,23 +18,21 @@ from App.controllers import (
 '''
 class StaffUnitTests(unittest.TestCase):
 
-    # def test_new_staff(self):
-    #     staff = Staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST")
-    #     assert staff.username == "joe"
+    def test_new_staff(self):
+         staff = Staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass")
+         assert staff.username == "joe"
 
-    # def test_get_json(self):
-    #     staff = Staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST")
-    #     staff_json = staff.to_json()
-    #     print(staff_json)
-    #     self.assertDictEqual(staff_json, {"staffid": None,
-    #         "username": "joe",
-    #         "firstname": "Joe",
-    #         "lastname": "Mama",
-    #         "email": "joe@example.com",
-    #         "faculty": "FST",
-    #         "reviews": [],
-    #         "reports": [],
-    #         "pendingAccomplishments": []})
+    def test_get_json(self):
+         staff = Staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass")
+         staff_json = staff.get_json()
+         print(staff_json)
+         self.assertDictEqual(staff_json, {
+             "id": None,
+             "username": "joe",
+             "firstname": "Joe",
+             "lastname": "Mama",
+             "email": "joe@example.com",
+             })
 
 
 '''
@@ -53,12 +50,44 @@ def empty_db():
 
 class StaffIntegrationTests(unittest.TestCase):
 
-    # def test_create_staff(self):
-    #     assert create_staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST") == True
 
-    # def test_get_staff_by_id(self):
-    #     staff = get_staff_by_id(1)
-    #     assert staff is not None
+
+    def test_create_staff(self):
+        staff = create_staff(username="rick",firstname="Rick", lastname="Grimes", email="rick@example.com", password="rickpass")
+        assert staff.username == "rick"
+
+    def test_authenticate(self):
+        user = create_staff("bob", "Bob", "Smith", "bob@example.com", "bobpass")
+        assert login("bob", "bobpass") != None
+    
+
+    def test_get_staff_by_id(self):
+        staff = get_staff_by_id(1)
+        assert staff is not None
+
+    def test_get_staff_by_name(self):
+        staff = get_staff_by_name("Rick", "Grimes")
+        assert staff is not None
+
+    def test_get_staff_by_username(self):
+        staff = get_staff_by_username("rick")
+        assert staff is not None
+
+    def test_get_all_staff_json(self):
+        staff_json = get_all_staff_json()
+        self.assertListEqual([{"id":1, 
+            "username":"bob", 
+            "firstname":"Bob", 
+            "lastname":"Smith", 
+            "email":"bob@example.com"},
+            {
+            "id":2, 
+            "username":"rick", 
+            "firstname":"Rick", 
+            "lastname":"Grimes", 
+            "email":"rick@example.com", 
+            }], staff_json)
+
 
     # def test_get_staff_by_username(self):
     #     staff = get_staff_by_username("joe")
