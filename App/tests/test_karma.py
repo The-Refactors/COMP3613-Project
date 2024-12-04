@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from App.main import create_app
 from App.database import db, create_db
-#from App.models import Karma
+from App.models import KarmaObserver,karmaRankingSystem,karma
 #from App.controllers import (
 #    get_karma,
 #    create_karma,
@@ -13,7 +13,7 @@ from App.database import db, create_db
 
 '''
    Unit Tests
-'''
+
 class KarmaUnitTests(unittest.TestCase):
 
     def test_new_karma(self):
@@ -33,9 +33,9 @@ class KarmaUnitTests(unittest.TestCase):
             "rank": -99,
             "studentid": 1
         })
-'''
+
     Integration Tests
-'''
+
 
 # This fixture creates an empty database for the test and deletes it after the test
 # scope="class" would execute the fixture once and resued for all methods in the class
@@ -62,3 +62,5 @@ class KarmaIntegrationTests(unittest.TestCase):
 
     def test_update_karma(self):
         assert update_review_points(1) == True
+
+        '''

@@ -1,7 +1,7 @@
 from .test_user import *
 #from .test_admin import *
 #from .test_staff import *
-#from .test_student import *
+from .test_student import *
 #from .test_review import *
 from .test_login import *
 # from .test_recommendation import *

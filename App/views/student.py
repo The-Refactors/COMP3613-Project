@@ -5,7 +5,7 @@ from App.database import db
 from .index import index_views
 from App.models import Staff, Student, User
 from App.controllers import (
-    create_user, login, get_student_by_student_id, get_all_students, get_staff_by_name)
+    create_user, login, get_student_by_student_id,create_student,get_student_by_id, get_all_students, get_staff_by_name,get_all_students_json)
 
 student_views = Blueprint('student_views',
                           __name__,
@@ -13,6 +13,21 @@ student_views = Blueprint('student_views',
 '''
 Page/Action Routes
 '''
+@student_views.route('/student/all', methods=['GET'])
+@login_required
+def browse_students():
+    students = get_all_students_json()
+    if students:
+        return jsonify(students), 200
+    return jsonify({'error': 'No students found'}), 404
+
+
+def view_student(student_id):
+    student = get_student_by_id(student_id)
+    if student:
+        return jsonify(student.get_json()), 200
+    return jsonify({'error': 'Student not found'}), 404
+
 
 # @student_views.route('/StudentHome', methods=['GET'])
 # @login_required
