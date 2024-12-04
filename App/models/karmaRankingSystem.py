@@ -24,13 +24,10 @@ class KarmaRankingSystem(db.Model):
         sorted_query = KarmaObserver.query.order_by(KarmaObserver.karma.desc()).all()
 
         rank = 0
-        last_karma = 0
 
         # loop for assigning new karma ranks to all observers
         for observer in sorted_query:
-            if not (observer.karma == last_karma):
-                rank += 1
+            rank += 1
             self.notify_of_rank(observer.id, rank)
-            last_karma = observer.karma
 
         db.session.commit()
