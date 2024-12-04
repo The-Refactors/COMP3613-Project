@@ -3,7 +3,7 @@ from App.models import Admin
 
 
 def create_admin(username, firstname, lastname, password, email):
-  new_admin = Admin(username, firstname, lastname, password, email)
+  new_admin = Admin(username=username, firstname=firstname, lastname=lastname, password=password, email=email)
   db.session.add(new_admin)
   try:
     db.session.commit()

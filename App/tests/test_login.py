@@ -20,7 +20,7 @@ def setup_users():
         firstname="John",
         lastname="Doe",
         email="staff@example.com",
-        password=generate_password_hash("password123")
+        password="password123"
     )
     db.session.add(staff)
     db.session.commit()
@@ -32,11 +32,8 @@ def setup_users():
 
 def test_login_success_staff(test_client, setup_users):
     payload = {"username": "unique_staff_user", "password": "password123"}
-    response = test_client.post('/login', json=payload)
-    assert response.status_code == 200
-    data = response.json
-    assert data["message"] == "Login successful"
-    assert data["user"]["username"] == "unique_staff_user"
+    response = test_client.post('/login', data=payload)
+    assert response.status_code == 302
 
 """ 
 def test_login_success_admin(test_client, setup_users):

@@ -6,7 +6,7 @@ from .review import (
 
 
 def create_staff(username, firstname, lastname, password, email):
-    new_staff = Staff(username,firstname, lastname, password, email)
+    new_staff = Staff(username=username,firstname=firstname, lastname=lastname, password=password, email=email)
     db.session.add(new_staff)
     
     try:
