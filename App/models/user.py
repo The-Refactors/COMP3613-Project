@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
         "polymorphic_on": user_type,
     }
 
-    def __init__(self, username, firstname,lastname , password, email):
+    def __init__(self, username, firstname, lastname, email, password):
         self.username= username
         self.firstname = firstname
         self.lastname = lastname

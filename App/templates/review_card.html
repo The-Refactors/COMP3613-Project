@@ -1,0 +1,41 @@
+{% if selected %}
+  <table class ="card-text-column">
+
+    {% if current_user.user_type=='admin' %}
+    <tr>
+        <td>Database ID:</td>
+        <td>{{selected.id}}</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td>Review ID:</td>
+      <td>{{selected.id}}</td>
+    </tr>
+    <tr>
+      <td>Student:</td>
+      <td>{{selected.student_id}}</td>
+    </tr>
+    <tr>
+      <td>Created by:</td>
+      <td>{{users[selected.staff_id-1].firstname}} {{users[selected.staff_id-1].lastname}}</td>
+    </tr>
+    <tr>
+        <td>Date Created:</td>
+        <td>{{selected.date_created}}</td>
+    </tr>
+    <tr>
+        <td>Review Score:</td>
+        <td>{{selected.points}}</td>
+    </tr>
+  </table>
+
+    <div class ="card-text-header">
+        Details:
+    </div>
+
+    <table class ="card-text">
+        {{selected.details}}
+    </table>
+{% else %}
+<div class = "not-selected-message">NO REVIEW SELECTED</div>
+{% endif %}

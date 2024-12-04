@@ -27,12 +27,12 @@ def initialize():
   db.drop_all()
   db.create_all()
   
-  create_admin("bobby", "Bob", "Harris", "bobpass", "bob@mail.com")
-  create_admin("lyss", "Alyssa", "Smith", "lysspass", "alyssa@mail.com")
+  create_admin("bobby", "Bob", "Harris", "bob@mail.com", "bobpass")
+  create_admin("lyss", "Alyssa", "Smith", "alyssa@mail.com", "lysspass")
 
-  create_staff("henry", "Henry", "John", "henrypass", "henry@mail.com")
-  create_staff("mike", "Michael", "Williams", "mikepass", "mike@mail.com")
-  create_staff("cattie", "Catherine", "Singh", "cattiepass", "cattie@mail.com")
+  create_staff("henry", "Henry", "John", "henry@mail.com", "henrypass")
+  create_staff("mike", "Michael", "Williams", "mike@mail.com", "mikepass")
+  create_staff("cattie", "Catherine", "Singh", "cattie@mail.com", "cattiepass")
 
   create_karma_system()
 

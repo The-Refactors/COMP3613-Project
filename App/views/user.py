@@ -5,6 +5,8 @@ from flask_login import current_user, login_required
 
 from.index import index_views
 
+from App.models import Student, Staff, User, Review
+
 from App.controllers import (
     create_user,
     jwt_authenticate, 
@@ -14,6 +16,16 @@ from App.controllers import (
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
+
+@user_views.route('/home', methods=['GET'])
+def home_page():
+    users = User.query.all()
+    students = Student.query.order_by(Student.karma.desc()).all()
+    staff = Staff.query.all()
+    reviews = Review.query.order_by(Review.id.desc()).all()
+    my_reviews = Review.query.order_by(Review.id.desc()).filter_by(staff_id=current_user.id)
+
+    return render_template(f'{current_user.user_type}_home.html', current_user=current_user, users=users, students=students, staff=staff, reviews=reviews, my_reviews=my_reviews)
 
 @user_views.route('/users', methods=['GET'])
 def get_user_page():

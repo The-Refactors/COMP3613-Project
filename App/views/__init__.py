@@ -8,10 +8,11 @@ from .karmaSystem import  karma_views
 # from .csv import csv_views
 from .student import student_views
 from .staff import staff_views
-from .login_views import login_views    
+from .review import review_views
+from .login_views import login_views
 # from .transcript import transcript_views
 
 
-views = [user_views, index_views, auth_views, student_views, staff_views,admin_views,karma_views]
+views = [user_views, index_views, auth_views, student_views, staff_views, review_views, admin_views, karma_views]
 
 # blueprints must be added to this list

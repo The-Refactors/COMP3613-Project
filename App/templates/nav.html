@@ -1,0 +1,25 @@
+{% extends "layout2.html" %}
+{% block title %}{% endblock %}
+{% block page %}{% endblock %}
+
+{{ super() }}
+
+{% block body %}
+<div id = "navbar" class = "navbar"> 
+
+    <div class = "nav-link-section">
+        <!-- <a class="nav-link" href = "/" style="font-family: Adlanta;">Student Conduct Tracker</a> -->
+        <a class="nav-link" href = "/home">HOME</a>
+        <a class="nav-link" href = "/staff/all">BROWSE STAFF</a>
+        <a class="nav-link" href = "/review/all">BROWSE REVIEWS</a>
+        <a class="nav-link" href = "/student/all">BROWSE STUDENTS</a>
+        <a class="nav-link" href = "/logout">LOG OUT</a>
+    </div>
+
+</div>
+
+{% block filter_overlay %}{% endblock %}
+{% block page_header %}{% endblock %}
+{% block page_content %}{% endblock %}
+
+{% endblock %}
