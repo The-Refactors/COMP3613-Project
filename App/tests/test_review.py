@@ -1,6 +1,8 @@
 import os, tempfile, pytest, logging, unittest, sys
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
+
+
 from App.main import create_app
 from App.database import db, create_db
 from App.models import Review, Student, Staff
@@ -11,6 +13,7 @@ from App.controllers import (
     get_review,
     get_all_reviews,
     get_student_reviews,
+    create_karma_system,
     delete_review
 )
 '''
@@ -57,10 +60,12 @@ def empty_db():
 class ReviewIntegrationTests(unittest.TestCase):
 
     def test_create_review(self):
-        student = create_staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass")
-        staff = create_student(student_id="816000000", system_id=1)
+        create_karma_system()
+        student = create_student(student_id="816000000", system_id=1)
+        staff = create_staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass")
         review = create_review(staff=staff, student=student, points=2, details="Joe is good.")
         create_review(staff=staff, student=student, points=1, details="Joe could be better.")
+        print(review)
         assert review.details == "Joe is good."
 
 
