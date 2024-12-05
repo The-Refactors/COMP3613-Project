@@ -6,7 +6,7 @@
 
 <div class = "page-content">
 
-    <div class = "page-segment" style="width:15%;">
+    <div class = "page-segment" style="width:25%;">
 
         <div class="pane">
 
@@ -77,7 +77,7 @@
 
     </div>
 
-    <div class = "page-segment" style="width:40%;">
+    <div class = "page-segment" style="width:25%;">
 
         <div class="pane">
 
@@ -87,34 +87,23 @@
     
                 <div class = "pane-header-text"> 
     
-                  <div> YOUR REVIEWS </div>
+                  <div> STAFF </div>
     
                 </div>
     
                 <div class = "pane-header-button"> 
-    
     
                 </div>
     
               </div>
               
               {% set test = 0 %}
-              {% set none_message = "NO REVIEWS" %}
+              {% set none_message = "NO STAFF" %}
     
               <div class = "pane-data">
     
-                {% include "my_review_list.html" %}
+                {% include "staff_list.html" %}
     
-              </div>
-
-              <div class = "pane-controls">
-                <a class="button-compound key hover" href="/write">
-                
-                    <div class="button-compound-text">
-                        WRITE REVIEW
-                    </div>
-                
-                </a>            
               </div>
     
             </div>

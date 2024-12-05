@@ -1,5 +1,5 @@
 username,firstname,lastname,password,email,user_type
-bobby,Bob,Harris,bobpass,bob@mail.com,admin
+bob,Bob,Harris,bobpass,bob@mail.com,admin
 lyss,Alyssa,Smith,lysspass,alyssa@mail.com,admin
 henry,Henry,John,henrypass,henry@mail.com,staff
 mike,Michael,Williams,mikepass,mike@mail.com,staff

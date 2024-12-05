@@ -99,7 +99,16 @@
                 VIEW PROFILE
             </div>
           
-          </a>     
+          </a>
+            {% if current_user.user_type == 'admin' %}
+            <a class="button-compound hover" href="/staff/delete/{{selected.id}}">
+                  
+              <div class="button-compound-text" style="color:var(--secondary2);">
+                  DELETE
+              </div>
+          
+            </a> 
+            {% endif %}
           {% endif %}       
         </div>
 

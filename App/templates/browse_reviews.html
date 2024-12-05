@@ -94,6 +94,15 @@
 
         <div class ="pane-controls">
 
+          {% if current_user.user_type == 'admin' or selected.staff_id == current_user.id %}
+          <a class="button-compound hover" href="/review/delete/{{selected.id}}">
+                
+            <div class="button-compound-text" style="color:var(--secondary2);">
+              DELETE
+            </div>
+        
+          </a>
+          {% endif %}
 
         </div>
 

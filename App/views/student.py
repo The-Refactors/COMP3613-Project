@@ -5,7 +5,7 @@ from App.database import db
 from .index import index_views
 from App.models import Staff, Student, User, Review
 from App.controllers import (
-    create_user, login, get_student_by_student_id,create_student,get_student_by_id, get_all_students, get_staff_by_name,get_all_students_json)
+    create_user, login, get_student_by_student_id,create_student,get_student_by_id, get_all_students, delete_student, get_staff_by_name,get_all_students_json)
 
 student_views = Blueprint('student_views',
                           __name__,
@@ -35,10 +35,20 @@ def view_student(student_id):
     users = User.query.all()
     students = Student.query.all()
     staff = Staff.query.all()
-    reviews = Review.query.filter_by(student_id=student_id)
-    if(selected):  
-        return render_template('view_student.html', current_user=current_user, selected=selected, users=users, reviews=reviews, students=students, staff=staff)
+    reviews = Review.query.filter_by(student_id=selected.id).all()
 
+    def jinja_get_student(student_id):
+        return (get_student_by_id(student_id))
+
+    if(selected):  
+        return render_template('view_student.html', current_user=current_user, selected=selected, users=users, reviews=reviews, students=students, staff=staff, jinja_get_student=jinja_get_student)
+
+@student_views.route('/student/delete/<int:student_id>', methods=['GET'])
+@login_required
+def delete_student_action(student_id):
+    student = get_student_by_id(student_id)
+    delete_student(student.student_id)
+    return redirect("/student/all")
 
 # @student_views.route('/StudentHome', methods=['GET'])
 # @login_required

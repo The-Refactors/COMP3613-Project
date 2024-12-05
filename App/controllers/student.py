@@ -1,6 +1,5 @@
 from App.database import db
-from App.models import Student
-
+from App.models import Student, Review
 
 def create_student(student_id, system_id):
     existing_student = get_student_by_student_id(student_id)
@@ -77,11 +76,20 @@ def get_karma_by_id(id):
   return None
 
 def delete_student(student_id):
+  from .review import delete_review
+  from .karmaSystem import update_karma, update_karma_ranking
+
   student = Student.query.filter_by(student_id=student_id).first()
-  if student:
+  reviews = Review.query.filter_by(student_id=student.id).all()
+  if student: 
     db.session.delete(student)
+
+    for review in reviews:
+      delete_review(review.id)
+
     try:
       db.session.commit()
+      update_karma_ranking(1)
       return True
     except Exception as e:
       print("[student.delete_student] Error occurred while deleting student: ", str(e))

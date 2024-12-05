@@ -1,6 +1,6 @@
 from App.database import db
 from App.models import Review
-from.karmaSystem import update_karma, update_karma_ranking
+from .karmaSystem import update_karma, update_karma_ranking
 
 def create_review(staff, student, points, details):
   new_review = Review(staff=staff,
@@ -92,6 +92,7 @@ def delete_review(review_id):
     update_karma(review.student_id)
     try:
       db.session.commit()
+      update_karma_ranking(1)
       return True
     except Exception as e:
       print("[review.delete_review] Error occurred while deleting review: ", str(e))

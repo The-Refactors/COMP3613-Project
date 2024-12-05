@@ -6,6 +6,7 @@ from sqlalchemy import or_
 from datetime import datetime
 
 from App.models import Student, Staff, User, Review
+from App.controllers import get_staff_by_id, get_student_by_id
 # from App.controllers import (
 #     jwt_authenticate, create_incident_report, get_student_by_UniId,
 #     get_accomplishment, get_student_by_id, get_recommendations_staff,
@@ -36,7 +37,11 @@ def browse_staff():
 def browse_staff_selected(selected_id=1):
     staff = Staff.query.all()
     selected = Staff.query.filter_by(id=selected_id).first()
-    return render_template('browse_staff.html', current_user=current_user, staff=staff, selected=selected)
+
+    def jinja_get_student(student_id):
+        return (get_student_by_id(student_id))
+
+    return render_template('browse_staff.html', current_user=current_user, staff=staff, selected=selected, jinja_get_student=jinja_get_student)
 
 @staff_views.route('/staff/<int:staff_id>', methods=['GET'])
 def view_staff(staff_id):
@@ -44,9 +49,21 @@ def view_staff(staff_id):
     users = User.query.all()
     students = Student.query.all()
     staff = Staff.query.all()
-    reviews = Review.query.filter_by(id=staff_id)
+    reviews = Review.query.filter_by(staff_id=staff_id).all()
+
+    def jinja_get_student(student_id):
+        return (get_student_by_id(student_id))
+
     if(selected):  
-        return render_template('view_staff.html', current_user=current_user, selected=selected, reviews=reviews, users=users, students=students, staff=staff)
+        return render_template('view_staff.html', current_user=current_user, selected=selected, reviews=reviews, users=users, students=students, staff=staff, jinja_get_student=jinja_get_student)
+
+@staff_views.route('/staff/delete/<int:staff_id>', methods=['GET'])
+@login_required
+def delete_staff_action(staff_id):
+    from App.controllers import delete_staff
+    staff = get_staff_by_id(staff_id)
+    delete_staff(staff.id)
+    return redirect("/staff/all")
 
 # @staff_views.route('/StaffHome', methods=['GET'])
 # def get_StaffHome_page():

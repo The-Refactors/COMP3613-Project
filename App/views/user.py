@@ -30,7 +30,15 @@ def home_page():
     reviews = Review.query.order_by(Review.id.desc()).all()
     my_reviews = Review.query.order_by(Review.id.desc()).filter_by(staff_id=current_user.id)
 
-    return render_template(f'{current_user.user_type}_home.html', current_user=current_user, users=users, rankings=rankings, students=students, staff=staff, reviews=reviews, my_reviews=my_reviews)
+    def jinja_get_student(student_id):
+        student = Student.query.filter_by(id=student_id).first()
+        return student
+
+    def jinja_get_staff(staff_id):
+        staff = Staff.query.filter_by(id=staff_id).first()
+        return staff
+
+    return render_template(f'{current_user.user_type}_home.html', current_user=current_user, users=users, rankings=rankings, students=students, staff=staff, reviews=reviews, my_reviews=my_reviews, jinja_get_student=jinja_get_student, jinja_get_staff=jinja_get_staff)
 
 @user_views.route('/write', methods=['GET'])
 def write_review_page():
