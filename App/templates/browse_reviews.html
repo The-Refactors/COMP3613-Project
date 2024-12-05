@@ -1,0 +1,116 @@
+{% extends "browse.html" %}
+
+{{ super() }}
+
+{% block title %}Reviews{% endblock %}
+
+{% block navbar %}
+
+{% endblock %}
+
+  {% block filter_overlay %}
+  
+  {% set filter_overlay_id = "filter-overlay" %}
+
+  {% endblock  %}
+
+  {% block page_header %}
+  <div class = "page-header">
+    <div>
+      Browse Reviews
+    </div>
+  </div>
+  {% endblock %}
+  
+  {% block page_content %}
+
+  <div class = "page-content">
+
+    <div class = "page-segment" style="width:25%;">
+
+        <div class="pane">
+  
+          <div class = "pane-content">
+            
+            <div class = "pane-header">
+              
+              <div class = "pane-header-text"> 
+  
+                <div> Reviews </div>
+                
+              </div>
+  
+              <div class = "pane-header-button"> 
+  
+                <div class="button-compound" id="filter-button" onclick="openFilterMenu('filter-overlay')">
+                  
+                              
+                </div>
+                
+              </div>
+              
+            </div>
+  
+            {% set test = 0 %}
+            {% set none_message = "NO REVIEWS" %}
+
+            <div class = "pane-data">
+                {% include "review_list.html" %}              
+            </div>
+            
+          </div>
+          
+        </div>
+  
+    </div>
+
+    <div class = "page-segment" style="width:70%;">
+
+    <div class= "pane">
+
+        <div class = "pane-content">
+
+        <div class = "pane-header">
+
+            <div class = "pane-header-text"> 
+
+            <div> REVIEW INFORMATION </div>
+
+            </div>
+
+            <div class = "pane-header-button"> 
+
+            <a class="button-compound" id="new-tab-button">
+
+            </a>
+
+            </div>
+
+        </div>
+        
+        <div class = "pane-data">
+            {% include "review_card.html" %}
+        </div>
+
+        <div class ="pane-controls">
+
+          {% if current_user.user_type == 'admin' or selected.staff_id == current_user.id %}
+          <a class="button-compound hover" href="/review/delete/{{selected.id}}">
+                
+            <div class="button-compound-text" style="color:var(--secondary2);">
+              DELETE
+            </div>
+        
+          </a>
+          {% endif %}
+
+        </div>
+
+        </div>     
+
+    </div>
+
+    </div>
+
+  </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% if students %}
+    {% for student in students %}
+    <div class ="list-item {% if selected.id == student.id %}active{% endif %}">
+        <a class = "list-item-link" href="/student/all/{{student.id}}">
+            {{student.student_id}}
+        </a>
+    </div>
+    {% endfor %}
+{% else %}
+<div class ="not-selected-message">
+    {{none_message}}
+</div>
+{% endif %}

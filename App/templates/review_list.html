@@ -1,0 +1,36 @@
+{% if reviews %}
+    {% for review in reviews %}
+    <div class ="list-item {% if selected.id == review.id %}active{% endif %}">
+        <a class = "list-item-link" href="/review/all/{{review.id}}">
+            <div class = "labelled-list-item">
+                {% if review.points > 0 %}
+                <div style="width:50px; font-size: 30px; color:var(--primary);">
+                    +{{review.points}}
+                </div>
+                {% else %}
+                <div style="width:50px; font-size: 30px; color:var(--secondary2);">
+                    {{review.points}}
+                </div>
+                {% endif %}
+                <div>
+                    <div style="margin:5px;">
+                        {% set this_student = jinja_get_student(review.student_id) %}
+                        {{this_student.student_id}}
+                    </div>
+                    <div style="margin:5px;">
+                        {% set this_staff = jinja_get_staff(review.staff_id) %}
+                        {{this_staff.firstname}} {{this_staff.lastname}}
+                    </div>
+                    <div style="margin:5px;font-style: italic;">
+                        "{{review.details}}"
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+{% else %}
+<div class ="not-selected-message">
+    {{none_message}}
+</div>
+{% endif %}

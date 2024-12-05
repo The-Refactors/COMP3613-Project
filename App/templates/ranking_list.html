@@ -1,0 +1,21 @@
+{% if rankings %}
+    {% for student in rankings %}
+    <div class ="list-item">
+        <a class = "list-item-link" href="/student/all/{{student.id}}">
+            <div class = "labelled-list-item">
+                <div style="width:40px; font-size:20px; color:var(--primary);">
+                    #{{student.karma_rank}}
+                </div>
+                <div>
+                    {{student.student_id}}
+                </div>
+            </div>
+            
+        </a>
+    </div>
+    {% endfor %}
+{% else %}
+<div class ="not-selected-message">
+    {{none_message}}
+</div>
+{% endif %}

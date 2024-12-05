@@ -1,7 +1,8 @@
 import nltk
-from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
+
 nltk.download('vader_lexicon')
 nltk.download('punkt')
 nltk.download('stopwords')

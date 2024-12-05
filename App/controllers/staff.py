@@ -1,26 +1,17 @@
-from App.models import Staff, Review, Student
-from App.database import db 
-
+from App.database import db
+from App.models import Staff
 from .review import (
-    create_review,
-    get_review
-)
-from .student import(
-    get_student_by_id,
-    get_student_by_username,
-    get_students_by_degree,
-    get_students_by_faculty
+    get_review, get_staff_reviews, delete_review
 )
 
-def create_staff(username,firstname, lastname, email, password, faculty):
-    newStaff = Staff(username,firstname, lastname, email, password, faculty)
-    db.session.add(newStaff)
+
+def create_staff(username, firstname, lastname, password, email):
+    new_staff = Staff(username=username,firstname=firstname, lastname=lastname, password=password, email=email)
+    db.session.add(new_staff)
     
     try:
         db.session.commit()
-        return True
-        # can return if we need
-        # return newStaff
+        return new_staff
     except Exception as e:
         print("[staff.create_staff] Error occurred while creating new staff: ", str(e))
         db.session.rollback()
@@ -28,7 +19,7 @@ def create_staff(username,firstname, lastname, email, password, faculty):
     
 
 def get_staff_by_id(id):
-    staff = Staff.query.filter_by(ID=id).first()
+    staff = Staff.query.filter_by(id=id).first()
     if staff:
         return staff
     else:
@@ -54,6 +45,7 @@ def staff_edit_review(id, details):
         return False
     else:
         review.details = details
+        db.session.add(review)
         try:
             db.session.commit()
             return True
@@ -63,11 +55,37 @@ def staff_edit_review(id, details):
             return False
 
 
-def staff_create_review(staff, student, isPositive, points, details):
-    if create_review(staff, student, isPositive, points,details):
-        return True
+def get_all_staff():
+    staff = Staff.query.all()
+    if staff:
+        return staff
     else:
+        return None
+
+def get_all_staff_json():
+    staff = Staff.query.all()
+    if staff:
+        return [member.get_json() for member in staff]
+    else:
+        return []
+
+def delete_staff(staff_id):
+    from .karmaSystem import update_karma, update_karma_ranking
+    
+    staff = get_staff_by_id(staff_id)
+    reviews = get_staff_reviews(staff_id)
+    for review in reviews:
+        delete_review(review.id)
+    if staff:
+        db.session.delete(staff)
+        try:
+            db.session.commit()
+            update_karma_ranking(1)
+            return True
+        except Exception as e:
+            print("[staff.delete_staff] Error occurred while deleting staff:", str(e))
+            db.session.rollback()
+            return False
+    else:
+        print("[staff.delete_staff] Error occurred while deleting staff: Staff " + id + " not found")
         return False
-
-
-

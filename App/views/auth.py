@@ -4,7 +4,7 @@ from flask_login import login_required, login_user, current_user, logout_user
 
 from .index import index_views
 from App.models import Staff, Student, User
-from App.controllers import (create_user, jwt_authenticate, login)
+from App.controllers import (create_user, create_staff, jwt_authenticate, login, signup)
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
 '''
@@ -23,7 +23,7 @@ def get_user_page():
 def identify_page():
   return jsonify({
       'message':
-      f"username: {current_user.username}, id : {current_user.ID}"
+      f"username: {current_user.username}, id : {current_user.id}"
   })
 
 
@@ -36,12 +36,31 @@ def login_action():
     user_type = type(user)
     print("User type:", user_type)
     login_user(user)
-    if (user.user_type == "staff"):
-      return redirect("/StaffHome")  # Redirect to student dashboard
-    elif (user.user_type == "student"):
-      return redirect("/StudentHome")  # Redirect to staff dashboard
-    elif (user.user_type == "admin"):
-      return redirect("/admin")
+    return redirect("/home")
+    # if (user.user_type == "staff"):
+    #   return redirect("/staff")  # Redirect to staff home
+    # elif (user.user_type == "admin"):
+    #   return redirect("/admin")  # Redirect to admin home
+  return render_template('login.html', message=message)
+
+@auth_views.route('/signup', methods=['GET'])
+def signup_page():
+  return render_template('signup.html')
+
+@auth_views.route('/signup/post', methods=['POST'])
+def signup_action():
+  data = request.form
+  message="Bad username or password"
+  user = signup(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
+  if user:
+    user_type = type(user)
+    print("User type:", user_type)
+    login_user(user)
+    return redirect("/home")
+    # if (user.user_type == "staff"):
+    #   return redirect("/staff")  # Redirect to staff home
+    # elif (user.user_type == "admin"):
+    #   return redirect("/admin")  # Redirect to admin home
   return render_template('login.html', message=message)
 
 
@@ -86,5 +105,5 @@ def user_login_api():
 def identify_user_action():
   return jsonify({
       'message':
-      f"username: {jwt_current_user.username}, id : {jwt_current_user.ID}"
+      f"username: {jwt_current_user.username}, id : {jwt_current_user.id}"
   })

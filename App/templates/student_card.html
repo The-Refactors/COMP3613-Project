@@ -1,0 +1,25 @@
+{% if selected %}
+  <table class ="card-text-column">
+
+    {% if current_user.user_type=='admin' %}
+    <tr>
+        <td>Database ID:</td>
+        <td>{{selected.id}}</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td>Student ID:</td>
+      <td>{{selected.student_id}}</td>
+    </tr>
+    <tr>
+      <td>Karma:</td>
+      <td>{{selected.karma}}</td>
+    </tr>
+    <tr>
+      <td>Rank:</td>
+      <td>{{selected.karma_rank}}</td>
+    </tr>
+  </table>
+{% else %}
+<div class = "not-selected-message">NO STUDENT SELECTED</div>
+{% endif %}

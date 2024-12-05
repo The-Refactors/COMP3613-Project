@@ -1,0 +1,128 @@
+{% extends "home.html" %}
+
+{% block page_content %}
+
+{% set selected = None %}
+
+<div class = "page-content">
+
+    <div class = "page-segment" style="width:15%;">
+
+        <div class="pane">
+
+            <div class = "pane-content">
+    
+              <div class = "pane-header">
+    
+                <div class = "pane-header-text"> 
+    
+                  <div> RANKINGS </div>
+    
+                </div>
+    
+                <div class = "pane-header-button"> 
+    
+                </div>
+    
+              </div>
+              
+              {% set test = 0 %}
+              {% set none_message = "NO RANKINGS" %}
+    
+              <div class = "pane-data">
+    
+                {% include "ranking_list.html" %}
+    
+              </div>
+    
+            </div>
+    
+        </div>
+
+    </div>
+
+    <div class = "page-segment" style="width:40%;">
+
+        <div class="pane">
+
+            <div class = "pane-content">
+    
+              <div class = "pane-header">
+    
+                <div class = "pane-header-text"> 
+    
+                  <div> RECENT REVIEWS </div>
+    
+                </div>
+    
+                <div class = "pane-header-button"> 
+    
+    
+                </div>
+    
+              </div>
+              
+              {% set test = 0 %}
+              {% set none_message = "NO REVIEWS" %}
+    
+              <div class = "pane-data">
+    
+                {% include "review_list.html" %}
+    
+              </div>
+    
+            </div>
+    
+        </div>
+
+    </div>
+
+    <div class = "page-segment" style="width:40%;">
+
+        <div class="pane">
+
+            <div class = "pane-content">
+    
+              <div class = "pane-header">
+    
+                <div class = "pane-header-text"> 
+    
+                  <div> YOUR REVIEWS </div>
+    
+                </div>
+    
+                <div class = "pane-header-button"> 
+    
+    
+                </div>
+    
+              </div>
+              
+              {% set test = 0 %}
+              {% set none_message = "NO REVIEWS" %}
+    
+              <div class = "pane-data">
+    
+                {% include "my_review_list.html" %}
+    
+              </div>
+
+              <div class = "pane-controls">
+                <a class="button-compound key hover" href="/write">
+                
+                    <div class="button-compound-text">
+                        WRITE REVIEW
+                    </div>
+                
+                </a>            
+              </div>
+    
+            </div>
+    
+        </div>
+
+    </div>
+    
+</div>
+  
+{% endblock %}

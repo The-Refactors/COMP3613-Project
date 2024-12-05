@@ -1,0 +1,11 @@
+staff_id,student_id,points,details
+7,1,3,"Amazing job, keep it up!"
+8,3,2,Good work
+5,3,2,Excellent
+6,3,-3,Terrible attitude
+5,2,-2,Very bad
+3,7,2,Very good
+4,9,-3,Awful behaviour
+7,5,1,Ok
+3,6,-1,Meh
+6,3,-2,Work harder next time
