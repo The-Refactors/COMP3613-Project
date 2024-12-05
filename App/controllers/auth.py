@@ -23,6 +23,17 @@ def login(username, password):
         print(f"User not found: {username}")  # Debug log
     return None
 
+def signup(username, password, firstname, lastname, email):
+    from .staff import create_staff
+    
+    user = User.query.filter_by(username=username).first()
+    if user == None:
+        user = create_staff(username, firstname, lastname, password, email)
+        return user
+    else:
+        print(f"Username already taken")  # Debug log
+    return None
+
 
 def setup_flask_login(app):
     login_manager = LoginManager()

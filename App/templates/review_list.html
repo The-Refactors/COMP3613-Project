@@ -18,7 +18,8 @@
                         {{this_student.student_id}}
                     </div>
                     <div style="margin:5px;">
-                        {{users[review.staff_id-1].firstname}} {{users[review.staff_id-1].lastname}}
+                        {% set this_staff = jinja_get_staff(review.staff_id) %}
+                        {{this_staff.firstname}} {{this_staff.lastname}}
                     </div>
                     <div style="margin:5px;font-style: italic;">
                         "{{review.details}}"

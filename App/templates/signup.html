@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Lilita+One&family=Titan+One&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Conduct Tracker - Login</title>
+    <title>Student Conduct Tracker - Sign Up</title>
   <link rel="icon" href="https://github.com/RichardR963/Info3604_Project/blob/main/images/AV2.png?raw=true" type="image/png">
 
     <style>
@@ -198,19 +198,25 @@
 <!-- Rest of your content -->
 </div>
 <!-- Login card -->
-<div class="login-card">
+<div class="login-card" style="height:75%;">
     <!-- Image and text header -->
     <div class="login-header">
         <img src="https://github.com/RichardR963/Info3604_Project/blob/main/images/AV2.png?raw=true"" alt="Student Conduct Tracker">
-        <h2>Student Conduct Tracker</h2>
+        <h2>Sign Up</h2>
     </div>
     <!-- Login form -->
-  <form class="login-form" action="/login" href="/login" method="POST">
-      <p>   Username</p>
+  <form class="login-form" action="/signup/post" href="/signup/post" method="POST">
+      <label>   Username</label>
       <input name="username" id="username" type="text" placeholder="Username">
-      <p> Password</p>
+      <label> Password</label>
       <input name="password" id="password" type="password" placeholder="Password">
-      <button type="submit" href="/login">
+      <label>   First Name</label>
+      <input name="firstname" id="firstname" type="text" placeholder="First Name">
+      <label> Last Name</label>
+      <input name="lastname" id="lastname" type="text" placeholder="Last Name">
+      <label>   Email</label>
+      <input name="email" id="email" type="text" placeholder="Email">
+      <button type="submit" href="/signup/post">
           Submit
       </button>
     {% if message %}

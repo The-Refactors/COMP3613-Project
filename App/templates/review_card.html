@@ -13,11 +13,17 @@
     </tr>
     <tr>
       <td>Student:</td>
-      <td>{{selected.student_id}}</td>
+      <td>
+        {% set this_student = jinja_get_student(selected.student_id) %}
+        {{this_student.student_id}}
+      </td>
     </tr>
     <tr>
       <td>Created by:</td>
-      <td>{{users[selected.staff_id-1].firstname}} {{users[selected.staff_id-1].lastname}}</td>
+      <td>
+        {% set this_staff = jinja_get_staff(selected.staff_id) %}
+        {{this_staff.firstname}} {{this_staff.lastname}}
+      </td>
     </tr>
     <tr>
         <td>Date Created:</td>

@@ -28,7 +28,11 @@ def browse_reviews():
         student = Student.query.filter_by(id=student_id).first()
         return student
 
-    return render_template('browse_reviews.html', current_user=current_user, reviews=reviews, students=students, staff=staff, users=users, selected=selected, jinja_get_student=jinja_get_student)
+    def jinja_get_staff(staff_id):
+        staff = Staff.query.filter_by(id=staff_id).first()
+        return staff
+
+    return render_template('browse_reviews.html', current_user=current_user, reviews=reviews, students=students, staff=staff, users=users, selected=selected, jinja_get_student=jinja_get_student, jinja_get_staff=jinja_get_staff)
 
 @review_views.route('/review/all/<int:selected_id>', methods=['GET'])
 @login_required
@@ -43,7 +47,11 @@ def browse_reviews_selected(selected_id=1):
         student = Student.query.filter_by(id=student_id).first()
         return student
 
-    return render_template('browse_reviews.html', current_user=current_user, reviews=reviews, students=students, staff=staff, users=users, selected=selected, jinja_get_student=jinja_get_student)
+    def jinja_get_staff(staff_id):
+        staff = Staff.query.filter_by(id=staff_id).first()
+        return staff
+
+    return render_template('browse_reviews.html', current_user=current_user, reviews=reviews, students=students, staff=staff, users=users, selected=selected, jinja_get_student=jinja_get_student, jinja_get_staff=jinja_get_staff)
 
 @review_views.route('/review/<int:review_id>', methods=['GET'])
 @login_required

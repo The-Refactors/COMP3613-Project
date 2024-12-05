@@ -54,8 +54,12 @@ def view_staff(staff_id):
     def jinja_get_student(student_id):
         return (get_student_by_id(student_id))
 
+    def jinja_get_staff(staff_id):
+        staff = Staff.query.filter_by(id=staff_id).first()
+        return staff
+
     if(selected):  
-        return render_template('view_staff.html', current_user=current_user, selected=selected, reviews=reviews, users=users, students=students, staff=staff, jinja_get_student=jinja_get_student)
+        return render_template('view_staff.html', current_user=current_user, selected=selected, reviews=reviews, users=users, students=students, staff=staff, jinja_get_student=jinja_get_student, jinja_get_staff=jinja_get_staff)
 
 @staff_views.route('/staff/delete/<int:staff_id>', methods=['GET'])
 @login_required
